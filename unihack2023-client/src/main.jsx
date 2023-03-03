@@ -4,6 +4,7 @@ import 'virtual:windi.css'
 
 import {
     BrowserRouter,
+    Outlet,
     Route,
     Routes,
 } from "react-router-dom";  // configuring the browser routing things
@@ -11,8 +12,10 @@ import Layout from './Layout';
 
 
 // each route is loaded asynchronously
-const Home = React.lazy(() => import('./HomePage.jsx'))
-const Login = React.lazy(() => import('./Login.jsx'))
+const Home = React.lazy(() => import('./pages/HomePage.jsx'))
+const Login = React.lazy(() => import('./pages/Login.jsx'))
+const Tasks = React.lazy(() => import('./pages/my/Tasks.jsx'))
+const Dashboard = React.lazy(() => import('./pages/my/Dashboard.jsx'))
 
 
 const routes = (
@@ -20,7 +23,12 @@ const routes = (
         <Route path="/" element={<Home />} />
 
         {/* Add more routes here, make sure they are ASYNC */}
-        <Route path="/login" element={<Login />} />
+        <Route path="login" element={<Login />} />
+        <Route path="tasks" element={<Tasks />} />
+        <Route path="my" element={<Dashboard />} > {/* this is a nested route */}
+            <Route path="tasks" element={<Tasks />} />
+            <Route path="calendar" element={<Tasks />} />
+        </Route>
     </>
 )
 
