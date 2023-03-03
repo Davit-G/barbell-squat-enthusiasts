@@ -23,11 +23,11 @@ function Dashboard({ }) {
                 <div className='rounded-xl shadow-lg w-60 md:w-100 p-4 px-8 h-[50vh] flex items-start flex-col justify-start'>  {/* Navigation on the left */}
                     <div className='flex flex-col justify-center items-start'>
                         <h1 className='text-2xl font-semibold text-left'>Welcome, User</h1>
-                        <div className='mt-4 flex flex-col'>
-                            <Link to="/my/" className='text-xl text-left hover:underline text-blue-500'>Home</Link>
-                            <Link to="/my/tasks" className='text-xl text-left hover:underline text-blue-500'>Tasks</Link>
-                            <Link to="/my/calendar" className='text-xl text-left hover:underline text-blue-500'>Calendar</Link>
-                            <Link className='text-xl text-left hover:underline text-blue-500'>wtf do i add here</Link>
+                        <div className='mt-4 flex flex-col space-y-3>
+                            <Link to="/my/" className='text-base md:text-xl text-left hover:underline text-blue-500'>Project Overview</Link>
+                            <Link to="/my/tasks" className='text-base md:text-xl text-left hover:underline text-blue-500'>Today's Tasks</Link>
+                            <Link to="/my/calendar" className='text-base md:text-xl text-left hover:underline text-blue-500'>Calendar View</Link>
+                            {/* <Link className='text-base md:text-xl text-left hover:underline text-blue-500'>wtf do i add here</Link> */}
                         </div>
                     </div>
                 </div>
