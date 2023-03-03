@@ -1,34 +1,26 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
-import './App.css'
+import ReactiveThing from './ReactiveThing'
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [count, setCount] = useState(0)
+    const [count2, setCount2] = useState(0)
+    const [count3, setCount3] = useState(0)
 
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    return (
+        <div className="">
+            <h1 className=''>{count}</h1>
+            <button className='p-2 m-2 text-red-500 border-black hover:text-green-500 hover:text-6xl border-1' onClick={() => {setCount(count + 1)}}>ighsohf</button>
+            <button className='p-2 m-2 border-black border-1' onClick={() => {setCount2(count2 + 1)}}>ighsohf</button>
+            <button className='p-2 m-2 border-black border-1' onClick={() => {setCount3(count3 + 1)}}>ighsohf</button>
+            
+            <ReactiveThing text="soidjgoij" 
+                count={count}
+                count2={count2}
+                count3={count3}
+            />
+        </div>
+    )
 }
 
 export default App
