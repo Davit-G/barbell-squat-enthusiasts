@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import 'virtual:windi.css'
@@ -10,8 +10,8 @@ import {
 } from "react-router-dom";  // configuring the browser routing things
 import Layout from './Layout';
 
-// each route is loaded asynchronously
 
+// each route is loaded asynchronously
 const Home = React.lazy(() => import('./HomePage.jsx'))
 const Login = React.lazy(() => import('./Login.jsx'))
 
@@ -26,7 +26,8 @@ const routes = (
 )
 
 function Fallback() { // a temporary page to display while the current page is loading
-    return <div>Loading...</div>
+
+    return <div className='mx-auto my-auto text-center'>Loading...</div>
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
