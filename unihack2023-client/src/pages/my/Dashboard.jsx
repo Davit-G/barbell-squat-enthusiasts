@@ -22,40 +22,6 @@ function Dashboard({ }) {
     return (
         <>
             <div className="h-[80vh] mx-auto mt-10 flex flex-row w-full">
-                <div className="hidden md:flex rounded-xl dark:bg-zinc-800 min-w-fit max-w-[30rem] my-4 mr-4 p-8 max-h-full h-fit items-center flex-col justify-start">
-                    {" "}
-                    {/* Navigation on the left */}
-                    <div className="flex flex-col justify-center items-start">
-                        <h1 className="text-2xl dark:text-white font-semibold text-left">Menu</h1>
-                        <div className="mt-4 flex flex-col space-y-3">
-                            <Link
-                                to="/my/"
-                                className="text-base md:text-xl text-left hover:underline text-blue-500 dark:text-blue-400"
-                            >
-                                Overview
-                            </Link>
-                            <Link
-                                to="/my/week"
-                                className="text-base md:text-xl text-left hover:underline text-blue-500 dark:text-blue-400"
-                            >
-                                Weekly Overview
-                            </Link>
-                            <Link
-                                to="/my/tasks"
-                                className="text-base md:text-xl text-left hover:underline text-blue-500 dark:text-blue-400"
-                            >
-                                Today's Tasks
-                            </Link>
-                            <Link
-                                to="/my/calendar"
-                                className="text-base md:text-xl text-left hover:underline text-blue-500 dark:text-blue-400"
-                            >
-                                Calendar View
-                            </Link>
-                            {/* <Link className='text-base md:text-xl text-left hover:underline text-blue-500'>wtf do i add here</Link> */}
-                        </div>
-                    </div>
-                </div>
 
                 {/* tasks, calendar etc here */}
                 <div className="m-4 flex w-full justify-center">

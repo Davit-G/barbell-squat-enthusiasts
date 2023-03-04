@@ -11,6 +11,7 @@ import Error from "./pages/ErrorPage";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
 import { initializeApp } from "firebase/app";
+import AppLayout from "./AppLayout";
 
 // each route is loaded asynchronously
 const Home = React.lazy(() => import("./pages/HomePage.jsx"));
@@ -26,55 +27,52 @@ const firebaseConfig = {
     storageBucket: "unihack2023-9ba75.appspot.com",
     messagingSenderId: "72795354157",
     appId: "1:72795354157:web:3b4982750ba7f3460274a4"
-  };
+};
 
 const app = initializeApp(firebaseConfig);
 
 const routes = (
-  <>
-    <Route path="/" element={<Home />} />
+    <>
+        <Route element={<Layout />}> {/* this is the default layout for all pages */}
+            <Route index path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+        </Route>
 
-    {/* Add more routes here, make sure they are ASYNC */}
-    <Route path="login" element={<Login />} />
-    <Route path="tasks" element={<Tasks />} />
-    
-    
-    <Route path="my" element={<Dashboard />}>
-      {" "}
-      {/* this is a nested route */}
-      <Route path="tasks" element={<Tasks />} />
-      <Route path="calendar" element={<Calendar />} />
-      <Route path="week" element={<Week />} />
-    </Route>
-    <Route path="*" element={<ErrorPage />} />
-  </>
+        <Route path="*" element={<ErrorPage />} />
+
+        {/* Add more routes here, make sure they are ASYNC */}
+
+        <Route path="/my" element={<AppLayout></AppLayout>}>
+            {" "}
+            {/* this is a nested route */}
+            <Route path="/my" element={<Dashboard />} />
+            <Route path="tasks" element={<Tasks />} />
+            <Route path="calendar" element={<Calendar />} />
+            <Route path="week" element={<Week />} />
+        </Route>
+    </>
 );
 
 function Fallback() {
-  // a temporary page to display while the current page is loading
+    // a temporary page to display while the current page is loading
 
-  return <div className="mx-auto my-auto text-center">Loading...</div>;
+    return <div className="mx-auto my-auto text-center">Loading...</div>;
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      {" "}
-      {/* handles redux */}
-      <BrowserRouter>
-        {" "}
-        {/* handles routing */}
-        
-        <Layout>
-          {" "}
-          {/* handles the layout of the page */}
-          <React.Suspense fallback={<Fallback />}>
+    <React.StrictMode>
+        <Provider store={store}>
             {" "}
-            {/* if page not loaded yet, display temporary page thing */}
-            <Routes>{routes}</Routes>
-          </React.Suspense>
-        </Layout>
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>
+            {/* handles redux */}
+            <BrowserRouter>
+                {" "}
+                {/* handles routing */}
+                <React.Suspense fallback={<Fallback />}>
+                    {" "}
+                    {/* if page not loaded yet, display temporary page thing */}
+                    <Routes>{routes}</Routes>
+                </React.Suspense>
+            </BrowserRouter>
+        </Provider>
+    </React.StrictMode>
 );
