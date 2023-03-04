@@ -37,6 +37,8 @@ const routes = (
     {/* Add more routes here, make sure they are ASYNC */}
     <Route path="login" element={<Login />} />
     <Route path="tasks" element={<Tasks />} />
+    
+    
     <Route path="my" element={<Dashboard />}>
       {" "}
       {/* this is a nested route */}
@@ -62,6 +64,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         {" "}
         {/* handles routing */}
+        
         <Layout>
           {" "}
           {/* handles the layout of the page */}

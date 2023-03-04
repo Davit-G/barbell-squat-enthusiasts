@@ -16,7 +16,7 @@ import {
   startOfToday,
 } from "date-fns";
 
-// import {ChevronLeftIcon} from '@heroicons/react/24/solid'
+
 function Calendar() {
   let today = startOfToday();
   let [selectedDay, setSelectedDay] = useState(today);
