@@ -31,3 +31,10 @@ collection = db["users"]
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+
+@app.get("/api/user/{user_id}")
+async def get_user_credentials(user_id):
+    return {
+        "user_id": "abc",
+        "user_name": "Random"
+    }
