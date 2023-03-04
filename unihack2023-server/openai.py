@@ -2,27 +2,12 @@ import requests
 import json
 from config import API_KEY
 
-url = "https://api.openai.com/v1/chat/completions"
-
-headers = {
+requests_session = requests.Session()
+requests_session.headers.update({
     "Content-Type": "application/json",
     "Authorization": "Bearer " +  API_KEY
-}
-
-# def askQuestion():
-#     name = input("Describe your project?")
-#     start_date = input("What is your start date?")
-#     end_date = input("What is your end date?")
-#     mile_count = input("How many milestones would you like?")
-#     part_count = input("Is there any other participant?")
-#     loc = input("Where is this located?")
-    
-#     return f"""
-#     I plan {name}. Starting on the {start_date} and ending on the {end_date}.
-#     There would be {part_count} participant for this project, I would like to have {mile_count} milestones and
-#     this project would be located at {loc}.
-#     """
-    
+})
+url = "https://api.openai.com/v1/chat/completions"
 
 def build_prompt(name, desc, start_date, end_date, mile_count, part_count, loc):
     prompt = f"""I am creating a project called {name}. {desc}.
@@ -62,10 +47,10 @@ def get_subtasks(data):
     name, desc, start_date, end_date, mile_count, part_count, loc = data['name'], data['desc'], data['start_date'], data['end_date'], data['mile_count'], data['part_count'], data['loc']
     task = build_prompt(name, desc, start_date, end_date, mile_count, part_count, loc)
 
-    response = requests.post(url, headers = headers, json={
+    response = requests_session.post(url, json={
         "messages" : [{ "role" : "user", "content" : task }],
         "model" : "gpt-3.5-turbo"})
     response = response.json()['choices'][0]['message']['content'] #chatgpt's entire response message
 
     subtasks = parse_response(response)
-    return subtasks
+    return subtasks 
