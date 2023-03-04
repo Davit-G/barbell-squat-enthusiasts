@@ -38,7 +38,7 @@ function Dashboard({}) {
                 <div className="w-full h-[0.5px] bg-gradient-to-r from-zinc-900 dark:from-zinc-600 to-transparent"></div>
               </div>
 
-              <div className="flex flex-col items-center justify-start mb-4 mt-2 p-4 w-full space-y-3 h-[45rem] overflow-y-scroll scrollbar-hide rounded-lg ">
+              <div className="flex flex-col items-center justify-start mb-4 mt-2 p-4 w-full space-y-3 h-[50rem] overflow-y-scroll scrollbar-hide rounded-lg ">
                 {" "}
                 {/* Tasks go here */}
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((project) => {
@@ -74,7 +74,7 @@ function Project({ project }) {
 
   return (
     <div
-      className={`rounded-xl ml-2 shadow-sm shadow-zinc-500 p-4 w-11/12 ${bgColor} hover:scale-[1.02] transition-all duration-150`}
+      className={`rounded-xl ml-2 shadow-sm shadow-zinc-500 p-4 w-11/12 ${bgColor} hover:scale-[1.02] transition-all duration-150 cursor-pointer`}
     >
       <div className="grid grid-cols-4 w-full">
         <h1 className="text-2xl font-semibold col-span-3">
