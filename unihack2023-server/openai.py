@@ -9,40 +9,44 @@ headers = {
     "Authorization": "Bearer " +  API_KEY
 }
 
-def askQuestion():
-    name = input("Describe your project?")
-    start_date = input("What is your start date?")
-    end_date = input("What is your end date?")
-    mile_count = input("How many milestones would you like?")
-    part_count = input("Is there any other participant?")
-    loc = input("Where is this located?")
+# def askQuestion():
+#     name = input("Describe your project?")
+#     start_date = input("What is your start date?")
+#     end_date = input("What is your end date?")
+#     mile_count = input("How many milestones would you like?")
+#     part_count = input("Is there any other participant?")
+#     loc = input("Where is this located?")
     
-    return f"""
-    I plan {name}. Starting on the {start_date} and ending on the {end_date}.
-    There would be {part_count} participant for this project, I would like to have {mile_count} milestones and
-    this project would be located at {loc}.
-    """
+#     return f"""
+#     I plan {name}. Starting on the {start_date} and ending on the {end_date}.
+#     There would be {part_count} participant for this project, I would like to have {mile_count} milestones and
+#     this project would be located at {loc}.
+#     """
     
 
-def build_prompt(data):
-    data += """
-        Give me a list of subtasks that I can do to work towards this goal.
-        Return tasks in the json format below.
-        ```json
-        {
-            "subtasks": [subtask]
-        }```
-        where each subtask in "subtasks" is a json object with the format
-        ```json
-        {
-            "name": "",
-            "description": "",
-            "time":"dd/mm/yyyy"
-        }```
-        Please give me less than 10 subtasks.
-        Please explicitly order the tasks.
-        """
-    return data
+def build_prompt(name, desc, start_date, end_date, mile_count, part_count, loc):
+    prompt = f"""I am creating a project called {name}. {desc}.
+It starts at {start_date} and ends at {end_date}. I want to break this project down into {mile_count} milestones.
+I want the work to be split between {part_count} participants. This project will take place at {loc}. """
+
+    prompt += """Give me a list of subtasks that I can do to work towards this goal.
+Return tasks in the json format below.
+```json
+{
+    'subtasks': [subtask]
+}```
+where each subtask in "subtasks" is a json object with the format
+```json
+\{
+    "name": "",
+    "description": "",
+    "time":"dd/mm/yyyy"
+}```"""
+
+    prompt += f"""Please give me exactly {min(10, int(mile_count))} subtasks.
+Please explicitly order the tasks."""
+    
+    return prompt
 
 def parse_response(response):
     l, r = 0 , len(response) - 1
@@ -55,7 +59,8 @@ def parse_response(response):
     return json.loads(response) #return as dictionary
 
 def get_subtasks(data):
-    task = build_prompt(data)
+    name, desc, start_date, end_date, mile_count, part_count, loc = data['name'], data['desc'], data['start_date'], data['end_date'], data['mile_count'], data['part_count'], data['loc']
+    task = build_prompt(name, desc, start_date, end_date, mile_count, part_count, loc)
 
     response = requests.post(url, headers = headers, json={
         "messages" : [{ "role" : "user", "content" : task }],
@@ -64,6 +69,3 @@ def get_subtasks(data):
 
     subtasks = parse_response(response)
     return subtasks
-
-
-print(get_subtasks(build_prompt(askQuestion())))
