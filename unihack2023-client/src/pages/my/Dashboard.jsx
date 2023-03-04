@@ -9,7 +9,7 @@ import { shuffle } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { selectDispayName, selectLogin, selectUid } from "../../features/login/loginSlice";
 import { selectBackend } from "../../features/backend/backendSlice";
-
+import AnimatedVerticalPage from "../AnimatedVerticalPage";
 import axios from "axios";
 import { setProjects } from "../../features/projects/projectsSlice";
 
@@ -39,7 +39,7 @@ function Dashboard({ }) {
     }, [loggedIn]);
 
     return (
-        <>
+        <AnimatedVerticalPage>
             {/* tasks, calendar etc here */}
             <div className="m-4 flex w-full justify-center">
                 {child ? (
@@ -66,7 +66,7 @@ function Dashboard({ }) {
                 )}
             </div>
 
-        </>
+        </AnimatedVerticalPage>
     );
 }
 

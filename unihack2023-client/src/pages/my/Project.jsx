@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { selectBackend } from '../../features/backend/backendSlice';
 import { selectLogin } from '../../features/login/loginSlice';
+import AnimatedVerticalPage from '../AnimatedVerticalPage';
 
 
 
@@ -32,7 +33,7 @@ function Project({ }) {
     }, [loggedIn])
 
     return (
-        <>
+        <AnimatedVerticalPage>
             <div className='p-8'>
                 <h1 className='text-4xl font-semibold dark:text-zinc-200'>
                     {project.projectExists === true ? <>
@@ -44,7 +45,7 @@ function Project({ }) {
                     </>}
                 </h1>
             </div>
-        </>
+        </AnimatedVerticalPage>
     );
 }
 

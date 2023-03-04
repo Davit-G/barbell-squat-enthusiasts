@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { MoonIcon, SunIcon } from "@heroicons/react/solid";
 import { signOut, getAuth } from "@firebase/auth";
+import {motion, useIsPresent} from 'framer-motion'
 import {
   selectDispayName,
   selectLogin,
@@ -13,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 function AppLayout({}) {
+  const isPresent = useIsPresent()
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const html = document.querySelector("html");
@@ -146,8 +148,10 @@ function AppLayout({}) {
                 ) : (
                   <></>
                 )}
+
+               
               </div>
-              
+
               <div className=" flex flex-col h-1/2 justify-center">
                 <div className="flex flex-col space-y-3">
                   <Link

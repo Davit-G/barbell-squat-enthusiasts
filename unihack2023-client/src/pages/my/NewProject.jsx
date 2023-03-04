@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import ChatWindow from '../../components/Chat';
 import { selectBackend } from '../../features/backend/backendSlice';
 import { selectLogin, selectUid } from '../../features/login/loginSlice';
+import AnimatedVerticalPage from '../AnimatedVerticalPage';
 
 
 function NewProjectPage({ }) {
@@ -34,7 +35,7 @@ function NewProjectPage({ }) {
     })
 
     return (
-        <>
+        <AnimatedVerticalPage>
             <div className="h-full min-h-fit w-full overflow-auto ">
                 {projectPageState === "new" ? <>
 
@@ -100,7 +101,7 @@ function NewProjectPage({ }) {
                 </>}
 
             </div>
-        </>
+        </AnimatedVerticalPage>
     );
 }
 

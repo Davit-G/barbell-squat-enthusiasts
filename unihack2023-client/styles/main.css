@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 
+
+
 .truncate-2-lines {
     overflow: hidden;
     display: -webkit-box;
@@ -16,4 +18,4 @@
     -webkit-box-orient: vertical;
   }
 
- 
+  

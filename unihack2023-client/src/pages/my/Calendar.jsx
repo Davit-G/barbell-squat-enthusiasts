@@ -3,7 +3,7 @@ import { Fragment, useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 
 import {motion, AnimatePresence,} from 'framer-motion'
-
+import AnimatedVerticalPage from "../AnimatedVerticalPage";
 import {
   add,
   eachDayOfInterval,
@@ -56,6 +56,9 @@ function Calendar() {
   ];
 
   return (
+    <AnimatedVerticalPage>
+
+   
     <div className="m-4">
         <h1 className="text-4xl text-center font-semibold dark:text-zinc-200 py-4">
                 Calendar
@@ -166,6 +169,7 @@ function Calendar() {
       </div>
     
     </div>
+    </AnimatedVerticalPage>
   );
 }
 
