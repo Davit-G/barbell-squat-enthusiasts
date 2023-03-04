@@ -138,7 +138,7 @@ function Calendar() {
                 {format(selectedDay, "MMM dd, yyy")}
               </time>
             </h2>
-            <ol className="mt-4 space-y-2 text-sm leading-6 text-gray-500 h-[40rem] overflow-y-scroll scrollbar-hide ">
+            <ol className="mt-4 space-y-2 text-sm leading-6 text-gray-500 h-[40rem] overflow-y-scroll scrollbar-hide p-1">
               {[1, 2, 3,4,5,6].map((num) => (
                 <CalendarTask num={num} />
               ))}
@@ -153,7 +153,7 @@ function Calendar() {
 function CalendarTask({ num }) {
   return (
     <>
-      <div className="rounded-xl border-[0.75px] p-2 border-zinc-400 w-full">
+      <div className="rounded-xl shadow-md shadow-zinc-400 p-2 w-full">
         <p className="text-purple-600">12:00 PM - 4:00 PM</p>
         <h1 className="text-xl font-semibold">{num}: Task name</h1>
         <p className="text-gray-700 truncate-2-lines">

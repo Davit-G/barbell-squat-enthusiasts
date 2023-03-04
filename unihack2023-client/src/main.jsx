@@ -1,19 +1,34 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 
-import '../styles/main.css'
+import "../styles/main.css";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom"; // configuring the browser routing things
 import Layout from "./Layout";
 import Calendar from "./pages/my/Calendar";
 import Week from "./pages/my/Week";
 import Error from "./pages/ErrorPage";
 
+import { store } from "./app/store";
+import { Provider } from "react-redux";
+import { initializeApp } from "firebase/app";
+
 // each route is loaded asynchronously
 const Home = React.lazy(() => import("./pages/HomePage.jsx"));
 const Login = React.lazy(() => import("./pages/Login.jsx"));
 const Tasks = React.lazy(() => import("./pages/my/Tasks.jsx"));
 const Dashboard = React.lazy(() => import("./pages/my/Dashboard.jsx"));
-const ErrorPage = React.lazy(() => import("./pages/ErrorPage.jsx"))
+const ErrorPage = React.lazy(() => import("./pages/ErrorPage.jsx"));
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDh3icl4HE5zlXzkd5c2awSv6mSN26EveM",
+    authDomain: "unihack2023-9ba75.firebaseapp.com",
+    projectId: "unihack2023-9ba75",
+    storageBucket: "unihack2023-9ba75.appspot.com",
+    messagingSenderId: "72795354157",
+    appId: "1:72795354157:web:3b4982750ba7f3460274a4"
+  };
+
+const app = initializeApp(firebaseConfig);
 
 const routes = (
   <>
@@ -27,8 +42,7 @@ const routes = (
       {/* this is a nested route */}
       <Route path="tasks" element={<Tasks />} />
       <Route path="calendar" element={<Calendar />} />
-      <Route path="week" element={<Week/>}/>
-
+      <Route path="week" element={<Week />} />
     </Route>
     <Route path="*" element={<ErrorPage />} />
   </>
@@ -42,18 +56,22 @@ function Fallback() {
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <Provider store={store}>
       {" "}
-      {/* handles routing */}
-      <Layout>
+      {/* handles redux */}
+      <BrowserRouter>
         {" "}
-        {/* handles the layout of the page */}
-        <React.Suspense fallback={<Fallback />}>
+        {/* handles routing */}
+        <Layout>
           {" "}
-          {/* if page not loaded yet, display temporary page thing */}
-          <Routes>{routes}</Routes>
-        </React.Suspense>
-      </Layout>
-    </BrowserRouter>
+          {/* handles the layout of the page */}
+          <React.Suspense fallback={<Fallback />}>
+            {" "}
+            {/* if page not loaded yet, display temporary page thing */}
+            <Routes>{routes}</Routes>
+          </React.Suspense>
+        </Layout>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );

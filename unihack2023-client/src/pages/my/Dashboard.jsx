@@ -6,9 +6,13 @@ Also provides a react router outlet for the nested routes.
 import React, { useEffect, useState } from "react";
 import { Link, Outlet, useOutlet } from "react-router-dom";
 import { shuffle } from "lodash";
+import { useSelector } from "react-redux";
+import { selectDispayName, selectLogin } from "../../features/login/loginSlice";
 function Dashboard({}) {
   const child = useOutlet(); // checks to see if we have a nested route, or if we are at the default route
 
+  const loggedIn = useSelector(selectLogin);
+  const displayname = useSelector(selectDispayName);
   useEffect(() => {
     // when this component is rendered for the first time, do this
 
@@ -22,7 +26,7 @@ function Dashboard({}) {
           {" "}
           {/* Navigation on the left */}
           <div className="flex flex-col justify-center items-start">
-            <h1 className="text-2xl font-semibold text-left">Welcome, User</h1>
+            <h1 className="text-2xl font-semibold text-left">Welcome, {displayname}</h1>
             <div className="mt-4 flex flex-col space-y-3">
               <Link
                 to="/my/"
@@ -97,7 +101,9 @@ function Project({ project }) {
   ];
 
   return (
-    <div className={`rounded-xl ml-2 shadow-md shadow-zinc-400 p-4 w-11/12 ${bgColor} bg-opacity-40`}>
+    <div
+      className={`rounded-xl ml-2 shadow-md shadow-zinc-400 p-4 w-11/12 ${bgColor} bg-opacity-40`}
+    >
       <div className="grid grid-cols-4 w-full">
         <h1 className="text-2xl font-semibold col-span-3">
           {project}: Project Name
