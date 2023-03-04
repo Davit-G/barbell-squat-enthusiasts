@@ -20,6 +20,8 @@ function Login({}) {
         const user = res.user;
         dispatch(setLogin(true));
 
+        
+
         dispatch(
           setUserDetails({
             uid: user.uid,
