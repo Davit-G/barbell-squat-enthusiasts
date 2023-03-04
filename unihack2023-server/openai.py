@@ -22,11 +22,20 @@ def askQuestion():
     There would be {part_count} participant for this project, I would like to have {mile_count} milestones and
     this project would be located at {loc}.
     """
+
+def generate_fake_transcript(input_answers):
+    openai_input = "Here is a transcript of a conversation with a person who wants to plan a project and needs help breaking down tasks:\n"
+    for conversation in input_answers:
+        # conversation is the dict of question and answer
+        openai_input += "ChatGPT: \"" + conversation["question"] + "\""
+        openai_input += "User: \"" + conversation["answer"] + "\""
     
+    openai_input += "\n\n"
+    return openai_input
 
 def build_prompt(data):
     data += """
-        Give me a list of subtasks that I can do to work towards this goal.
+        Give me a list of subtasks that I can do to break the project down in the context of the transcript.
         Return tasks in the json format below.
         ```json
         {
@@ -54,8 +63,9 @@ def parse_response(response):
 
     return json.loads(response) #return as dictionary
 
-def get_subtasks(data):
-    task = build_prompt(data)
+def get_subtasks(input_answers):
+    processed_transcript = generate_fake_transcript(input_answers)
+    task = build_prompt(processed_transcript)
 
     response = requests.post(url, headers = headers, json={
         "messages" : [{ "role" : "user", "content" : task }],
@@ -66,4 +76,4 @@ def get_subtasks(data):
     return subtasks
 
 
-print(get_subtasks(build_prompt(askQuestion())))
+# print(get_subtasks(build_prompt(askQuestion())))

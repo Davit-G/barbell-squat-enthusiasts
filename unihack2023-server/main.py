@@ -7,6 +7,8 @@ from schemas.user import User
 from schemas.project import Project
 from schemas.task import Task
 
+import openai
+
 app = FastAPI()
 
 origins = [
@@ -59,7 +61,23 @@ async def get_user_credentials(user_id):
 
 @app.post("/api/create_project")
 async def create_project(project: Project):
-    project_data = vars(project)
+        
+    project_data = await vars(project)
+
+    """
+    uid: str # the owner of this project
+    project_name: str
+    project_description: Optional[str]
+    start_date: Optional[str]
+    end_date: Optional[str]
+    question_answers: list[dict] = []
+    """
+
+    # openapi shenanigans
+    input_answers = project_data["question_answers"]
+
+    openai.get_subtasks()
+
     projListener.create_project_in_database(project_data)
     return {"status": 201}
 
@@ -86,7 +104,7 @@ async def update_project(new_project: Project):
         print(e)
         return {"status": 400}
     
-@app.post("/api/create_Task")
+@app.post("/api/create_task")
 async def create_task(task: Task):
     task_data = vars(task)
     taskListener.create_task_in_database(task_data)
