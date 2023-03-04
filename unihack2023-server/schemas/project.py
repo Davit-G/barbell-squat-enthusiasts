@@ -8,4 +8,4 @@ class Project(BaseModel):
     project_description: Optional[str]
     start_date: Optional[str]
     end_date: Optional[str]
-    question_answers: list = []
+    question_answers: dict = []

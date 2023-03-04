@@ -31,7 +31,8 @@ def create_task_in_database(task_data):
     tasks.update_one(key, {"$set": task_data}, upsert=True)
 
 def create_multiple_tasks_in_database(task_data, proj_id):
-    for task in task_data:
+    for task in task_data["subtasks"]:
+
         task["task_id"] = uuid.uuid4().hex
         task["proj_id"] = proj_id
         create_task_in_database(task)
