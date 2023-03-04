@@ -61,6 +61,37 @@ async def get_user_credentials(user_id):
         "user_projects": user["user_projects"]}
 
 
+@app.get("/api/user/{user_id}/dashboard")
+async def get_user_dashboard(user_id):
+    try:
+        # try get all projects of user
+        projects = projListener.get_all_projects_by_uid(user_id)
+        # iterate through projects and get all tasks
+        for project in projects:
+            project["tasks"] = taskListener.get_tasks_by_project_id(project["proj_id"])
+        
+        return {"projects": projects}
+        
+    except Exception as e:
+        print(e)
+        return {"status": 404}
+
+@app.get("/api/user/{user_id}/projects")
+async def get_user_projects(user_id):
+    try:
+        projects = projListener.get_all_projects_by_uid(user_id)
+    except Exception as e:
+        print(e)
+        return {"status": 404}
+
+    return {"projects": projects}
+
+
+@app.get("/api/project/{proj_id}/tasks")
+async def get_tasks(proj_id):
+    tasks = taskListener.get_tasks_by_project_id(proj_id)
+    return {"tasks": tasks}
+
 @app.post("/api/project/create")
 async def create_project(project: Project):
     print(project)
@@ -86,6 +117,10 @@ async def create_project(project: Project):
     # subtasks = {'subtasks': [{'name': 'Research Z Algorithm', 'description': 'Spend time gathering information and understanding the concepts behind the Z Algorithm', 'time': '01/06/2021'}, {'name': 'Read Z Algorithm Code', 'description': 'Spend time reading code examples and  understanding how it works', 'time': '10/06/2021'}, {'name': 'Implement Z Algorithm', 'description': 'Write out the code for the Z Algorithm on a small example', 'time': '20/06/2021'}, {'name': 'Debug Small Example', 'description': 'Test the code on the small example and debug any issues that come up', 'time': '25/06/2021'}, {'name': 'Implement Z Algorithm on Larger Example', 'description': 'Test the code on a larger example and optimize', 'time': '05/07/2021'}, {'name': 'Test and Debug Larger Example', 'description': 'Ensure the code works as expected for the larger example, and debug any issues that arise', 'time': '15/07/2021'}, {'name': 'Verify Implementation with Other Data Sets', 'description': 'Test the code on different data sets and verify that the implementation works properly', 'time': '30/07/2021'}, {'name': 'Write Documentation and Examples', 'description': 'Create documentation and example code to share with others', 'time': '07/08/2021'}, {'name': 'Publish Results', 'description': 'Publish the results of the Z Algorithm implementation in a forum or blog', 'time': '14/08/2021'}]}
     print("subtasks")
     print(subtasks)
+
+    # encode a number onto each subtask called task_num
+    for i in range(len(subtasks["subtasks"])):
+        subtasks["subtasks"][i]["task_num"] = i + 1
 
     proj_id = uuid.uuid4().hex
     project_data["proj_id"] = proj_id

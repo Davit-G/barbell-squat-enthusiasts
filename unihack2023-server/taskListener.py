@@ -41,3 +41,6 @@ def create_multiple_tasks_in_database(task_data, proj_id):
 def update_task_in_database(task_data):
     key = {"task_id": task_data["task_id"]}
     tasks.update_one(key, {"$set": task_data}, upsert=True)
+
+def get_tasks_by_project_id(proj_id):
+    return list(tasks.find({"proj_id": proj_id}, {"_id" : 0}))
