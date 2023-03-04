@@ -22,7 +22,7 @@ function Dashboard({}) {
   return (
     <>
       <div className="h-[80vh] mx-auto mt-10 flex flex-row w-full">
-        <div className="hidden md:flex rounded-xl shadow-lg shadow-zinc-500 w-[25rem] my-4 mr-4 p-4 px-8 h-[50vh] items-start flex-col justify-start">
+        <div className="hidden md:flex rounded-xl shadow-lg dark:shadow-none dark:bg-zinc-700 shadow-zinc-500 w-[25rem] my-4 mr-4 p-4 px-8 h-[50vh] items-start flex-col justify-start">
           {" "}
           {/* Navigation on the left */}
           <div className="flex flex-col justify-center items-start">
@@ -63,10 +63,10 @@ function Dashboard({}) {
             child // If we are in a sub-route of /my such as /my/tasks, show the nested route, otherwise show the default dashboard
           ) : (
             <div className="w-full py-4 pl-20">
-              <h1 className="text-4xl text-center font-semibold">
+              <h1 className="text-4xl text-center font-semibold dark:text-zinc-200">
                 Here are your projects:{" "}
               </h1>
-              <div className="flex flex-col justify-start items-start my-4 p-2 w-full space-y-3 h-[45rem] overflow-y-scroll scrollbar-hide rounded-lg ">
+              <div className="flex flex-col justify-start items-start my-4 p-4 w-full space-y-3 h-[45rem] overflow-y-scroll scrollbar-hide rounded-lg ">
                 {" "}
                 {/* Tasks go here */}
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((project) => {
@@ -102,7 +102,7 @@ function Project({ project }) {
 
   return (
     <div
-      className={`rounded-xl ml-2 shadow-md shadow-zinc-400 p-4 w-11/12 ${bgColor} bg-opacity-40`}
+      className={`rounded-xl ml-2 shadow-md shadow-zinc-400 p-4 w-11/12 ${bgColor} hover:scale-[1.02] transition-all duration-150`}
     >
       <div className="grid grid-cols-4 w-full">
         <h1 className="text-2xl font-semibold col-span-3">

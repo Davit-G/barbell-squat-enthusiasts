@@ -41,13 +41,13 @@ function Login({}) {
       <div className="h-[90vh] flex items-center justify-center flex-col">
         {" "}
         {/* main page container*/}
-        <div className="md:w-3/5 sm:w-6/7 w-full mx-auto py-10 p-2 rounded-2xl shadow-lg">
+        <div className="md:w-3/5 sm:w-6/7 w-full mx-auto py-10 p-2 rounded-2xl shadow-lg dark:shadow-none dark:bg-zinc-700 dark:bg-opacity-60">
           {" "}
           {/* login box in the middle*/}
-          <h1 className="w-full text-center text-4xl font-semibold">
+          <h1 className="w-full text-center text-4xl font-semibold text-zinc-900 dark:text-zinc-200">
             Log In to Quick Tasks
           </h1>
-          <p className="text-gray-700 text-center mt-8">
+          <p className="text-gray-700 dark:text-zinc-400 text-center mt-8">
             Choose your login provider:
           </p>
           <div className="w-full max-w-lg mx-auto mt-4">
