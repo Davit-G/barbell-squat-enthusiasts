@@ -1,6 +1,9 @@
 import React from "react";
 import { Fragment, useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
+
+import {motion, AnimatePresence,} from 'framer-motion'
+
 import {
   add,
   eachDayOfInterval,
@@ -19,6 +22,7 @@ import {
 function Calendar() {
   let today = startOfToday();
   let [selectedDay, setSelectedDay] = useState(today);
+  let [selectedTask, setSelectedTask] = useState(null)
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
@@ -150,45 +154,53 @@ function Calendar() {
               </h2>
               <ol className="mt-4 space-y-4 text-sm leading-6  h-[40rem] overflow-y-scroll scrollbar-hide p-4">
                 {[1, 2, 3, 4, 5, 6].map((num) => (
-                  <CalendarTask num={num} />
+                  <CalendarTask num={num} id={num}/>
+
+
+                  
                 ))}
               </ol>
             </section>
           </div>
         </div>
       </div>
+    
     </div>
   );
 }
 
-function CalendarTask({ num }) {
+function CalendarTask({ num, id }) {
   return (
-    <>
-      <div className="rounded-xl shadow-md dark:shadow-none dark:bg-zinc-700 dark:bg-opacity-60 shadow-zinc-400 p-2 w-full hover:scale-[1.05] cursor-pointer transition-all duration-150 ">
-        <p className="text-purple-600 font-bold">12:00 PM - 4:00 PM</p>
-        <h1 className="text-xl font-semibold">{num}: Task name</h1>
-        <p className="text-gray-700 dark:text-zinc-400 truncate-2-lines">
+   
+      <motion.div onClick={() => setSelectedTask(id)}  id={id} className="rounded-xl shadow-md dark:shadow-none dark:bg-zinc-700 dark:bg-opacity-60 shadow-zinc-400 p-2 w-full hover:scale-[1.05] cursor-pointer transition-all duration-150 ">
+        <motion.p className="text-purple-600 font-bold">12:00 PM - 4:00 PM</motion.p>
+        <motion.h1 className="text-xl font-semibold">{num}: Task name</motion.h1>
+        <motion.p className="text-gray-700 dark:text-zinc-400 truncate-2-lines">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod,
           nunc sit amet ultricies ultricies, nunc nisl aliquam nisl, eget
           aliquam nisl nisl sit amet lorem. Sed euismod, nunc sit amet ultricies
           ultricies, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet
           lorem.
-        </p>
+        </motion.p>
 
-        <div className="flex flex-row justify-end mt-2 text-white">
-          <button className="bg-green-500  font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-lime-600">
+        <motion.div className="flex flex-row justify-end mt-2 text-white">
+          <motion.button className="bg-green-500  font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-lime-600">
             Complete
-          </button>
-          <button className="bg-blue-500  font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-blue-600">
+          </motion.button>
+          <motion.button className="bg-blue-500  font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-blue-600">
             Edit
-          </button>
-          <button className="bg-red-500  font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-red-600">
+          </motion.button>
+          <motion.button className="bg-red-500  font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-red-600">
             Delete
-          </button>
-        </div>
-      </div>
-    </>
+          </motion.button>
+        </motion.div>
+      </motion.div>
+    
   );
+
 }
+
+
+
 
 export default Calendar;

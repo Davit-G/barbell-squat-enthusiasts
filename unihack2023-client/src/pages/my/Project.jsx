@@ -23,6 +23,7 @@ function Project({ }) {
         // we are logged in, so get the project in the search param if possible
         axios.get(`${backendURL}/api/project/${searchParams.get("projectId")}`).then((res) => {
             console.log(res);
+            console.log(res.data)
             setProject({ projectExists: true } + res.data)
         }).catch((err) => {
             console.log(err);
