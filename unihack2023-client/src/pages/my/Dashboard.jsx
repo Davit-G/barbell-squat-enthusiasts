@@ -58,11 +58,11 @@ function Dashboard({}) {
           {child ? (
             child // If we are in a sub-route of /my such as /my/tasks, show the nested route, otherwise show the default dashboard
           ) : (
-            <div className="w-full py-4 pl-20">
+            <div className="w-full p-4 md:pl-20">
               <h1 className="text-4xl text-center font-semibold">
                 Here are your projects:{" "}
               </h1>
-              <div className="flex flex-col justify-start items-start my-4 p-2 w-full space-y-3 h-[45rem] overflow-y-scroll scrollbar-hide rounded-lg ">
+              <div className="flex flex-col justify-start items-start my-6 p-3 w-full space-y-6 h-[45rem] overflow-y-scroll scrollbar-hide rounded-lg ">
                 {" "}
                 {/* Tasks go here */}
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((project) => {
@@ -80,10 +80,10 @@ function Dashboard({}) {
 export default Dashboard;
 
 function Project({ project }) {
-  const [bgColor, setBgColor] = useState("bg-white");
+  const [bgColor, setBgColor] = useState();
   useEffect(() => {
     setBgColor(shuffle(colours).pop());
-  }, [bgColor]);
+  }, []);
   const colours = [
     "bg-red-200",
     "bg-yellow-200",
@@ -97,7 +97,9 @@ function Project({ project }) {
   ];
 
   return (
-    <div className={`rounded-xl ml-2 shadow-md shadow-zinc-400 p-4 w-11/12 ${bgColor} bg-opacity-40`}>
+    <div
+      className={`rounded-xl ml-2 shadow-md shadow-zinc-500 p-3 w-full ${bgColor} bg-opacity-40 hover:brightness-75`}
+    >
       <div className="grid grid-cols-4 w-full">
         <h1 className="text-2xl font-semibold col-span-3">
           {project}: Project Name
@@ -107,7 +109,7 @@ function Project({ project }) {
       </div>
       <div className="flex space-x-4 pt-3 pb-1">
         <p className="text-gray-500">Next Task: Task Name</p>
-        <p className="text-purple-600">12:00 PM - 4:00 PM</p>
+        <p className="text-zinc-900 font-bold">12:00 PM - 4:00 PM</p>
       </div>
     </div>
   );
