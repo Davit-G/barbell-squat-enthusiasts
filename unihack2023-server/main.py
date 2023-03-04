@@ -1,8 +1,21 @@
 from fastapi import FastAPI
 import authentication as auth
+from fastapi.middleware.cors import CORSMiddleware
 from schemas import user
 
 app = FastAPI()
+
+origins = [
+    "*"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
