@@ -13,7 +13,7 @@ export const projectsSlice = createSlice({
             state.projects.push(action.payload);
         },
         setProjects: (state, action) => {
-            state.projects = action.payload;
+            state.projects = action.payload.projects;
         },
     },
 });

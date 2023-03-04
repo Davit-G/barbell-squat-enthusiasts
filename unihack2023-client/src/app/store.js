@@ -1,14 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import { saveState, loadState } from './localStorage'
-
 import { debounce } from "lodash";
 import { setLoginFromLocalStorage } from '../features/login/loginSlice';
 
-
 import loginReducer from '../features/login/loginSlice'
 import projectsReducer from '../features/projects/projectsSlice';
-
+import backendReducer from "../features/backend/backendSlice"
 
 // the throttled saveState function, makes sure that too many writes to local storage are not made
 // for perforamnce reasons bruh
@@ -30,7 +28,8 @@ const enableOnDev = process.env.NODE_ENV === "development"
 export const store = configureStore({
     reducer: {
         login: loginReducer,
-        projects: projectsReducer
+        projects: projectsReducer,
+        backend: backendReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(localStorageMiddleware),
     devTools: enableOnDev
