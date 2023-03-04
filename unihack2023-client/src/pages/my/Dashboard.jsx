@@ -7,9 +7,9 @@ import React, { useEffect, useState } from "react";
 import { Link, Outlet, useOutlet } from "react-router-dom";
 import { shuffle } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
-import { selectDispayName, selectLogin } from "../../features/login/loginSlice";
+import { selectDispayName, selectLogin, selectUid } from "../../features/login/loginSlice";
 import { selectBackend } from "../../features/backend/backendSlice";
-
+import AnimatedVerticalPage from "../AnimatedVerticalPage";
 import axios from "axios";
 import { setProjects } from "../../features/projects/projectsSlice";
 
@@ -20,13 +20,14 @@ function Dashboard({ }) {
     const backendURL = useSelector(selectBackend);
     const loggedIn = useSelector(selectLogin);
     const displayname = useSelector(selectDispayName);
+    const loggedInUID = useSelector(selectUid)
 
     useEffect(() => {
         if (!loggedIn) return;
         if (!displayname) return;
 
         // we are logged in, so get the user's projects
-        axios.get(`${backendURL}/api/user/${user.uid}`).then((res) => {
+        axios.get(`${backendURL}/api/user/${loggedInUID}`).then((res) => {
             console.log(res);
             dispatch(
                 setProjects({
@@ -38,7 +39,7 @@ function Dashboard({ }) {
     }, [loggedIn]);
 
     return (
-        <>
+        <AnimatedVerticalPage>
             {/* tasks, calendar etc here */}
             <div className="m-4 flex w-full justify-center">
                 {child ? (
@@ -65,7 +66,7 @@ function Dashboard({ }) {
                 )}
             </div>
 
-        </>
+        </AnimatedVerticalPage>
     );
 }
 

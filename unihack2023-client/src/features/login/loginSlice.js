@@ -52,6 +52,7 @@ export const { setLogin, setUserDetails, setLoginFromLocalStorage, setLogout } =
 export const selectLogin = (state) => state.login.loggedIn;
 export const selectAccessToken = (state) => state.login.accessToken;
 export const selectDispayName = (state) => state.login.displayName;
+export const selectUid = (state) => state.login.uid;
 
 // export const selectUserDetails = (state) => state.login.setUserDetails;
 export default loginSlice.reducer;

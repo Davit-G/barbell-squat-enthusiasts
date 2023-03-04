@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-
+import { motion, useIsPresent } from "framer-motion";
+import AnimatedHorizontalPage from "./AnimatedHorizontalPage";
 function HomePage({}) {
-
-
+  const isPresent = useIsPresent();
   return (
-    <>
+    <AnimatedHorizontalPage>
       <div className="h-[90vh] mx-auto">
         <div className="bg-zinc-100 dark:bg-zinc-700 dark:bg-opacity-60 p-4 px-20 h-[50vh] flex items-center flex-col  justify-center text-zinc-900 dark:text-white rounded-t-lg">
           <h1 className="text-5xl font-semibold text-center ">
@@ -35,7 +35,7 @@ function HomePage({}) {
           </h2>
         </div>
       </div>
-    </>
+    </AnimatedHorizontalPage>
   );
 }
 

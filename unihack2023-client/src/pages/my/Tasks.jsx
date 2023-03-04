@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import AnimatedVerticalPage from "../AnimatedVerticalPage";
 
 function TaskBlock({ num }) {
   return (
-    <>
+    <AnimatedVerticalPage>
       <div className="cursor-pointer rounded-xl shadow-md shadow-zinc-500 dark:shadow-none text-zinc-900 dark:text-white dark:bg-zinc-700 dark:bg-opacity-60 p-3 w-full hover:scale-[1.02] transition-all duration-150">
         <p className="text-purple-600">12:00 PM - 4:00 PM</p>
         <h1 className="text-2xl font-semibold">{num}: Task name</h1>
@@ -26,7 +27,7 @@ function TaskBlock({ num }) {
           </button>
         </div>
       </div>
-    </>
+    </AnimatedVerticalPage>
   );
 }
 

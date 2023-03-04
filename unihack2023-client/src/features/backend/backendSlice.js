@@ -2,7 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    url: "https://oxford-clean.bnr.la:4269",
+    url: "https://oxford-clean.bnr.la:4269"
 }
 
 export const backendSlice = createSlice({
