@@ -1,2 +1,7 @@
 fastapi==0.92.0
 uvicorn==0.17.6
+google-api-python-client 
+google-auth-httplib2 
+google-auth-oauthlib
+python-dotenv
+pymongo
