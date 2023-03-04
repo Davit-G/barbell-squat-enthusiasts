@@ -13,6 +13,8 @@ import { Provider } from "react-redux";
 import { initializeApp, } from "firebase/app";
 
 import AppLayout from "./AppLayout";
+
+// TODO: turn these into async imports
 import NewProjectPage from "./pages/my/NewProject";
 import NewTaskPage from "./pages/my/NewTask";
 import Project from "./pages/my/Project";
@@ -24,6 +26,7 @@ const Login = React.lazy(() => import("./pages/Login.jsx"));
 const Tasks = React.lazy(() => import("./pages/my/Tasks.jsx"));
 const Dashboard = React.lazy(() => import("./pages/my/Dashboard.jsx"));
 const ErrorPage = React.lazy(() => import("./pages/ErrorPage.jsx"));
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyDh3icl4HE5zlXzkd5c2awSv6mSN26EveM",
@@ -42,7 +45,6 @@ const routes = (
             <Route path="/login" element={<Login />} />
         </Route>
 
-        <Route path="*" element={<ErrorPage />} />
 
         {/* Add more routes here, make sure they are ASYNC */}
 
@@ -53,13 +55,15 @@ const routes = (
             <Route path="tasks" element={<Tasks />} />
             <Route path="calendar" element={<Calendar />} />
             <Route path="week" element={<Week />} />
+
+            <Route exact path="/my/project" element={<Project></Project>} />
+            <Route exact path="/my/task" element={<Task></Task>} />
+
             <Route path="/my/project/new" element={<NewProjectPage></NewProjectPage>} />
             <Route path="/my/task/new" element={<NewTaskPage></NewTaskPage>} />
 
-            <Route path="/my/project/:projectId" element={<Project></Project>} />
-            <Route path="/my/task/:taskId" element={<Task></Task>} />
-
         </Route>
+        <Route path="*" element={<ErrorPage />} />
     </>
 );
 

@@ -26,7 +26,7 @@ function AppLayout({ }) {
     const displayName = useSelector(selectDispayName);
 
 
-    const projects = ['Get Bitches', 'Get Money', 'Get Hoes']
+    const projects = ['Travel Europe', 'Learn AI and ML', 'Set up Super']
     const themeSwitch = () => {
         if (html.classList.contains("dark")) {
             html.classList.remove("dark");
@@ -45,9 +45,9 @@ function AppLayout({ }) {
                     <div className="flex flex-col h-full justify-between items-start">
                         <div className="h-full w-full">
                             <div className="grid grid-cols-4">
-                                <h1 className="text-2xl dark:text-white font-semibold text-left col-span-3">
+                                <Link to="/" className="text-2xl dark:text-white font-semibold text-left col-span-3">
                                     Quick Tasks
-                                </h1>
+                                </Link>
                                 <button
                                     className="text-zinc-900 dark:text-gray-400 dark:hover:text-white hover:text-blue-700 justify-end mt-1"
                                     onClick={() => {
@@ -113,32 +113,29 @@ function AppLayout({ }) {
                                     Calendar View
                                 </Link>
                                 <br></br>
-                                <div>
-                                    {loggedIn ?
-                                        <>
-                                            <h1 className="text-base md:text-2xl text-left  font-bold text-black-500 dark:text-zinc-300">
-                                                Projects
-                                            </h1>
-                                            <div className="p-2 block space-y-1">
-                                                {projects.map((project) => {
-                                                    return (
-                                                        <div>
+                                {loggedIn ?
+                                    <>
+                                        <h1 className="text-base md:text-2xl text-left  font-bold text-black-500 dark:text-zinc-300">
+                                            Projects
+                                        </h1>
+                                        <div className="p-2 block space-y-1">
+                                            {projects.map((project) => {
+                                                return (
+                                                    <div>
+                                                        <Link
+                                                            to={"/my/project?projectId=" + project}
+                                                            className="w-full text-base  text-left  font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-500 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
+                                                        >
+                                                            {project}
+                                                        </Link>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </>
+                                    : <>
 
-                                                            <Link
-                                                                to="/my/project"
-                                                                className="w-full text-base  text-left  font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-500 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
-                                                            >
-                                                                {project}
-                                                            </Link>
-                                                        </div>
-                                                    );
-                                                })}
-                                            </div>
-                                        </>
-                                        : <>
-
-                                        </>}
-                                </div>
+                                    </>}
                             </div>
                             <span className="w-full pt-[2px] mt-10 bg-gray-300"></span>
                         </div>
@@ -166,6 +163,7 @@ function AppLayout({ }) {
                                                 );
                                                 dispatch(setLogin(false));
                                                 navigate("/");
+                                                localStorage.setItem("state", null)
                                             })
                                             .catch((error) => {
                                                 // An error happened.
