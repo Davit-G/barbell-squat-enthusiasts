@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { selectBackend } from '../../features/backend/backendSlice';
 import { selectLogin } from '../../features/login/loginSlice';
 
@@ -19,7 +19,7 @@ function Project({ }) {
 
     useEffect(() => {
         if (!loggedIn) return;
-
+        
         // we are logged in, so get the project in the search param if possible
         axios.get(`${backendURL}/api/project/${searchParams.get("projectId")}`).then((res) => {
             console.log(res);
@@ -37,7 +37,7 @@ function Project({ }) {
                     {project.projectExists === true ? <>
                         {project.name}
                     </> : project.projectExists === false ? <>
-                        Project does not exist, try again later...
+                        Project does not exist, try again later... {searchParams.get("projectId")}
                     </> : <>
                         Loading...
                     </>}
