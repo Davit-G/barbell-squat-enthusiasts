@@ -7,7 +7,7 @@ function AppLayout({ }) {
     return (
         <>
             <div className='flex flex-row min-h-screen max-h-screen'>
-                <div className='w-1/3 bg-gray-200 p-6'>
+                <div className='w-80 bg-gray-200 p-6'>
 
                     {" "}
                     {/* Navigation on the left */}
@@ -63,8 +63,6 @@ function AppLayout({ }) {
                             <span className="w-full pt-[2px] mt-10 bg-gray-300"></span>
                         </div>
 
-
-
                         <div>
                             <div className="flex flex-col space-y-3">
                                 <Link
@@ -84,7 +82,7 @@ function AppLayout({ }) {
                         </div>
                     </div>
                 </div>
-                <div>
+                <div className='w-full'>
                     <Outlet />
                 </div>
 
