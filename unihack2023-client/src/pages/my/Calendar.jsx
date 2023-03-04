@@ -56,7 +56,7 @@ function Calendar() {
     
     <div className="pt-4 md:pt-6">
       <div className="max-w-md px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6">
-        <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
+        <div className="md:grid md:grid-cols-2 md:divide-x md:divide-zinc-300">
           <div className="md:pr-14">
             <div className="flex items-center">
               <h2 className="flex-auto text-2xl font-semibold text-gray-900">
@@ -138,7 +138,7 @@ function Calendar() {
                 {format(selectedDay, "MMM dd, yyy")}
               </time>
             </h2>
-            <ol className="mt-4 space-y-2 text-sm leading-6 text-gray-500 h-[40rem] overflow-y-scroll scrollbar-hide ">
+            <ol className="mt-4 space-y-4 text-sm leading-6 text-gray-500 h-[40rem] overflow-y-scroll scrollbar-hide p-1">
               {[1, 2, 3,4,5,6].map((num) => (
                 <CalendarTask num={num} />
               ))}
@@ -153,7 +153,7 @@ function Calendar() {
 function CalendarTask({ num }) {
   return (
     <>
-      <div className="rounded-xl border-[0.75px] p-2 border-zinc-400 w-full">
+      <div className="rounded-xl p-2 shadow-md shadow-zinc-600 w-full">
         <p className="text-purple-600">12:00 PM - 4:00 PM</p>
         <h1 className="text-xl font-semibold">{num}: Task name</h1>
         <p className="text-gray-700 truncate-2-lines">

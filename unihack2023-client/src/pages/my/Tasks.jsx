@@ -22,9 +22,9 @@ function TaskBlock({ num }) {
 function Tasks({ }) { // tasks view, shows up here temporarily
     return (
         <>
-            <div className='w-full py-4 pl-20 h-[50vh] flex flex-col justify-start items-start pt-8'>
-                <h1 className='text-4xl font-semibold text-left'>Today's tasks:</h1>
-                <div className='flex flex-col justify-start items-start mt-4 w-full'> {/* Tasks go here */}
+            <div className='w-full p-4 md:pl-20  flex flex-col items-center  '>
+                <h1 className='text-4xl font-semibold '>Today's tasks:</h1>
+                <div className='flex flex-col mt-4 w-full'> {/* Tasks go here */}
                     {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((task) => {
                         return (
                             <TaskBlock key={task} num={task} />
