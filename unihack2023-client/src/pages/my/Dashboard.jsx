@@ -19,45 +19,31 @@ function Dashboard({}) {
     console.log(child);
   }, [child]);
 
-  return (
-    <>
-      <div className="h-[80vh] mx-auto mt-10 flex flex-row w-full">
-        <div className="hidden md:flex rounded-xl dark:bg-zinc-800 min-w-fit max-w-[30rem] my-4 mr-4 p-8 max-h-full h-fit items-center flex-col justify-start">
-          {" "}
-          {/* Navigation on the left */}
-          <div className="flex flex-col justify-center items-start">
-            <h1 className="text-2xl dark:text-white font-semibold text-left">
-              Menu
-            </h1>
-            <div className="mt-4 flex flex-col space-y-3">
-              <Link
-                to="/my/"
-                className="text-base md:text-xl text-left hover:underline text-blue-500 dark:text-blue-400"
-              >
-                Overview
-              </Link>
-              <Link
-                to="/my/week"
-                className="text-base md:text-xl text-left hover:underline text-blue-500 dark:text-blue-400"
-              >
-                Weekly Overview
-              </Link>
-              <Link
-                to="/my/tasks"
-                className="text-base md:text-xl text-left hover:underline text-blue-500 dark:text-blue-400"
-              >
-                Today's Tasks
-              </Link>
-              <Link
-                to="/my/calendar"
-                className="text-base md:text-xl text-left hover:underline text-blue-500 dark:text-blue-400"
-              >
-                Calendar View
-              </Link>
-              {/* <Link className='text-base md:text-xl text-left hover:underline text-blue-500'>wtf do i add here</Link> */}
+    return (
+        <>
+            <div className="h-[80vh] mx-auto mt-10 flex flex-row w-full">
+
+                {/* tasks, calendar etc here */}
+                <div className="m-4 flex w-full justify-center">
+                    {child ? (
+                        child // If we are in a sub-route of /my such as /my/tasks, show the nested route, otherwise show the default dashboard
+                    ) : (
+                        <div className="w-full py-4 ">
+                            <h1 className="text-4xl text-center font-semibold dark:text-zinc-200">
+                                Active projects:{" "}
+                            </h1>
+                            <div className="flex flex-col justify-start items-start my-4 p-4 w-full space-y-3 h-[45rem] overflow-y-scroll scrollbar-hide rounded-lg ">
+                                {" "}
+                                {/* Tasks go here */}
+                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((project) => {
+                                    return <Project project={project} />;
+                                })}
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
-          </div>
-        </div>
+         
 
         {/* tasks, calendar etc here */}
         <div className="m-4 flex w-full justify-center">
@@ -84,7 +70,7 @@ function Dashboard({}) {
             </div>
           )}
         </div>
-      </div>
+      
     </>
   );
 }

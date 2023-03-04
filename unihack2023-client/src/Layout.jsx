@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { MoonIcon, SunIcon } from "@heroicons/react/solid";
 import { useSelector } from "react-redux";
 import { selectDispayName, selectLogin } from "./features/login/loginSlice";
@@ -119,7 +119,7 @@ function Layout({ children }) {
 
       <div className="container min-h-full mx-auto">{children}</div>
 
-      {/* footer is being weird so i removed it for now */}
+            <div className="container min-h-full mx-auto">{children ? children : <Outlet></Outlet>}</div>
 
       {/* <footer className='h-fit'>
                 <div className="bg-neutral-200 p-6 text-center dark:bg-neutral-700">
