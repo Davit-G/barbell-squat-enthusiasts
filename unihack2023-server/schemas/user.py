@@ -3,5 +3,5 @@ from pydantic import BaseModel
 class User(BaseModel):
     name: str
     uid: str
-    calendar_id: str
+    calendarId: str
     user_projects: list = []

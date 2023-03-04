@@ -117,3 +117,6 @@ def modifyEvent(event):
 
     # Print the updated date.
     print (updated_event['updated'])
+    
+    
+getEvents(maxResults=10, date=datetime.datetime.utcnow().isoformat() + 'Z')

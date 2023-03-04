@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.encoders import jsonable_encoder
 import authentication as auth
 import projectListener as projListener
 import taskListener as taskListener
@@ -39,7 +38,7 @@ async def create_user(user: User):
         dict: statuscode
     """
     user_data = vars(user)
-    print(auth.create_user_in_database(user_data))
+    auth.create_user_in_database(user_data)
     return {"status": 201}
 
 
@@ -52,10 +51,10 @@ async def get_user_credentials(user_id):
         return {"status": 404}
 
     return {
-        "uid": user.uid,
-        "name": user.name,
-        "calendar_id" : user.calendar_id,
-        "user_projects": get_projects_by_uid()}
+        "uid": user["uid"],
+        "name": user["name"],
+        "calendarId" : user["calendarId"],
+        "user_projects": user["user_projects"]}
 
 
 @app.post("/api/create_project")
@@ -65,20 +64,20 @@ async def create_project(project: Project):
     return {"status": 201}
 
 @app.get("/api/project/{project_id}")
-async def get_project_by_id(project_id):
+async def get_project_by_id(project_id:str):
     try:
         project = projListener.get_project_details(project_id)
         return {
-        "proj_id": project.proj_id,
-        "title": project.title,
-        "start_date" : project.start_date,
-        "end_date" : project.end_date,
-        "tasks": get_task_by_id()}
+        "proj_id": project["proj_id"],
+        "title": project["title"],
+        "start_date" : project["start_date"],
+        "end_date" : project["end_date"],
+        "tasks": project["tasks"]} 
     except Exception as e:
         print(e)
         return {"status": 404}
     
-@app.patch("/project/{project_id}")
+@app.patch("/api/project/patch/{project_id}")
 async def update_project(new_project: Project):
     try:
         projListener.update_project(new_project)
@@ -98,18 +97,17 @@ async def get_task_by_id(task_id):
     try:
         task = taskListener.get_task_details(task_id)
         return {
-        "task_id": task.task_id,
-        "title": task.title,
-        "start_date" : task.start_date,
-        "end_date" : task.end_date,
-        "description":task.description}
+        "task_id": task["task_id"],
+        "title": task["title"],
+        "start_date" : task["start_date"],
+        "end_date" : task["end_date"],
+        "description": task["description"]}
     except Exception as e:
         print(e)
         return {"status": 404}
     
-    
-@app.patch("/task/{task_id}")
-async def update_project(new_task: Task):
+@app.patch("/api/task/patch/{task_id}")
+async def update_task(new_task: Task):
     try:
         taskListener.update_task_in_database(new_task)
         return new_task

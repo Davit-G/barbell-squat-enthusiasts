@@ -16,9 +16,10 @@ projects = database["Projects"]
 
 def get_project_details(id):
     project = projects.find_one({"proj_id": id})
+    print(project)
     if project is None:
         raise Exception("Project does not exist")
-    return projects
+    return project
 
 
 def delete_project_by_id(id):
