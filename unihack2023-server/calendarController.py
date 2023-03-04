@@ -100,14 +100,6 @@ def checkAuth():
         print('An error occurred: %s' % error)
 
 def createEvent(eventJson):
-    """Insert new google event for user.
-
-    Args:
-        eventJson (string): json string of event
-
-    Returns:
-        dictionary: dictionary for created event
-    """
     service = checkAuth()
     
     event = service.events().insert(calendarId='primary', body=eventJson).execute()

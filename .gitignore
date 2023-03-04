@@ -4,3 +4,7 @@
 /venv
 /unihack2023-server/.env
 /unihack2023-server/venv
+/unihack2023-server/config.py
+/unihack2023-server/schemas/__pycache__
+/unihack2023-server/__pycache__
+unihack2023-server/schemas/__pycache__/__init__.cpython-311.pyc

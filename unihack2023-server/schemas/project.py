@@ -1,8 +1,9 @@
 from pydantic import BaseModel
-from task import Task
 
 
 class Project(BaseModel):
     proj_id: str
     title: str
-    tasks: list(Task) = []
+    start_date: str
+    end_date: str
+    tasks: list(str) = []
