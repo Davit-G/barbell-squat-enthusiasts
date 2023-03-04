@@ -33,3 +33,7 @@ def create_project_in_database(project_data):
 def update_project(project_data):
     key = {"proj_id": project_data["proj_id"]}
     projects.update_one(key, {"$set": project_data}, upsert=True)
+
+def get_all_projects_by_uid(uid):
+    projects_list = projects.find({"uid": uid}, {"_id": 0})
+    return list(projects_list)
