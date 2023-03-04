@@ -6,4 +6,4 @@ class Project(BaseModel):
     title: str
     start_date: str
     end_date: str
-    tasks: list(str) = []
+    tasks: list = []
