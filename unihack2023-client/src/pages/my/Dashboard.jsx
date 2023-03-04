@@ -21,29 +21,7 @@ function Dashboard({}) {
 
     return (
         <>
-            <div className="h-[80vh] mx-auto mt-10 flex flex-row w-full">
-
-                {/* tasks, calendar etc here */}
-                <div className="m-4 flex w-full justify-center">
-                    {child ? (
-                        child // If we are in a sub-route of /my such as /my/tasks, show the nested route, otherwise show the default dashboard
-                    ) : (
-                        <div className="w-full py-4 ">
-                            <h1 className="text-4xl text-center font-semibold dark:text-zinc-200">
-                                Active projects:{" "}
-                            </h1>
-                            <div className="flex flex-col justify-start items-start my-4 p-4 w-full space-y-3 h-[45rem] overflow-y-scroll scrollbar-hide rounded-lg ">
-                                {" "}
-                                {/* Tasks go here */}
-                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((project) => {
-                                    return <Project project={project} />;
-                                })}
-                            </div>
-                        </div>
-                    )}
-                </div>
-            </div>
-         
+            
 
         {/* tasks, calendar etc here */}
         <div className="m-4 flex w-full justify-center">
