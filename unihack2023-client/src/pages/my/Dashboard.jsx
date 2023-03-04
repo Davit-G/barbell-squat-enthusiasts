@@ -58,7 +58,7 @@ function Dashboard({ }) {
                 </div>
 
                 {/* tasks, calendar etc here */}
-                <div className="m-4 flex w-full">
+                <div className="m-4 flex w-full justify-center">
                     {child ? (
                         child // If we are in a sub-route of /my such as /my/tasks, show the nested route, otherwise show the default dashboard
                     ) : (
