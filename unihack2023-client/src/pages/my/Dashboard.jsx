@@ -26,6 +26,7 @@ function Dashboard({ }) {
                         <div className='mt-4 flex flex-col space-y-3'>
                             <Link to="/my/" className='text-base md:text-xl text-left hover:underline text-blue-500'>Project Overview</Link>
                             <Link to="/my/tasks" className='text-base md:text-xl text-left hover:underline text-blue-500'>Today's Tasks</Link>
+                            <Link to="/my/week" className='text-base md:text-xl text-left hover:underline text-blue-500'>Weekly Overview</Link>
                             <Link to="/my/calendar" className='text-base md:text-xl text-left hover:underline text-blue-500'>Calendar View</Link>
                             {/* <Link className='text-base md:text-xl text-left hover:underline text-blue-500'>wtf do i add here</Link> */}
                         </div>
@@ -35,8 +36,8 @@ function Dashboard({ }) {
                 {/* tasks, calendar etc here */}
                 <div className='m-4'>
                     {child ? child : // If we are in a sub-route of /my such as /my/tasks, show the nested route, otherwise show the default dashboard
-                        <>
-                            <h1 className='text-4xl font-semibold text-left'>Here is what your week looks like:</h1>
+                        <div className=''>
+                            <h1 className='text-4xl font-semibold'>Here are your projects: </h1>
                             <div className='flex flex-col justify-start items-start mt-4 w-full'> {/* Tasks go here */}
                                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((task) => {
                                     return (
@@ -47,7 +48,7 @@ function Dashboard({ }) {
                                     )
                                 })}
                             </div>
-                        </>
+                        </div>
                     }
                 </div>
             </div>

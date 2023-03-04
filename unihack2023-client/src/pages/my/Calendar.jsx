@@ -140,11 +140,36 @@ function Calendar() {
                 {format(selectedDay, "MMM dd, yyy")}
               </time>
             </h2>
+            <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500">
+              
+              {
+                [1,2,3].map((num) => <TaskBlock num={num} />)
+              }
+            </ol>
           </section>
         </div>
       </div>
     </div>
   );
+}
+
+function TaskBlock({ num }) {
+
+    return (
+        <>
+            <div className="rounded-xl shadow-md p-4 w-full">
+                <p className='text-purple-600'>12:00 PM - 4:00 PM</p>
+                <h1 className='text-2xl font-semibold'>{num}: Task name</h1>
+                <p className='text-gray-700 truncate'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc sit amet ultricies ultricies, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet lorem. Sed euismod, nunc sit amet ultricies ultricies, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet lorem.</p>
+
+                <div className='flex flex-row justify-end mt-4'>
+                    <button className='bg-green-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-lime-700'>Complete</button>
+                    <button className='bg-blue-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-blue-700'>Edit</button>
+                    <button className='bg-red-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-red-700'>Delete</button>
+                </div>
+            </div>
+        </>
+    )
 }
 
 export default Calendar;

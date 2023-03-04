@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import WindiCSS from 'vite-plugin-windicss'
+
 import viteImagemin from 'vite-plugin-imagemin' // image compression plugin, automatic dont worry
 
 
@@ -9,7 +9,7 @@ import viteImagemin from 'vite-plugin-imagemin' // image compression plugin, aut
 export default defineConfig({
     plugins: [
         react(),
-        WindiCSS(),
+        
         viteImagemin({
             gifsicle: {
                 optimizationLevel: 7,

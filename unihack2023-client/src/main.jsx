@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
-import "virtual:windi.css";
 
+import '../styles/main.css'
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom"; // configuring the browser routing things
 import Layout from "./Layout";
 import Calendar from "./pages/my/Calendar";
+import Week from "./pages/my/Week";
 
 // each route is loaded asynchronously
 const Home = React.lazy(() => import("./pages/HomePage.jsx"));
@@ -24,6 +25,7 @@ const routes = (
       {/* this is a nested route */}
       <Route path="tasks" element={<Tasks />} />
       <Route path="calendar" element={<Calendar />} />
+      <Route path="week" element={<Week/>}/>
     </Route>
   </>
 );
