@@ -3,6 +3,7 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import { MoonIcon, SunIcon } from "@heroicons/react/solid";
 import { signOut, getAuth } from "@firebase/auth";
 import {motion, useIsPresent} from 'framer-motion'
+import { selectBackend } from "../../features/backend/backendSlice";
 import {
   selectDispayName,
   selectLogin,
@@ -17,6 +18,7 @@ import axios from "axios";
 
 function AppLayout({}) {
   const isPresent = useIsPresent()
+  const backendURL = useSelector(selectBackend);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const html = document.querySelector("html");
@@ -34,8 +36,9 @@ function AppLayout({}) {
 
   useEffect(() =>{
     if(!loggedIn) return 
-    axios.get(``)
-  },[allProjects, loggedIn])
+    axios.get(`${backendURL}/api/${userUID}`)
+  },[userUID, loggedIn])
+
   const themeSwitch = () => {
     if (html.classList.contains("dark")) {
       html.classList.remove("dark");
@@ -139,7 +142,7 @@ function AppLayout({}) {
                       Projects
                     </h1>
                     <div className="p-2 block space-y-1">
-                      {projects.map((project, index) => {
+                      {/* {projects.map((project, index) => {
                         return (
                           <div>
                             <Link
@@ -151,7 +154,7 @@ function AppLayout({}) {
                             </Link>
                           </div>
                         );
-                      })}
+                      })} */}
                     </div>
                   </>
                 ) : (
