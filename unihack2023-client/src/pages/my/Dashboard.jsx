@@ -3,56 +3,112 @@ The dashboard is at /my and essentially shows the main summary view of the user'
 Also provides a react router outlet for the nested routes.
 */
 
-import React, { useEffect, useState } from 'react';
-import { Link, Outlet, useOutlet } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Link, Outlet, useOutlet } from "react-router-dom";
+import { shuffle } from "lodash";
+function Dashboard({}) {
+  const child = useOutlet(); // checks to see if we have a nested route, or if we are at the default route
 
-function Dashboard({ }) {
+  useEffect(() => {
+    // when this component is rendered for the first time, do this
 
-    const child = useOutlet(); // checks to see if we have a nested route, or if we are at the default route
+    console.log(child);
+  }, [child]);
 
-    useEffect(() => { // when this component is rendered for the first time, do this
-
-        console.log(child)
-
-    }, [child])
-
-    return (
-        <>
-            <div className='h-[90vh] mx-auto mt-10 flex flex-row w-full'>
-
-                <div className='rounded-xl shadow-lg w-60 md:w-100 p-4 px-8 h-[50vh] flex items-start flex-col justify-start'>  {/* Navigation on the left */}
-                    <div className='flex flex-col justify-center items-start'>
-                        <h1 className='text-2xl font-semibold text-left'>Welcome, User</h1>
-                        <div className='mt-4 flex flex-col'>
-                            <Link to="/my/" className='text-xl text-left hover:underline text-blue-500'>Home</Link>
-                            <Link to="/my/tasks" className='text-xl text-left hover:underline text-blue-500'>Tasks</Link>
-                            <Link to="/my/calendar" className='text-xl text-left hover:underline text-blue-500'>Calendar</Link>
-                            <Link className='text-xl text-left hover:underline text-blue-500'>wtf do i add here</Link>
-                        </div>
-                    </div>
-                </div>
-
-                {/* tasks, calendar etc here */}
-                <div className='m-4'>
-                    {child ? child : // If we are in a sub-route of /my such as /my/tasks, show the nested route, otherwise show the default dashboard
-                        <>
-                            <h1 className='text-4xl font-semibold text-left'>Here is what your week looks like:</h1>
-                            <div className='flex flex-col justify-start items-start mt-4 w-full'> {/* Tasks go here */}
-                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((task) => {
-                                    return (
-                                        <div className="rounded-xl shadow-md p-4 w-full">
-                                            <p className='text-purple-600'>12:00 PM - 4:00 PM</p>
-                                            <h1 className='text-2xl font-semibold'>{task}: Task name</h1>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        </>
-                    }
-                </div>
+  return (
+    <>
+      <div className="h-[80vh] mx-auto mt-10 flex flex-row w-full">
+        <div className="hidden md:flex rounded-xl shadow-lg shadow-zinc-500 w-[25rem] my-4 mr-4 p-4 px-8 h-[50vh] items-start flex-col justify-start">
+          {" "}
+          {/* Navigation on the left */}
+          <div className="flex flex-col justify-center items-start">
+            <h1 className="text-2xl font-semibold text-left">Welcome, User</h1>
+            <div className="mt-4 flex flex-col space-y-3">
+              <Link
+                to="/my/"
+                className="text-base md:text-xl text-left hover:underline text-blue-500"
+              >
+                Project Overview
+              </Link>
+              <Link
+                to="/my/tasks"
+                className="text-base md:text-xl text-left hover:underline text-blue-500"
+              >
+                Today's Tasks
+              </Link>
+              <Link
+                to="/my/week"
+                className="text-base md:text-xl text-left hover:underline text-blue-500"
+              >
+                Weekly Overview
+              </Link>
+              <Link
+                to="/my/calendar"
+                className="text-base md:text-xl text-left hover:underline text-blue-500"
+              >
+                Calendar View
+              </Link>
+              {/* <Link className='text-base md:text-xl text-left hover:underline text-blue-500'>wtf do i add here</Link> */}
             </div>
-        </>
-    );
+          </div>
+        </div>
+
+        {/* tasks, calendar etc here */}
+        <div className="m-4 flex  w-full">
+          {child ? (
+            child // If we are in a sub-route of /my such as /my/tasks, show the nested route, otherwise show the default dashboard
+          ) : (
+            <div className="w-full py-4 pl-20">
+              <h1 className="text-4xl text-center font-semibold">
+                Here are your projects:{" "}
+              </h1>
+              <div className="flex flex-col justify-start items-start my-4 p-2 w-full space-y-3 h-[45rem] overflow-y-scroll scrollbar-hide rounded-lg ">
+                {" "}
+                {/* Tasks go here */}
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((project) => {
+                  return <Project project={project} />;
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default Dashboard;
+
+function Project({ project }) {
+  const [bgColor, setBgColor] = useState("bg-white");
+  useEffect(() => {
+    setBgColor(shuffle(colours).pop());
+  }, [bgColor]);
+  const colours = [
+    "bg-red-200",
+    "bg-yellow-200",
+    "bg-green-200",
+    "bg-blue-200",
+    "bg-indigo-200",
+    "bg-purple-200",
+    "bg-pink-200",
+    "bg-white",
+    "bg-gray-200",
+  ];
+
+  return (
+    <div className={`rounded-xl ml-2 shadow-md shadow-zinc-400 p-4 w-11/12 ${bgColor} bg-opacity-40`}>
+      <div className="grid grid-cols-4 w-full">
+        <h1 className="text-2xl font-semibold col-span-3">
+          {project}: Project Name
+        </h1>
+
+        <p className="flex justify-end pr-2">12 Tasks Remaining</p>
+      </div>
+      <div className="flex space-x-4 pt-3 pb-1">
+        <p className="text-gray-500">Next Task: Task Name</p>
+        <p className="text-purple-600">12:00 PM - 4:00 PM</p>
+      </div>
+    </div>
+  );
+}
