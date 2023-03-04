@@ -19,7 +19,6 @@ def createCalendar():
     }
 
     created_calendar = service.calendars().insert(body=calendar).execute()
-    # print(created_calendar)
     return created_calendar['id']
     
 
@@ -52,16 +51,15 @@ def getEvent(title="",loc="",desc="",start_date="",end_date=""):
     },
     }
 
-def getEvents(maxResults=10):
+def getEvents(maxResults=10, date=datetime.datetime.utcnow().isoformat() + 'Z'):
     """Shows basic usage of the Google Calendar API.
     Prints the start and name of the next 10 events on the user's calendar.
     """
     # Call the Calendar API
     service = checkAuth()
     
-    now = datetime.datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
-    print('Getting the upcoming 10 events')
-    events_result = service.events().list(calendarId='primary', timeMin=now,
+    print('Getting the upcoming {maxResults} events')
+    events_result = service.events().list(calendarId='primary', timeMin=date,
                                             maxResults=maxResults, singleEvents=True,
                                             orderBy='startTime').execute()
     events = events_result.get('items', [])
