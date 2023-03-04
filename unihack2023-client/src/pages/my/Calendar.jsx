@@ -1,6 +1,6 @@
 import React from "react";
 import { Fragment, useState } from "react";
-
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import {
   add,
   eachDayOfInterval,
@@ -53,33 +53,32 @@ function Calendar() {
   ];
 
   return (
-    
-    <div className="pt-4 md:pt-6">
+    <div className="pt-4 md:pt-6 text-zinc-900 dark:text-zinc-200">
       <div className="max-w-md px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6">
-        <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
+        <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200 md:dark:divide-zinc-400">
           <div className="md:pr-14">
             <div className="flex items-center">
-              <h2 className="flex-auto text-2xl font-semibold text-gray-900">
+              <h2 className="flex-auto text-2xl font-semibold">
                 {format(firstDayCurrentMonth, "MMMM yyyy")}
               </h2>
               <button
                 type="button"
                 onClick={previousMonth}
-                className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+                className="-my-1.5 flex flex-none items-center justify-center p-1.5 hover:text-gray-500"
               >
                 <span className="sr-only">Previous month</span>
-                {"<"}
+                <ChevronLeftIcon className="w-5 h-5" />
               </button>
               <button
                 onClick={nextMonth}
                 type="button"
-                className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+                className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5  hover:text-gray-500"
               >
                 <span className="sr-only">Next month</span>
-                {">"}
+                <ChevronRightIcon className="w-5 h-5" />
               </button>
             </div>
-            <div className="grid grid-cols-7 mt-10 text-base leading-6 text-center text-zinc-900 font-bold  border-b-zinc-900 border-b-2 pb-1">
+            <div className="grid grid-cols-7 mt-10 text-base leading-6 text-center  font-bold  border-b-zinc-900 dark:border-b-zinc-400 border-b-2 pb-1">
               <div>S</div>
               <div>M</div>
               <div>T</div>
@@ -108,7 +107,7 @@ function Calendar() {
                       !isEqual(day, selectedDay) &&
                         !isToday(day) &&
                         isSameMonth(day, firstDayCurrentMonth) &&
-                        "text-gray-900",
+                        "text-gray-900 dark:text-zinc-200",
                       !isEqual(day, selectedDay) &&
                         !isToday(day) &&
                         !isSameMonth(day, firstDayCurrentMonth) &&
@@ -116,8 +115,9 @@ function Calendar() {
                       isEqual(day, selectedDay) && isToday(day) && "bg-red-500",
                       isEqual(day, selectedDay) &&
                         !isToday(day) &&
-                        "bg-gray-900",
-                      !isEqual(day, selectedDay) && "hover:bg-gray-200",
+                        "bg-gray-900 dark:bg-zinc-200 dark:text-zinc-900",
+                      !isEqual(day, selectedDay) &&
+                        "hover:bg-gray-200 dark:hover:bg-zinc-600",
                       (isEqual(day, selectedDay) || isToday(day)) &&
                         "font-semibold",
                       "mx-auto flex h-8 w-8 items-center justify-center rounded-full"
@@ -132,14 +132,14 @@ function Calendar() {
             </div>
           </div>
           <section className="mt-12 md:mt-0 md:pl-14">
-            <h2 className="font-semibold text-2xl text-gray-900">
+            <h2 className="font-semibold text-2xl">
               Schedule for{" "}
               <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
                 {format(selectedDay, "MMM dd, yyy")}
               </time>
             </h2>
-            <ol className="mt-4 space-y-4 text-sm leading-6 text-gray-500 h-[40rem] overflow-y-scroll scrollbar-hide p-1">
-              {[1, 2, 3,4,5,6].map((num) => (
+            <ol className="mt-4 space-y-4 text-sm leading-6  h-[40rem] overflow-y-scroll scrollbar-hide p-1">
+              {[1, 2, 3, 4, 5, 6].map((num) => (
                 <CalendarTask num={num} />
               ))}
             </ol>
@@ -153,10 +153,10 @@ function Calendar() {
 function CalendarTask({ num }) {
   return (
     <>
-      <div className="rounded-xl shadow-md shadow-zinc-400 p-2 w-full">
-        <p className="text-purple-600">12:00 PM - 4:00 PM</p>
+      <div className="rounded-xl shadow-md dark:shadow-none dark:bg-zinc-700 dark:bg-opacity-60 shadow-zinc-400 p-2 w-full">
+        <p className="text-purple-600 font-bold">12:00 PM - 4:00 PM</p>
         <h1 className="text-xl font-semibold">{num}: Task name</h1>
-        <p className="text-gray-700 truncate-2-lines">
+        <p className="text-gray-700 dark:text-zinc-400 truncate-2-lines">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod,
           nunc sit amet ultricies ultricies, nunc nisl aliquam nisl, eget
           aliquam nisl nisl sit amet lorem. Sed euismod, nunc sit amet ultricies
@@ -164,14 +164,14 @@ function CalendarTask({ num }) {
           lorem.
         </p>
 
-        <div className="flex flex-row justify-end mt-2">
-          <button className="bg-green-500 text-white font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-lime-700">
+        <div className="flex flex-row justify-end mt-2 text-white">
+          <button className="bg-green-500  font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-lime-600">
             Complete
           </button>
-          <button className="bg-blue-500 text-white font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-blue-700">
+          <button className="bg-blue-500  font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-blue-600">
             Edit
           </button>
-          <button className="bg-red-500 text-white font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-red-700">
+          <button className="bg-red-500  font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-red-600">
             Delete
           </button>
         </div>

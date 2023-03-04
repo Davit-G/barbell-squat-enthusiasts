@@ -26,7 +26,9 @@ function Dashboard({}) {
           {" "}
           {/* Navigation on the left */}
           <div className="flex flex-col justify-center items-start">
-            <h1 className="text-2xl font-semibold text-left">Welcome, {displayname}</h1>
+            <h1 className="text-2xl font-semibold text-left">
+              Welcome, {displayname}
+            </h1>
             <div className="mt-4 flex flex-col space-y-3">
               <Link
                 to="/my/"
@@ -58,7 +60,7 @@ function Dashboard({}) {
         </div>
 
         {/* tasks, calendar etc here */}
-        <div className="m-4 flex  w-full">
+        <div className="m-4 flex  w-full justify-center">
           {child ? (
             child // If we are in a sub-route of /my such as /my/tasks, show the nested route, otherwise show the default dashboard
           ) : (
@@ -84,10 +86,6 @@ function Dashboard({}) {
 export default Dashboard;
 
 function Project({ project }) {
-  const [bgColor, setBgColor] = useState("bg-white");
-  useEffect(() => {
-    setBgColor(shuffle(colours).pop());
-  }, [bgColor]);
   const colours = [
     "bg-red-200",
     "bg-yellow-200",
@@ -100,6 +98,11 @@ function Project({ project }) {
     "bg-gray-200",
   ];
 
+  const [bgColor, setBgColor] = useState("bg-white");
+  useEffect(() => {
+    setBgColor(shuffle(colours).pop());
+  }, [bgColor]);
+
   return (
     <div
       className={`rounded-xl ml-2 shadow-md shadow-zinc-400 p-4 w-11/12 ${bgColor} hover:scale-[1.02] transition-all duration-150`}
@@ -111,9 +114,10 @@ function Project({ project }) {
 
         <p className="flex justify-end pr-2">12 Tasks Remaining</p>
       </div>
-      <div className="flex space-x-4 pt-3 pb-1">
-        <p className="text-gray-500">Next Task: Task Name</p>
-        <p className="text-purple-600">12:00 PM - 4:00 PM</p>
+      <div className="flex  pt-3 pb-1">
+        <p className="text-zinc-700 font-bold">Next Task:</p>
+        <p className="text-zinc-700 pl-2">Task Name</p>
+        <p className="text-purple-800 font-semibold pl-8">12:00 PM - 4:00 PM</p>
       </div>
     </div>
   );
