@@ -1,0 +1,6 @@
+node_modules
+/venv
+/unihack2023-server/credentials.json
+/unihack2023-server/token.json
+/unihack2023-server/config.py
+/unihack2023-server/__pycache__
