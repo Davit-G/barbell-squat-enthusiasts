@@ -98,12 +98,11 @@ async def get_task_by_id(task_id):
     try:
         task = taskListener.get_task_details(task_id)
         return {
-        "id": task.id,
+        "task_id": task.task_id,
         "title": task.title,
         "start_date" : task.start_date,
         "end_date" : task.end_date,
-        "description":task.description,
-        "location": task.location}
+        "description":task.description}
     except Exception as e:
         print(e)
         return {"status": 404}

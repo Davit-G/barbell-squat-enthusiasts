@@ -5,5 +5,4 @@ class Task(BaseModel):
     title: str
     start_date: str
     end_date: str
-    desc: str | None = None
-    location: str | None = None
+    description: str | None = None

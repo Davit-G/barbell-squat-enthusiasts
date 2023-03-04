@@ -15,20 +15,20 @@ database = client.Unihack2023
 projects = database["Projects"]
 
 def get_project_details(id):
-    project = projects.find_one({"id": id})
+    project = projects.find_one({"proj_id": id})
     if project is None:
         raise Exception("Project does not exist")
     return projects
 
 
 def delete_project_by_id(id):
-    projects.delete_many({"id": id})
+    projects.delete_many({"proj_id": id})
 
 
 def create_project_in_database(project_data):
-    key = {"id": project_data["id"]}
+    key = {"proj_id": project_data["proj_id"]}
     projects.update_one(key, {"$set": project_data}, upsert=True)
 
 def update_project(project_data):
-    key = {"id": project_data["id"]}
+    key = {"proj_id": project_data["proj_id"]}
     projects.update_one(key, {"$set": project_data}, upsert=True)
