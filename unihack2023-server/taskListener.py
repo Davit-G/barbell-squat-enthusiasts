@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 from pymongo import MongoClient
 from schemas.task import Task
 
+import uuid
+
 
 # get mongo connection details
 load_dotenv()
@@ -27,6 +29,12 @@ def delete_task_by_id(id):
 def create_task_in_database(task_data):
     key = {"task_id": task_data["task_id"]}
     tasks.update_one(key, {"$set": task_data}, upsert=True)
+
+def create_multiple_tasks_in_database(task_data, proj_id):
+    for task in task_data:
+        task["task_id"] = uuid.uuid4().hex
+        task["proj_id"] = proj_id
+        create_task_in_database(task)
     
     
 def update_task_in_database(task_data):
