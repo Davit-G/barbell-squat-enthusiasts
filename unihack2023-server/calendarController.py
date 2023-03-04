@@ -11,18 +11,30 @@ from googleapiclient.errors import HttpError
 
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
+def createCalendar():
+    service = checkAuth()
+    
+    calendar = {
+        'summary': 'Squat Enthusiast'
+    }
+
+    created_calendar = service.calendars().insert(body=calendar).execute()
+    # print(created_calendar)
+    return created_calendar['id']
+    
+
 def getEvent(title="",loc="",desc="",start_date="",end_date=""):
     return {
     'summary': 'Google I/O 2015', # title
     'location': '800 Howard St., San Francisco, CA 94103', 
     'description': 'A chance to hear more about Google\'s developer products.', 
     'start': {
-        'dateTime': '2015-05-28T09:00:00-07:00',
-        'timeZone': 'America/Los_Angeles',
+        'dateTime': '2023-03-04T13:52:58+00:00',
+        'timeZone': 'Australia/Melbourne'
     },
     'end': {
-        'dateTime': '2015-05-28T17:00:00-07:00',
-        'timeZone': 'America/Los_Angeles',
+        'dateTime': '2023-03-04T14:52:58+00:00',
+        'timeZone': 'Australia/Melbourne'
     },
     'recurrence': [
         'RRULE:FREQ=DAILY;COUNT=2'
@@ -101,6 +113,7 @@ def createEvent(eventJson):
     service = checkAuth()
     
     event = service.events().insert(calendarId='primary', body=eventJson).execute()
+    print(event)
     return event
 
 
@@ -131,5 +144,4 @@ def modifyEvent(event):
 
 
 if __name__ == '__main__':
-    getEvent()
-    createEvent(getEvent())
+    createCalendar()
