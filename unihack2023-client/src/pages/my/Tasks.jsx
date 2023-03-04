@@ -46,8 +46,8 @@ function Tasks({}) {
         <div className="flex flex-col justify-start items-start space-y-4 mt-8 p-6 w-full overflow-y-scroll scrollbar-hide h-[45rem]">
           {" "}
           {/* Tasks go here */}
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((task) => {
-            return <TaskBlock key={task} num={task} />;
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((task, index) => {
+            return <TaskBlock key={`task-${index}`} num={task} />;
           })}
         </div>
       </div>

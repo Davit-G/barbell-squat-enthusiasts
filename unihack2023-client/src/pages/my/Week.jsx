@@ -39,9 +39,9 @@ function Week() {
             Here is what your week looks like:
           </h1>
           <div className="flex space-x-3 justify-center flex-wrap">
-            {weekDays.map((day) => {
+            {weekDays.map((day, index) => {
               return (
-                <div className="group">
+                <div key={`day-${index}`} className="group">
                   <button
                     onClick={() => {
                       setSelectedDay(format(day, "dd/MM/yyyy"));
@@ -78,9 +78,9 @@ function Week() {
           </div>
 
           <div className="p-4 flex flex-col justify-start items-start mt-4 w-full h-[45rem]  space-y-3 overflow-y-scroll scrollbar-hide">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((task) => {
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((task, index) => {
               return (
-                <div className="rounded-xl shadow-md shadow-zinc-500 dark:shadow-none dark:bg-zinc-700 transition-all duration-150 hover:scale-[1.02] dark:bg-opacity-60 p-4 w-full cursor-pointer">
+                <div key={`week-task-${index}`} className="rounded-xl shadow-md shadow-zinc-500 dark:shadow-none dark:bg-zinc-700 transition-all duration-150 hover:scale-[1.02] dark:bg-opacity-60 p-4 w-full cursor-pointer">
                   <p className="text-purple-600">12:00 PM - 4:00 PM</p>
                   <h1 className="text-2xl font-semibold">{task}: Task name</h1>
                 </div>

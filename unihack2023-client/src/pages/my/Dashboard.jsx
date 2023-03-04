@@ -12,11 +12,11 @@ import { selectBackend } from "../../features/backend/backendSlice";
 import AnimatedVerticalPage from "../AnimatedVerticalPage";
 import axios from "axios";
 import { setProjects } from "../../features/projects/projectsSlice";
-
+import { getAllProjects } from "../../features/projects/projectsSlice";
 function Dashboard({ }) {
     const child = useOutlet(); // checks to see if we have a nested route, or if we are at the default route
     const dispatch = useDispatch();
-
+    const userProjects = useSelector(getAllProjects)
     const backendURL = useSelector(selectBackend);
     const loggedIn = useSelector(selectLogin);
     const displayname = useSelector(selectDispayName);
@@ -27,7 +27,7 @@ function Dashboard({ }) {
         if (!displayname) return;
 
         // we are logged in, so get the user's projects
-        axios.get(`${backendURL}/api/user/${loggedInUID}`).then((res) => {
+        axios.get(`${backendURL}/api/user/${loggedInUID}/projects`).then((res) => {
             console.log(res);
             dispatch(
                 setProjects({
@@ -58,8 +58,8 @@ function Dashboard({ }) {
                         <div className="flex flex-col items-center justify-start mb-4 mt-2 p-4 w-full space-y-3 h-[50rem] overflow-y-scroll scrollbar-hide rounded-lg ">
                             {" "}
                             {/* Tasks go here */}
-                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((project) => {
-                                return <Project project={project} />;
+                            {userProjects.map((project, index) => {
+                                return <Project key={`project-${index}`} project={project} />;
                             })}
                         </div>
                     </div>
@@ -73,6 +73,8 @@ function Dashboard({ }) {
 export default Dashboard;
 
 function Project({ project }) {
+    
+
     const [bgColor, setBgColor] = useState("bg-white");
     useEffect(() => {
         setBgColor(shuffle(colours).pop());
@@ -90,12 +92,12 @@ function Project({ project }) {
     ];
 
     return (
-        <div
+        <Link to={`/my/projects?projectId=${project.project_id}`}
             className={`rounded-xl ml-2 shadow-sm shadow-zinc-500 p-4 w-11/12 ${bgColor} hover:scale-[1.02] transition-all duration-150 cursor-pointer`}
         >
             <div className="grid grid-cols-4 w-full">
                 <h1 className="text-2xl font-semibold col-span-3">
-                    {project}: Project Name
+                    {project.project_name}
                 </h1>
 
                 <p className="flex justify-end pr-2">12 Tasks Remaining</p>
@@ -104,6 +106,6 @@ function Project({ project }) {
                 <p className="text-gray-500">Next Task: Task Name</p>
                 <p className="text-purple-600">12:00 PM - 4:00 PM</p>
             </div>
-        </div>
+        </Link>
     );
 }

@@ -8,10 +8,12 @@ import {
   selectLogin,
   setLogin,
   setUserDetails,
+  selectUid
 } from "./features/login/loginSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
+import axios from "axios";
 
 function AppLayout({}) {
   const isPresent = useIsPresent()
@@ -21,12 +23,19 @@ function AppLayout({}) {
   const auth = getAuth();
   const userTheme = localStorage.getItem("theme");
   const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
+  const userUID = useSelector(selectUid);
   const loggedIn = useSelector(selectLogin);
 
   const displayName = useSelector(selectDispayName);
 
-  const projects = ["Travel Europe", "Learn AI and ML", "Set up Super"];
+  const [allProjects, setAllProjects] = useState()
+
+
+
+  useEffect(() =>{
+    if(!loggedIn) return 
+    axios.get(``)
+  },[allProjects, loggedIn])
   const themeSwitch = () => {
     if (html.classList.contains("dark")) {
       html.classList.remove("dark");
@@ -130,12 +139,12 @@ function AppLayout({}) {
                       Projects
                     </h1>
                     <div className="p-2 block space-y-1">
-                      {projects.map((project) => {
+                      {projects.map((project, index) => {
                         return (
                           <div>
                             <Link
                               to={"/my/project?projectId=" + project}
-                              key={project}
+                              key={`user-project-${index}`}
                               className="w-full text-base  text-left  font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-500 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
                             >
                               {project}

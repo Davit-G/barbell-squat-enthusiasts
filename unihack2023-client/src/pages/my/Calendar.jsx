@@ -156,8 +156,8 @@ function Calendar() {
                 </time>
               </h2>
               <ol className="mt-4 space-y-4 text-sm leading-6  h-[40rem] overflow-y-scroll scrollbar-hide p-4">
-                {[1, 2, 3, 4, 5, 6].map((num) => (
-                  <CalendarTask num={num} id={num}/>
+                {[1, 2, 3, 4, 5, 6].map((num,index) => (
+                  <CalendarTask num={num} id={num} key ={`calendar-task-${index}`}/>
 
 
                   
