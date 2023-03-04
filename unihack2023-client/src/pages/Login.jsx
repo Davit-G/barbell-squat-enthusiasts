@@ -6,8 +6,7 @@ import { useDispatch } from "react-redux";
 import { setLogin, setUserDetails } from "../features/login/loginSlice";
 
 function Login({}) {
-
-    const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const googleProvider = new GoogleAuthProvider();
   const auth = getAuth();
@@ -20,8 +19,6 @@ function Login({}) {
         const user = res.user;
         dispatch(setLogin(true));
 
-        
-
         dispatch(
           setUserDetails({
             uid: user.uid,
@@ -31,7 +28,7 @@ function Login({}) {
           })
         );
         // // axios.get(`/api/user/${user.uid}`)
-        navigate('/my', {replace: true})
+        navigate("/my", { replace: true });
       })
       .catch((err) => {
         console.log(err);

@@ -43,11 +43,12 @@ export const loginSlice = createSlice({
             }
             
         },
+       
     },
 });
 
 // Action creators are generated for each case reducer function
-export const { setLogin, setUserDetails, setLoginFromLocalStorage } = loginSlice.actions;
+export const { setLogin, setUserDetails, setLoginFromLocalStorage, setLogout } = loginSlice.actions;
 
 // export the selector
 export const selectLogin = (state) => state.login.loggedIn;

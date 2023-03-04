@@ -10,7 +10,8 @@ import Error from "./pages/ErrorPage";
 
 import { store } from "./app/store";
 import { Provider } from "react-redux";
-import { initializeApp } from "firebase/app";
+import { initializeApp, } from "firebase/app";
+
 import AppLayout from "./AppLayout";
 
 // each route is loaded asynchronously
@@ -30,7 +31,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
 const routes = (
     <>
         <Route element={<Layout />}> {/* this is the default layout for all pages */}
