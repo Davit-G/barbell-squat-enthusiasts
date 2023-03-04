@@ -1,0 +1,20 @@
+{
+  "name": "unihack2023",
+  "version": "1.0.0",
+  "description": "Unihack 2023 team project",
+  "main": "index.js",
+  "scripts": {
+    "server": "cd unihack2023-server && uvicorn main:app",
+    "client-dev": "cd unihack2023-client && npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Davit-G/barbell-squat-enthusiasts.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Davit-G/barbell-squat-enthusiasts/issues"
+  },
+  "homepage": "https://github.com/Davit-G/barbell-squat-enthusiasts#readme"
+}

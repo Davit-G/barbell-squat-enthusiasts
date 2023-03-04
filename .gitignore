@@ -1,0 +1,6 @@
+/node_modules
+/unihack2023-server/credentials.json
+/unihack2023-server/token.json
+/venv
+/unihack2023-server/.env
+/unihack2023-server/venv
