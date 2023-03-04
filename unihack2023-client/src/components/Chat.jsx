@@ -18,23 +18,23 @@ function ChatWindow({ projectName, onceChatIsDone }) {
     const [answeredQuestions, setAnsweredQuestions] = useState([
         {
             question: "What is your project about?",
-            answer: null
+            answer: ""
         },
         {
             question: "When should the project begin and end?",
-            answer: null
+            answer: ""
         },
         {
             question: "Have you already started working on the project? What is your progress so far?",
-            answer: null
+            answer: ""
         },
         {
             question: "How many tasks do you want to see completed for this project? (Max: 30)",
-            answer: null
+            answer: ""
         },
         {
             question: "Is there anything else you want to add?",
-            answer: null
+            answer: ""
         }
     ])
     
@@ -67,7 +67,7 @@ function ChatWindow({ projectName, onceChatIsDone }) {
                 text: e.target.value,
                 isUserInput: true
             }])
-            e.target.value = ""
+            
 
             // scroll to bottom
             messageEnd.current?.scrollIntoView({behavior: "smooth"})
@@ -77,12 +77,14 @@ function ChatWindow({ projectName, onceChatIsDone }) {
                 if (index === currentQuestion) {
                     return {
                         ...question,
-                        answer: e.target.value
+                        answer: String(e.target.value)
                     }
                 } else {
                     return question
                 }
             }))
+
+            e.target.value = ""
             
             // set next question
             if (currentQuestion < answeredQuestions.length - 1) {
@@ -94,12 +96,12 @@ function ChatWindow({ projectName, onceChatIsDone }) {
                     uid: uid,
                     project_name: projectName,
                     project_description: answeredQuestions[0].answer,
-                    question_answers: answeredQuestions.map((question) => {
+                    question_answers: { "data": answeredQuestions.map((question) => {
                         return {
                             question: question.question,
                             answer: question.answer
                         }
-                    })
+                    })}
                 }).then((res) => {
                     console.log(res);
 
