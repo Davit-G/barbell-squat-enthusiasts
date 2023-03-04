@@ -6,12 +6,14 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom"; // conf
 import Layout from "./Layout";
 import Calendar from "./pages/my/Calendar";
 import Week from "./pages/my/Week";
+import Error from "./pages/ErrorPage";
 
 // each route is loaded asynchronously
 const Home = React.lazy(() => import("./pages/HomePage.jsx"));
 const Login = React.lazy(() => import("./pages/Login.jsx"));
 const Tasks = React.lazy(() => import("./pages/my/Tasks.jsx"));
 const Dashboard = React.lazy(() => import("./pages/my/Dashboard.jsx"));
+const ErrorPage = React.lazy(() => import("./pages/ErrorPage.jsx"))
 
 const routes = (
   <>
@@ -26,7 +28,9 @@ const routes = (
       <Route path="tasks" element={<Tasks />} />
       <Route path="calendar" element={<Calendar />} />
       <Route path="week" element={<Week/>}/>
+
     </Route>
+    <Route path="*" element={<ErrorPage />} />
   </>
 );
 

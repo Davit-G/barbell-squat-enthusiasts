@@ -11,9 +11,11 @@
   "dependencies": {
     "@heroicons/react": "^1.0.6",
     "date-fns": "^2.29.3",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.2",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "vite-plugin-imagemin": "^0.6.1"
   },
   "devDependencies": {

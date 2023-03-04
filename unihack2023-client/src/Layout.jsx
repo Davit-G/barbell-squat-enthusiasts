@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function Layout({ children }) {
     return (
         <div className='flex flex-col'>
-            <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900"> {/* nav bar type thing */}
+            <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5  dark:bg-gray-900"> {/* nav bar type thing */}
                 <div className="container flex flex-wrap items-center justify-between mx-auto">
                     <a href="/" className="flex items-center">
                         <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Quick Tasks</span> {/* title */}

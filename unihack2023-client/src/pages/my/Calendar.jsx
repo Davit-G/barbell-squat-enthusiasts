@@ -53,12 +53,13 @@ function Calendar() {
   ];
 
   return (
-    <div className="pt-16">
+    
+    <div className="pt-4 md:pt-6">
       <div className="max-w-md px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6">
         <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
           <div className="md:pr-14">
             <div className="flex items-center">
-              <h2 className="flex-auto font-semibold text-gray-900">
+              <h2 className="flex-auto text-2xl font-semibold text-gray-900">
                 {format(firstDayCurrentMonth, "MMMM yyyy")}
               </h2>
               <button
@@ -78,7 +79,7 @@ function Calendar() {
                 {">"}
               </button>
             </div>
-            <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-gray-500">
+            <div className="grid grid-cols-7 mt-10 text-base leading-6 text-center text-zinc-900 font-bold  border-b-zinc-900 border-b-2 pb-1">
               <div>S</div>
               <div>M</div>
               <div>T</div>
@@ -96,7 +97,6 @@ function Calendar() {
                     "py-1.5"
                   )}
                 >
-                  
                   <button
                     type="button"
                     onClick={() => setSelectedDay(day)}
@@ -127,24 +127,21 @@ function Calendar() {
                       {format(day, "d")}
                     </time>
                   </button>
-
-                
                 </div>
               ))}
             </div>
           </div>
           <section className="mt-12 md:mt-0 md:pl-14">
-            <h2 className="font-semibold text-gray-900">
+            <h2 className="font-semibold text-2xl text-gray-900">
               Schedule for{" "}
               <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
                 {format(selectedDay, "MMM dd, yyy")}
               </time>
             </h2>
-            <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500">
-              
-              {
-                [1,2,3].map((num) => <TaskBlock num={num} />)
-              }
+            <ol className="mt-4 space-y-2 text-sm leading-6 text-gray-500 h-[40rem] overflow-y-scroll scrollbar-hide ">
+              {[1, 2, 3,4,5,6].map((num) => (
+                <CalendarTask num={num} />
+              ))}
             </ol>
           </section>
         </div>
@@ -153,23 +150,34 @@ function Calendar() {
   );
 }
 
-function TaskBlock({ num }) {
+function CalendarTask({ num }) {
+  return (
+    <>
+      <div className="rounded-xl border-[0.75px] p-2 border-zinc-400 w-full">
+        <p className="text-purple-600">12:00 PM - 4:00 PM</p>
+        <h1 className="text-xl font-semibold">{num}: Task name</h1>
+        <p className="text-gray-700 truncate-2-lines">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod,
+          nunc sit amet ultricies ultricies, nunc nisl aliquam nisl, eget
+          aliquam nisl nisl sit amet lorem. Sed euismod, nunc sit amet ultricies
+          ultricies, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet
+          lorem.
+        </p>
 
-    return (
-        <>
-            <div className="rounded-xl shadow-md p-4 w-full">
-                <p className='text-purple-600'>12:00 PM - 4:00 PM</p>
-                <h1 className='text-2xl font-semibold'>{num}: Task name</h1>
-                <p className='text-gray-700 truncate'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc sit amet ultricies ultricies, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet lorem. Sed euismod, nunc sit amet ultricies ultricies, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet lorem.</p>
-
-                <div className='flex flex-row justify-end mt-4'>
-                    <button className='bg-green-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-lime-700'>Complete</button>
-                    <button className='bg-blue-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-blue-700'>Edit</button>
-                    <button className='bg-red-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-red-700'>Delete</button>
-                </div>
-            </div>
-        </>
-    )
+        <div className="flex flex-row justify-end mt-2">
+          <button className="bg-green-500 text-white font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-lime-700">
+            Complete
+          </button>
+          <button className="bg-blue-500 text-white font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-blue-700">
+            Edit
+          </button>
+          <button className="bg-red-500 text-white font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-red-700">
+            Delete
+          </button>
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default Calendar;
