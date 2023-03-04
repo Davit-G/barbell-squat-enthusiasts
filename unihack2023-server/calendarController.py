@@ -22,33 +22,19 @@ def createCalendar():
     return created_calendar['id']
     
 
-def getEvent(title="",loc="",desc="",start_date="",end_date=""):
+def getEvent(title="",loc="",desc="",start_date="",end_date="",timeZone="Australia/Melbourne"):
     return {
-    'summary': 'Google I/O 2015', # title
-    'location': '800 Howard St., San Francisco, CA 94103', 
-    'description': 'A chance to hear more about Google\'s developer products.', 
+    'summary': title, # title
+    'location': loc, 
+    'description': desc, 
     'start': {
-        'dateTime': '2023-03-04T13:52:58+00:00',
-        'timeZone': 'Australia/Melbourne'
+        'dateTime': start_date,
+        'timeZone': timeZone
     },
     'end': {
-        'dateTime': '2023-03-04T14:52:58+00:00',
-        'timeZone': 'Australia/Melbourne'
-    },
-    'recurrence': [
-        'RRULE:FREQ=DAILY;COUNT=2'
-    ],
-    'attendees': [
-        {'email': 'lpage@example.com'},
-        {'email': 'sbrin@example.com'},
-    ],
-    'reminders': {
-        'useDefault': False, # set to True if no reminder
-        'overrides': [
-        {'method': 'email', 'minutes': 24 * 60},
-        {'method': 'popup', 'minutes': 10},
-        ],
-    },
+        'dateTime': end_date,
+        'timeZone': timeZone
+    }
     }
 
 def getEvents(maxResults=10, date=datetime.datetime.utcnow().isoformat() + 'Z'):
@@ -131,7 +117,3 @@ def modifyEvent(event):
 
     # Print the updated date.
     print (updated_event['updated'])
-
-
-if __name__ == '__main__':
-    createCalendar()
