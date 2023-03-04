@@ -4,6 +4,7 @@ import { MoonIcon, SunIcon } from "@heroicons/react/solid";
 import { signOut, getAuth } from "@firebase/auth";
 import {
     selectDispayName,
+    selectLogin,
     setLogin,
     setUserDetails,
 } from "./features/login/loginSlice";
@@ -19,7 +20,9 @@ function AppLayout({ }) {
     const userTheme = localStorage.getItem("theme");
     const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-    
+    const loggedIn = useSelector(selectLogin)
+
+
     const displayName = useSelector(selectDispayName);
 
 
@@ -36,7 +39,7 @@ function AppLayout({ }) {
     return (
         <>
             <div className="flex flex-row min-h-screen max-h-screen overflow-hidden">
-                <div className="w-80 bg-gray-200 dark:bg-zinc-800 p-6">
+                <div className="w-80 bg-zinc-200 dark:bg-zinc-800 p-6">
                     {" "}
                     {/* Navigation on the left */}
                     <div className="flex flex-col h-full justify-between items-start">
@@ -55,57 +58,86 @@ function AppLayout({ }) {
                                     <SunIcon className="hidden dark:block w-5 h-5" />
                                 </button>
                             </div>
-                            <div className="text-xs text-zinc-600 dark:text-zinc-400 mt-4">
+                            {loggedIn ? <div className="text-xs text-zinc-600 dark:text-zinc-400 mt-4">
                                 Signed in as {displayName}
-                            </div>
+                            </div> : <></>}
                             <br></br>
                             <span class="w-full pt-[2px] bg-gray-300"></span>
                             <br></br>
-                            <div className="flex flex-col space-y-3 ">
+                            {loggedIn ? <>
+                                <div className="flex flex-col space-y-3 ">
+                                    <h1 className="text-base md:text-2xl text-left  font-bold text-black-500 dark:text-zinc-300">
+                                        Add
+                                    </h1>
+                                    <Link
+                                        to="/my/project/new"
+                                        className="text-base md:text-lg text-left  font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-500 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
+                                    >
+                                        New Project
+                                    </Link>
+                                    <Link
+                                        to="/my/task/new"
+                                        className="text-base md:text-lg text-left  font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-500 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
+                                    >
+                                        New Task
+                                    </Link>
+                                </div>
+                            </> : <></>}
+
+                            <div className="flex flex-col mt-10 space-y-3 ">
+                                <h1 className="text-base md:text-2xl text-left  font-bold text-black-500 dark:text-zinc-300">
+                                    View
+                                </h1>
                                 <Link
                                     to="/my/"
-                                    className="text-base md:text-lg text-left  font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-300 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
+                                    className="text-base md:text-lg text-left  font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-500 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
                                 >
                                     Project Overview
                                 </Link>
                                 <Link
                                     to="/my/week"
-                                    className="text-base md:text-lg text-left  font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-300 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
+                                    className="text-base md:text-lg text-left  font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-500 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
                                 >
                                     Weekly Overview
                                 </Link>
                                 <Link
                                     to="/my/tasks"
-                                    className="text-base md:text-lg text-left font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-300 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
+                                    className="text-base md:text-lg text-left font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-500 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
                                 >
                                     Today's Tasks
                                 </Link>
                                 <Link
                                     to="/my/calendar"
-                                    className="text-base md:text-lg text-left font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-300 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
+                                    className="text-base md:text-lg text-left font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-500 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
                                 >
                                     Calendar View
                                 </Link>
                                 <br></br>
                                 <div>
-                                    <h1 className="text-base md:text-2xl text-left  font-bold text-black-500 dark:text-zinc-300">
-                                        Projects
-                                    </h1>
-                                    <div className="p-2 block space-y-1">
-                                        {projects.map((project) => {
-                                            return (
-                                                <div>
+                                    {loggedIn ?
+                                        <>
+                                            <h1 className="text-base md:text-2xl text-left  font-bold text-black-500 dark:text-zinc-300">
+                                                Projects
+                                            </h1>
+                                            <div className="p-2 block space-y-1">
+                                                {projects.map((project) => {
+                                                    return (
+                                                        <div>
 
-                                                    <Link
-                                                        to="/my/project"
-                                                        className="w-full text-base  text-left  font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-400 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
-                                                    >
-                                                        {project}
-                                                    </Link>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
+                                                            <Link
+                                                                to="/my/project"
+                                                                className="w-full text-base  text-left  font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-500 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
+                                                            >
+                                                                {project}
+                                                            </Link>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </>
+                                        : <>
+
+                                        </>}
                                 </div>
                             </div>
                             <span className="w-full pt-[2px] mt-10 bg-gray-300"></span>
@@ -149,7 +181,20 @@ function AppLayout({ }) {
                     </div>
                 </div>
                 <div className="w-full">
-                    <Outlet />
+                    {loggedIn ? <Outlet /> :
+                        <div className="flex flex-col justify-center items-center h-screen">
+                            <h1 className="text-2xl font-bold text-gray-500 dark:text-zinc-300">
+                                You are not logged in
+                            </h1>
+                            <Link
+                                to="/login"
+                                className="text-base md:text-lg text-left text-gray-500 hover:text-zinc-900 dark:text-zinc-300 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75 font-semibold"
+                            >
+                                Log In
+                            </Link>
+                        </div>
+                    }
+
                 </div>
             </div>
         </>

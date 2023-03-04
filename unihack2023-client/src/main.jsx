@@ -13,6 +13,10 @@ import { Provider } from "react-redux";
 import { initializeApp, } from "firebase/app";
 
 import AppLayout from "./AppLayout";
+import NewProjectPage from "./pages/my/NewProject";
+import NewTaskPage from "./pages/my/NewTask";
+import Project from "./pages/my/Project";
+import Task from "./pages/my/Task";
 
 // each route is loaded asynchronously
 const Home = React.lazy(() => import("./pages/HomePage.jsx"));
@@ -49,6 +53,12 @@ const routes = (
             <Route path="tasks" element={<Tasks />} />
             <Route path="calendar" element={<Calendar />} />
             <Route path="week" element={<Week />} />
+            <Route path="/my/project/new" element={<NewProjectPage></NewProjectPage>} />
+            <Route path="/my/task/new" element={<NewTaskPage></NewTaskPage>} />
+
+            <Route path="/my/project/:projectId" element={<Project></Project>} />
+            <Route path="/my/task/:taskId" element={<Task></Task>} />
+
         </Route>
     </>
 );

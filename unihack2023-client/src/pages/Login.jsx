@@ -29,7 +29,7 @@ function Login({ }) {
 
                 axios.post(`${backendURL}/api/create_user/`, {
                     uid: user.uid,
-                    displayName: user.displayName,
+                    name: user.displayName,
 
                 }).then((res) => {
                     navigate("/my", { replace: true });
@@ -39,7 +39,6 @@ function Login({ }) {
                         setUserDetails({
                             uid: user.uid,
                             displayName: user.displayName,
-
                             accessToken: user.accessToken,
                         })
                     );
