@@ -8,6 +8,10 @@ import Calendar from "./pages/my/Calendar";
 import Week from "./pages/my/Week";
 import Error from "./pages/ErrorPage";
 
+import { store } from './app/store'
+import { Provider } from 'react-redux'
+
+
 // each route is loaded asynchronously
 const Home = React.lazy(() => import("./pages/HomePage.jsx"));
 const Login = React.lazy(() => import("./pages/Login.jsx"));
@@ -57,3 +61,23 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
+        <Provider store={store}> {/* handles redux */}
+
+            <BrowserRouter> {/* handles routing */}
+                <Layout> {/* handles the layout of the page */}
+
+                    <React.Suspense fallback={<Fallback />}> {/* if page not loaded yet, display temporary page thing */}
+
+                        <Routes>
+                            {routes}
+                        </Routes>
+
+                    </React.Suspense>
+                </Layout>
+            </BrowserRouter>
+
+        </Provider>
+
+    </React.StrictMode>,
+)

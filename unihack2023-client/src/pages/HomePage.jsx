@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 function HomePage({}) {
+
     return ( 
         <>
             <div className='h-[90vh] mx-auto'>
