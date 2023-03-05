@@ -49,6 +49,10 @@ function Login({}) {
             googleAccessToken: credential.accessToken,
           })
           .then((res) => {
+            
+            console.log(res);
+            
+            
             navigate("/my", { replace: true });
             dispatch(setLogin(true));
 
