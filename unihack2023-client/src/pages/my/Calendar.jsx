@@ -45,11 +45,7 @@ function Calendar() {
     return classes.filter(Boolean).join(" ");
   }
 
-  function deleteTask(taskID) {
-    axios.delete(`${backendURL}/api/task/${taskID}`).then((res) => {
-      setUserProjects();
-    });
-  }
+ 
 
   useEffect(() => {
     if (!loggedIn) return;
@@ -58,7 +54,7 @@ function Calendar() {
     axios.get(`${backendURL}/api/user/${loggedInUID}/projects`).then((res) => {
       setUserProjects(res.data.projects);
     });
-    setSelectedDay(today);
+    setSelectedDay(today)
   }, [loggedIn]);
 
   useEffect(() => {
@@ -71,22 +67,27 @@ function Calendar() {
           const tasks = res.data.tasks;
           tasks.map((task) => {
             const taskDate = task.date;
-            const [day, month, year] = taskDate.split("-");
+            const [day,month,year] = taskDate.split("-");
             console.log(year, month, day);
             const taskDateObj = new Date(year, month - 1, day);
+            
 
-            if (
+         
+            
+
+            if(
+              
               taskDateObj.getMonth() === selectedDay.getMonth() &&
-              taskDateObj.getDate() === selectedDay.getDate() &&
+              taskDateObj.getDate() === selectedDay.getDate() && 
               taskDateObj.getFullYear() == selectedDay.getFullYear()
-            ) {
-              setVisibleTasks((prev) => [...prev, task]);
+            ){
+              setVisibleTasks(prev => [...prev, task])
               // console.log(true)
             }
           });
         });
     });
-  }, [userProjects, selectedDay]);
+  }, [userProjects,selectedDay]);
 
   let colStartClasses = [
     "",
@@ -199,12 +200,7 @@ function Calendar() {
                 </h2>
                 <ol className="mt-4 space-y-4 text-sm leading-6  h-[40rem] overflow-y-scroll scrollbar-hide p-4">
                   {visibleTasks.map((task) => {
-                    return (
-                      <CalendarTask
-                        task={task}
-                        deleteTaskCallback={deleteTask}
-                      />
-                    );
+                    return <CalendarTask task={task} />;
                   })}
                 </ol>
               </section>
@@ -234,23 +230,17 @@ function Calendar() {
   );
 }
 
-function CalendarTask({ task, deleteTaskCallback }) {
+function CalendarTask({ task }) {
   return (
    
       
 
       <div className="flex flex-row justify-end mt-2 text-white">
-        <button
-          onClick={deleteTaskCallback(task.task_id)}
-          className="bg-green-500  font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-lime-600"
-        >
+        <button className="bg-green-500  font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-lime-600">
           Complete
         </button>
-
-        <button
-          onClick={deleteTaskCallback(task.task_id)}
-          className="bg-red-500  font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-red-600"
-        >
+        
+        <button className="bg-red-500  font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-red-600">
           Delete
         </button>
       </div>
