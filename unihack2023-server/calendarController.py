@@ -10,6 +10,9 @@ from schemas.task import Task
 
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
+def ddmmyyyy_to_yyyymmdd(date):
+  return date[6:] + '/' + date[3:5] + '/' + date[:2]
+
 def createCalendar(token):
     service = checkAuth(token)
     
@@ -21,20 +24,16 @@ def createCalendar(token):
     return created_calendar['id']
     
 
-def getEvent(title="",desc="",start_date="",end_date="",timeZone="Australia/Melbourne"):
+def getEvent(title,desc,start_date,end_date):
     return {
     'summary': title, # title
-    'summary': title, # title
-    'location': loc, 
-        'summary': title, # title
-    'location': loc, 
-        'description': desc, 
-        'start': {
-            'date': start_date,
-        },
-        'end': {
-            'date': end_date,
-        }
+    'description': desc, 
+    'start': {
+        'date': start_date,
+    },
+    'end': {
+        'date': end_date,
+    }
     }
 
 def getEvents(token,calID="primary",maxResults=10, date=datetime.datetime.utcnow().isoformat() + 'Z'):
@@ -113,5 +112,5 @@ def modifyEvent(token,event):
     # Print the updated date.
     print (updated_event['updated'])
     
-    
-getEvents(token="ya29.a0AVvZVsqt1RnGvmtKAwbZ5dYAtbuoHaOgx-kmxM0ap_Q4brBOj1X8jYJOD4YPAEwJ0TLnd-hWdMtXBrKo-Tf-g653uMub-QtWYN48qcAUPo-rz0BUX-6Pqg8TA-Ajim1tdP-nm4eBJRseG4VmGs-ARs6eWIcQaCgYKATYSARMSFQGbdwaI4ZS043XA_NlMLimhmLwo3A0163",maxResults=10, date=datetime.datetime.utcnow().isoformat() + 'Z')
+token="ya29.a0AVvZVsqt1RnGvmtKAwbZ5dYAtbuoHaOgx-kmxM0ap_Q4brBOj1X8jYJOD4YPAEwJ0TLnd-hWdMtXBrKo-Tf-g653uMub-QtWYN48qcAUPo-rz0BUX-6Pqg8TA-Ajim1tdP-nm4eBJRseG4VmGs-ARs6eWIcQaCgYKATYSARMSFQGbdwaI4ZS043XA_NlMLimhmLwo3A0163"
+createCalendar(token)

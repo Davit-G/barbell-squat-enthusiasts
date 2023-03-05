@@ -147,7 +147,7 @@ async def get_project_by_id(proj_id:str):
         return {"status": 404}
     
 
-@app.post("/api/delete_project")
+@app.post("/api/delete_project/{project_id}")
 async def delete_project(project_id: str):
     projListener.delete_project_by_id(project_id)
     return {"status": 201}
@@ -171,7 +171,7 @@ async def create_task(task: Task, calendarId: str,token:str):
     return {"status": 201}
 
 
-@app.post("/api/delete_task")
+@app.post("/api/delete_task/{task_id}")
 async def delete_task(task_id: str):
     taskListener.delete_task_by_id(task_id)
     return {"status": 201}
