@@ -109,7 +109,7 @@ async def create_project(project: Project, token:str):
 
     # openapi shenanigans
     input_answers = project_data["question_answers"]["data"]
-    user = await auth.get_user_details(project_data["uid"])
+    user = auth.get_user_details(project_data["uid"])
     token = user["googleAccessToken"]
 
     subtasks = openai.get_subtasks(input_answers)
@@ -162,7 +162,7 @@ async def update_project(new_project: Project):
     
 async def create_task(task: Task, calendarId: str,token):
     task_data = vars(task)
-    data = await calendarAPI.createEvent(token,task_data, calendarId)
+    data =  calendarAPI.createEvent(token,task_data, calendarId)
     task_data["task_id"] = data["id"]
     taskListener.create_task_in_database(task_data)
     return {"status": 201}
@@ -171,10 +171,10 @@ async def create_task(task: Task, calendarId: str,token):
 async def create_task(task: Task, calendarId: str):
     task_data = vars(task)
     project_data = projListener.get_project_details(task_data["proj_id"])
-    user = await auth.get_user_details(project_data["uid"])
+    user =  auth.get_user_details(project_data["uid"])
     token = user["googleAccessToken"]
     
-    data = await calendarAPI.createEvent(token,task_data, calendarId)
+    data =  calendarAPI.createEvent(token,task_data, calendarId)
     task_data["task_id"] = data["id"]
     taskListener.create_task_in_database(task_data)
     return {"status": 201}

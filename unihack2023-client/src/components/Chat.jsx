@@ -10,7 +10,7 @@ function ChatWindow({ projectName, onceChatIsDone }) {
     const chatRef = useRef()
     const messageEnd = useRef()
     const calendarID = useSelector(selectCalendarID)
-
+    console.log(calendarID)
     const uid = useSelector(selectUid)
 
     const backendURL = useSelector(selectBackend)
