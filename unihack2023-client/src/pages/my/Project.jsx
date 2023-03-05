@@ -49,16 +49,19 @@ function Project({}) {
     <AnimatedVerticalPage>
       <div className="m-4 flex w-full justify-center">
         <div className="w-full py-4 ">
-          <h1 className="text-4xl text-center font-semibold dark:text-zinc-200">
+          <h1 className="text-4xl text-center font-bold dark:text-zinc-200">
             {project.project_name}
           </h1>
+          <div className="flex justify-center p-2">
+            <p className="text-base font-semibold dark:text-zinc-400">{project.project_description}</p>
+          </div>
 
           <div className="grid grid-cols-2 pt-4  mx-auto w-11/12">
             <div className="w-full h-[0.5px] bg-gradient-to-r from-transparent to-zinc-900 dark:to-zinc-600"></div>
             <div className="w-full h-[0.5px] bg-gradient-to-r from-zinc-900 dark:from-zinc-600 to-transparent"></div>
           </div>
 
-          <div className="flex flex-col items-start justify-start mb-4 mt-2 p-4 w-full space-y-3 h-[50rem] overflow-y-scroll scrollbar-hide rounded-lg ">
+          <div className="flex flex-col items-start  justify-start  p-10 w-full space-y-3 h-[50rem] overflow-y-scroll scrollbar-hide rounded-lg ">
             {tasks.map((task) => {
               return <TaskBlock task={task} />;
             })}
@@ -73,9 +76,10 @@ export default Project;
 
 function TaskBlock({ task }) {
   return (
-    <div className=" cursor-pointer rounded-xl shadow-md shadow-zinc-500 dark:shadow-none text-zinc-900 dark:text-white dark:bg-zinc-700 dark:bg-opacity-60 p-3 w-full hover:scale-[1.02] transition-all duration-150">
-      <div>
-        <h1 className="text-2xl font-semibold">{task.name}</h1>
+    <div className="w-[95%] cursor-pointer rounded-xl shadow-md shadow-zinc-500 dark:shadow-none text-zinc-900 dark:text-white dark:bg-zinc-700 dark:bg-opacity-60 p-3  hover:scale-[1.02] transition-all duration-150">
+      <div className="grid grid-cols-4">
+        <h1 className="col-span-3 text-2xl font-semibold">{task.name}</h1>
+        <p className="flex justify-end mr-4">{task.date}</p>
       </div>
       <p className="text-gray-700 dark:text-zinc-400 mt-2 truncate-2-lines">
         {task.description}
