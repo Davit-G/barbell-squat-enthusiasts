@@ -11,12 +11,14 @@ function HomePage({}) {
             Planning projects has{" "}
             <span className="text-blue-500">never been this easy</span>!
           </h1>
-          <h2 className="text-2xl font-semibold text-center">
-            (btw the name quick tasks is temporary)
-          </h2>
 
           <div className="flex flex-row justify-center mt-4">
-            <button className="bg-blue-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-blue-700">
+            <button
+              onClick={() => {
+                navigate("/login");
+              }}
+              className="bg-blue-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-blue-700"
+            >
               Get Started
             </button>
             <button className="bg-blue-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-blue-700">

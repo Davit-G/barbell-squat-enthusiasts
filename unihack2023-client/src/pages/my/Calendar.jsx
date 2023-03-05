@@ -45,6 +45,50 @@ function Calendar() {
     return classes.filter(Boolean).join(" ");
   }
 
+ 
+
+  useEffect(() => {
+    if (!loggedIn) return;
+
+    // we are logged in, so get the user's projects
+    axios.get(`${backendURL}/api/user/${loggedInUID}/projects`).then((res) => {
+      setUserProjects(res.data.projects);
+    });
+    setSelectedDay(today)
+  }, [loggedIn]);
+
+  useEffect(() => {
+    if (!loggedIn) return;
+    setVisibleTasks([]);
+    userProjects.forEach((project) => {
+      axios
+        .get(`${backendURL}/api/project/${project.proj_id}/tasks`)
+        .then((res) => {
+          const tasks = res.data.tasks;
+          tasks.map((task) => {
+            const taskDate = task.date;
+            const [day,month,year] = taskDate.split("-");
+            console.log(year, month, day);
+            const taskDateObj = new Date(year, month - 1, day);
+            
+
+         
+            
+
+            if(
+              
+              taskDateObj.getMonth() === selectedDay.getMonth() &&
+              taskDateObj.getDate() === selectedDay.getDate() && 
+              taskDateObj.getFullYear() == selectedDay.getFullYear()
+            ){
+              setVisibleTasks(prev => [...prev, task])
+              // console.log(true)
+            }
+          });
+        });
+    });
+  }, [userProjects,selectedDay]);
+
   let colStartClasses = [
     "",
     "col-start-2",
