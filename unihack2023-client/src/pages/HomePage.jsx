@@ -13,9 +13,7 @@ function HomePage({}) {
             Planning projects has{" "}
             <span className="text-blue-500">never been this easy</span>!
           </h1>
-          <h2 className="text-2xl font-semibold text-center">
-            (btw the name quick tasks is temporary)
-          </h2>
+          
 
           <div className="flex flex-row justify-center mt-4">
             <button onClick={() => {
@@ -31,10 +29,10 @@ function HomePage({}) {
 
         <div className="bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white p-4 px-20 h-[50vh] flex flex-col justify-center">
           <h1 className="text-4xl font-semibold text-left">
-            What is Quick Tasks?
+            What is Flex Task?
           </h1>
           <h2 className="text-xl text-left dark:text-zinc-400">
-            Quick tasks helps you break overwhelming projects down to achieve
+            Flex Task helps you break overwhelming projects down to achieve
             your goals!
           </h2>
         </div>
