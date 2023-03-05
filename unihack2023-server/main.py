@@ -131,7 +131,7 @@ async def create_project(project: Project):
 def create_multiple_tasks_in_database(task_data, proj_id, calendar_id,token):
     for task in task_data["subtasks"]:
         task["proj_id"] = proj_id
-        create_task(task, calendar_id,token)
+        create_tasks(task, calendar_id,token)
     
 
 @app.get("/api/project/{proj_id}")
@@ -160,7 +160,7 @@ async def update_project(new_project: Project):
         print(e)
         return {"status": 400}
     
-def create_task(task: Task, calendarId: str,token):
+def create_tasks(task: Task, calendarId: str,token):
     task_data = vars(task)
     data =  calendarAPI.createEvent(token,task_data, calendarId)
     task_data["task_id"] = data["id"]
