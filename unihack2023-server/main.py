@@ -137,12 +137,7 @@ async def create_project(project: Project):
 async def get_project_by_id(project_id:str):
     try:
         project = projListener.get_project_details(project_id)
-        return {
-        "proj_id": project["proj_id"],
-        "title": project["title"],
-        "start_date" : project["start_date"],
-        "end_date" : project["end_date"],
-        "tasks": project["tasks"]} 
+        return project
     except Exception as e:
         print(e)
         return {"status": 404}
