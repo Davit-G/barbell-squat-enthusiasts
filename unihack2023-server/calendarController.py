@@ -114,5 +114,3 @@ def modifyEvent(token,event):
     # Print the updated date.
     print (updated_event['updated'])
     
-token="ya29.a0AVvZVsqt1RnGvmtKAwbZ5dYAtbuoHaOgx-kmxM0ap_Q4brBOj1X8jYJOD4YPAEwJ0TLnd-hWdMtXBrKo-Tf-g653uMub-QtWYN48qcAUPo-rz0BUX-6Pqg8TA-Ajim1tdP-nm4eBJRseG4VmGs-ARs6eWIcQaCgYKATYSARMSFQGbdwaI4ZS043XA_NlMLimhmLwo3A0163"
-createCalendar(token)
