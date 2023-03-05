@@ -40,7 +40,7 @@ async def create_user(user: User):
     Returns:
         dict: statuscode
     """
-    id = calendarAPI.createCalendar(user.googleAccessToken)
+    id = await calendarAPI.createCalendar(user.googleAccessToken)
     user.id = id
     user_data = vars(user)
     auth.create_user_in_database(user_data)
@@ -109,8 +109,8 @@ async def create_project(project: Project, token:str):
 
     # openapi shenanigans
     input_answers = project_data["question_answers"]["data"]
-    calendarId = project_data["googleCalendarId"]
-    
+    user = auth.get_user_details(project_data["uid"])
+    token = user["googleAccessToken"]
 
     subtasks = openai.get_subtasks(input_answers)
 
@@ -147,7 +147,7 @@ async def get_project_by_id(proj_id:str):
         return {"status": 404}
     
 
-@app.post("/api/delete_project/{project_id}")
+@app.delete("/api/delete_project/{project_id}")
 async def delete_project(project_id: str):
     projListener.delete_project_by_id(project_id)
     return {"status": 201}
@@ -171,8 +171,9 @@ async def create_task(task: Task, calendarId: str,token:str):
     return {"status": 201}
 
 
-@app.post("/api/delete_task/{task_id}")
+@app.delete("/api/delete_task/{task_id}")
 async def delete_task(task_id: str):
+    
     taskListener.delete_task_by_id(task_id)
     return {"status": 201}
 
