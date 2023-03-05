@@ -2,56 +2,29 @@ import requests
 import json
 from config import API_KEY
 
-url = "https://api.openai.com/v1/chat/completions"
-
-headers = {
+requests_session = requests.Session()
+requests_session.headers.update({
     "Content-Type": "application/json",
     "Authorization": "Bearer " +  API_KEY
-}
+})
+url = "https://api.openai.com/v1/chat/completions"
 
-def askQuestion():
-    name = input("Describe your project?")
-    start_date = input("What is your start date?")
-    end_date = input("What is your end date?")
-    mile_count = input("How many milestones would you like?")
-    part_count = input("Is there any other participant?")
-    loc = input("Where is this located?")
-    
-    return f"""
-    I plan {name}. Starting on the {start_date} and ending on the {end_date}.
-    There would be {part_count} participant for this project, I would like to have {mile_count} milestones and
-    this project would be located at {loc}.
-    """
+template= """Give me a list of subtasks that I can do to work towards this goal.
+Return tasks in the json format below.
+```json
+{
+    'subtasks': [subtask]
+}```
+where each subtask in "subtasks" is a json object with the format
+```json
+\{
+    "name": "",
+    "description": "",
+    "time":"dd/mm/yyyy"
+}```"""
 
-def generate_fake_transcript(input_answers):
-    openai_input = "Here is a transcript of a conversation with a person who wants to plan a project and needs help breaking down tasks:\n"
-    for conversation in input_answers:
-        # conversation is the dict of question and answer
-        openai_input += "ChatGPT: \"" + conversation["question"] + "\""
-        openai_input += "User: \"" + conversation["answer"] + "\""
-    
-    openai_input += "\n\n"
-    return openai_input
-
-def build_prompt(data):
-    data += """
-        Give me a list of subtasks that I can do to break the project down in the context of the transcript.
-        Return tasks in the json format below.
-        ```json
-        {
-            "subtasks": [subtask]
-        }```
-        where each subtask in "subtasks" is a json object with the format
-        ```json
-        {
-            "name": "",
-            "description": "",
-            "time":"dd/mm/yyyy"
-        }```
-        Please give me less than 10 subtasks.
-        Please explicitly order the tasks.
-        """
-    return data
+#Please give me exactly {int(mile_count)} subtasks.
+#Please explicitly order  tasks."""
 
 def parse_response(response):
     l, r = 0 , len(response) - 1
@@ -63,17 +36,17 @@ def parse_response(response):
 
     return json.loads(response) #return as dictionary
 
-def get_subtasks(input_answers):
-    processed_transcript = generate_fake_transcript(input_answers)
-    task = build_prompt(processed_transcript)
+def get_subtasks(data):
+    messages = [{ "role" : "user", "content" : f"{data['projectName']}" }]
+    for qa in data["question_Aanswers"]:
+        messages += [{ "role" : "assistant", "content" : f"{qa['question']}"}]
+        messages += [{ "role" : "user", "content" : f"{qa['answer']}"}]
 
-    response = requests.post(url, headers = headers, json={
-        "messages" : [{ "role" : "user", "content" : task }],
+    messages += [{ "role" : "user", "content" : template}]
+    response = requests_session.post(url, json={
+        "messages" : messages,
         "model" : "gpt-3.5-turbo"})
     response = response.json()['choices'][0]['message']['content'] #chatgpt's entire response message
 
     subtasks = parse_response(response)
     return subtasks
-
-
-# print(get_subtasks(build_prompt(askQuestion())))
