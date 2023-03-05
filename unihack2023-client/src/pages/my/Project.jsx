@@ -7,107 +7,59 @@ import { selectLogin, selectUid } from "../../features/login/loginSlice";
 import AnimatedVerticalPage from "../AnimatedVerticalPage";
 
 function Project({}) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const loggedInUID = useSelector(selectUid)
-  // const [project, setProject] = useState({
-  //     projectExists: null,
-  // })
+  const [searchParams] = useSearchParams();
 
-  const project = {
-    proj_id: "4e12d3af54f94f2591db2264f74493ca",
+  const projectId = searchParams.get("projectId");
 
-    end_date: null,
-    project_description: "would be funny to be a comedian",
-    project_name: "comedy",
+  const loggedInUID = useSelector(selectUid);
 
-    
-    start_date: null,
-    uid: "smSgLkA7wmSsaTumG138b1IyawS2",
-  };
-
-  useEffect(() => {
-    if(!loggedIn) return
-    axios.get
-  })
-
-  useEffect(() => {
-    if (!loggedIn) return
-    if(!project) return 
-
-    axios.get(`${backendURL}/api/project/${project.proj_id}/tasks`).then((res) => {
-      console.log(res.data);
-      // dispatch(
-      //     setProjects({
-      //         projects: res.data.projects,
-      //     })
-      // )
-    })
-  },[project])
-
-  const tasks = [{
-    "_id": {
-      "$oid": "6403c502f5f802845bf78808"
-    },
-    "task_id": "90b953ef290248c3b252bbb92bd85514",
-    "description": "Find and watch comedy specials of successful comedians to learn about their style and techniques. Take notes on what works and what doesn't.",
-    "name": "Research Comedians",
-    "proj_id": "4e12d3af54f94f2591db2264f74493ca",
-    "time": "16/08/2021"
-  },{
-    "_id": {
-      "$oid": "6403c502f5f802845bf7880a"
-    },
-    "task_id": "e58d29821e1a4e6da4d4c2b8eacb182a",
-    "description": "Start writing jokes based on personal experiences, observations, and general humor. Experiment with different styles and formats.",
-    "name": "Write Jokes",
-    "proj_id": "4e12d3af54f94f2591db2264f74493ca",
-    "time": "18/08/2021"
-  },{
-    "_id": {
-      "$oid": "6403c502f5f802845bf7880c"
-    },
-    "task_id": "4b93816919ef4170ad69f9481f95b9bd",
-    "description": "Practice telling jokes in front of a mirror, recording yourself, or performing in front of friends and family. Work on timing, tone, and body language.",
-    "name": "Practice Delivery",
-    "proj_id": "4e12d3af54f94f2591db2264f74493ca",
-    "time": "22/08/2021"
-  }
-]
-
+  const backendUrl = useSelector(selectBackend);
+  const [project, setProject] = useState({});
+  const [tasks, setTasks] = useState([]);
   const loggedIn = useSelector(selectLogin);
   const backendURL = useSelector(selectBackend);
 
   useEffect(() => {
     if (!loggedIn) return;
+    if (!projectId) return;
 
-    // we are logged in, so get the project in the search param if possible
     axios
-      .get(`${backendURL}/api/project/${searchParams.get("projectId")}`)
+      .get(`${backendURL}/api/project/${projectId}`)
       .then((res) => {
-        console.log(res);
         console.log(res.data);
-        setProject({ projectExists: true } + res.data);
+        setProject(res.data);
       })
       .catch((err) => {
         console.log(err);
-        setProject({ projectExists: false });
       });
-  }, [loggedIn]);
+  }, [loggedIn, projectId]);
+
+  useEffect(() => {
+    if (!project.project_name) return;
+    axios
+      .get(`${backendURL}/api/project/${project.proj_id}/tasks`)
+      .then((res) => {
+        console.log(res.data);
+        setTasks(res.data);
+      });
+  }, [project]);
 
   return (
     <AnimatedVerticalPage>
-      <div className="p-8"></div>
-      {/* <div className='p-8'>
-                <h1 className='text-4xl font-semibold dark:text-zinc-200'>
-                    {project.projectExists === true ? <>
-                        {project.name}
-                    </> : project.projectExists === false ? <>
-                        Project does not exist, try again later... {searchParams.get("projectId")}
-                    </> : <>
-                        Loading...
-                    </>}
-                </h1>
-            </div> */}
+      <div className="m-4 flex w-full justify-center">
+        <div className="w-full py-4 ">
+          <h1 className="text-4xl text-center font-semibold dark:text-zinc-200">
+            {project.project_name}
+          </h1>
+
+          <div className="grid grid-cols-2 pt-4  mx-auto w-11/12">
+            <div className="w-full h-[0.5px] bg-gradient-to-r from-transparent to-zinc-900 dark:to-zinc-600"></div>
+            <div className="w-full h-[0.5px] bg-gradient-to-r from-zinc-900 dark:from-zinc-600 to-transparent"></div>
+          </div>
+
+          <div className="flex flex-col items-center justify-start mb-4 mt-2 p-4 w-full space-y-3 h-[50rem] overflow-y-scroll scrollbar-hide rounded-lg "></div>
+        </div>
+      </div>
     </AnimatedVerticalPage>
   );
 }

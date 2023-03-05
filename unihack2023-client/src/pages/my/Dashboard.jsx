@@ -28,7 +28,7 @@ function Dashboard({ }) {
 
         // we are logged in, so get the user's projects
         axios.get(`${backendURL}/api/user/${loggedInUID}/projects`).then((res) => {
-            console.log(res);
+          
             dispatch(
                 setProjects({
                     projects: res.data.projects,
@@ -92,7 +92,7 @@ function Project({ project }) {
     ];
 
     return (
-        <Link to={`/my/projects?projectId=${project.project_id}`}
+        <Link to={`/my/project?projectId=${project.proj_id}`}
             className={`rounded-xl ml-2 shadow-sm shadow-zinc-500 p-4 w-11/12 ${bgColor} hover:scale-[1.02] transition-all duration-150 cursor-pointer`}
         >
             <div className="grid grid-cols-4 w-full">

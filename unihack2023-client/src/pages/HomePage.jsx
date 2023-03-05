@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { motion, useIsPresent } from "framer-motion";
 import AnimatedHorizontalPage from "./AnimatedHorizontalPage";
+import { useNavigate } from "react-router";
 function HomePage({}) {
   const isPresent = useIsPresent();
+  const navigate = useNavigate();
   return (
     <AnimatedHorizontalPage>
       <div className="h-[90vh] mx-auto">
@@ -16,7 +18,9 @@ function HomePage({}) {
           </h2>
 
           <div className="flex flex-row justify-center mt-4">
-            <button className="bg-blue-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-blue-700">
+            <button onClick={() => {
+              navigate("/login")
+            }} className="bg-blue-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-blue-700">
               Get Started
             </button>
             <button className="bg-blue-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-blue-700">

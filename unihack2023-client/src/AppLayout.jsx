@@ -2,42 +2,53 @@ import React, { useState, useEffect } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { MoonIcon, SunIcon } from "@heroicons/react/solid";
 import { signOut, getAuth } from "@firebase/auth";
-import {motion, useIsPresent} from 'framer-motion'
-import { selectBackend } from "../../features/backend/backendSlice";
+import { motion, useIsPresent } from "framer-motion";
+import { selectBackend } from "./features/backend/backendSlice";
+import { getAllProjects } from "./features/projects/projectsSlice";
 import {
   selectDispayName,
   selectLogin,
   setLogin,
   setUserDetails,
-  selectUid
+  selectUid,
 } from "./features/login/loginSlice";
+import { setProjects } from "./features/projects/projectsSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
 
 function AppLayout({}) {
-  const isPresent = useIsPresent()
+  const isPresent = useIsPresent();
   const backendURL = useSelector(selectBackend);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const html = document.querySelector("html");
   const auth = getAuth();
+  const displayName = useSelector(selectDispayName);
   const userTheme = localStorage.getItem("theme");
   const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const userUID = useSelector(selectUid);
   const loggedIn = useSelector(selectLogin);
 
-  const displayName = useSelector(selectDispayName);
+  useEffect(() => {
+    if (!loggedIn) return;
+    if (!displayName) return;
 
-  const [allProjects, setAllProjects] = useState()
+    // we are logged in, so get the user's projects
+    axios.get(`${backendURL}/api/user/${userUID}/projects`).then((res) => {
+      
+      dispatch(
+        setProjects({
+          projects: res.data.projects,
+        })
+      );
+    });
+  }, [loggedIn]);
 
+  
 
-
-  useEffect(() =>{
-    if(!loggedIn) return 
-    axios.get(`${backendURL}/api/${userUID}`)
-  },[userUID, loggedIn])
+  const userProjects = useSelector(getAllProjects);
 
   const themeSwitch = () => {
     if (html.classList.contains("dark")) {
@@ -113,7 +124,7 @@ function AppLayout({}) {
                 </h1>
                 <Link
                   to="/my/"
-                  className="text-base md:text-lg text-left  font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-500 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
+                  className="text-base md:text-lg text-left  font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-400 no-underline dark:hover:text-zinc-500 dark:hover:text-opacity-75"
                 >
                   Project Overview
                 </Link>
@@ -141,30 +152,27 @@ function AppLayout({}) {
                     <h1 className="text-base md:text-2xl text-left  font-bold text-black-500 dark:text-zinc-300">
                       Projects
                     </h1>
-                    <div className="p-2 block space-y-1">
-                      {/* {projects.map((project, index) => {
+                    <div className="p-1 block ">
+                      {userProjects.map((project, index) => {
                         return (
-                          <div>
-                            <Link
-                              to={"/my/project?projectId=" + project}
-                              key={`user-project-${index}`}
-                              className="w-full text-base  text-left  font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-500 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
-                            >
-                              {project}
-                            </Link>
-                          </div>
+                          <Link
+                            to={`/my/project?projectId=${project.proj_id}`}
+                            key={`dashboard-user-project-${index}`}
+                          >
+                            <div className="truncate-1-lines my-1 text-base text-left font-semibold text-gray-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-600 ">
+                              {project.project_name}
+                            </div>
+                          </Link>
                         );
-                      })} */}
+                      })}
                     </div>
                   </>
                 ) : (
                   <></>
                 )}
-
-               
               </div>
 
-              <div className=" flex flex-col h-1/2 justify-center">
+              <div className=" flex flex-col my-10">
                 <div className="flex flex-col space-y-3">
                   <Link
                     to="/"

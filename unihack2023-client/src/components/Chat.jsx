@@ -55,7 +55,7 @@ function ChatWindow({ projectName, onceChatIsDone }) {
                 isUserInput: false
             }])
             // scroll to bottom
-            messageEnd.current?.scrollIntoView({behavior: "smooth"})
+            // messageEnd.current?.scrollIntoView({behavior: "smooth"})
         }, 1000)
     }, [currentQuestion])
     
@@ -70,7 +70,7 @@ function ChatWindow({ projectName, onceChatIsDone }) {
             
 
             // scroll to bottom
-            messageEnd.current?.scrollIntoView({behavior: "smooth"})
+            // messageEnd.current?.scrollIntoView({behavior: "smooth"})
 
             // add answer to answeredQuestions
             setAnsweredQuestions(answeredQuestions.map((question, index) => {
