@@ -1,53 +1,53 @@
 from __future__ import print_function
+
 import datetime
 import os.path
+
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from schemas.task import Task
 
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
-def ddmmyyyy_to_yyyymmdd(date):
-  return date[6:] + '/' + date[3:5] + '/' + date[:2]
-
-def createCalendar(token):
-    service = checkAuth(token)
+def createCalendar():
+    service = checkAuth()
     
     calendar = {
-        'summary': 'flextask'
+        'summary': 'Squat Enthusiast'
     }
 
     created_calendar = service.calendars().insert(body=calendar).execute()
     return created_calendar['id']
     
 
-def getEvent(title,desc,start_date,end_date):
+def getEvent(title="",loc="",desc="",start_date="",end_date="",timeZone="Australia/Melbourne"):
     return {
     'summary': title, # title
+    'location': loc, 
     'description': desc, 
     'start': {
-        'date': start_date,
+        'dateTime': start_date,
+        'timeZone': timeZone
     },
     'end': {
-        'date': end_date,
+        'dateTime': end_date,
+        'timeZone': timeZone
     }
     }
 
-def getEvents(token,calID="primary",maxResults=10, date=datetime.datetime.utcnow().isoformat() + 'Z'):
+def getEvents(maxResults=10, date=datetime.datetime.utcnow().isoformat() + 'Z'):
     """Shows basic usage of the Google Calendar API.
     Prints the start and name of the next 10 events on the user's calendar.
     """
     # Call the Calendar API
-    service = checkAuth(token)
+    service = checkAuth()
     
     print('Getting the upcoming {maxResults} events')
-    events_result = service.events().list(calendarId=calID, timeMin=date,
+    events_result = service.events().list(calendarId='primary', timeMin=date,
                                             maxResults=maxResults, singleEvents=True,
                                             orderBy='startTime').execute()
-    print(events_result)
     events = events_result.get('items', [])
 
     if not events:
@@ -60,8 +60,13 @@ def getEvents(token,calID="primary",maxResults=10, date=datetime.datetime.utcnow
         print(start, event['summary'])
 
 
-def checkAuth(token):    
-    creds = Credentials(token=token)
+def checkAuth():
+    creds = None
+    # The file token.json stores the user's access and refresh tokens, and is
+    # created automatically when the authorization flow completes for the first
+    # time.
+    if os.path.exists('token.json'):
+        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
@@ -80,37 +85,38 @@ def checkAuth(token):
     except HttpError as error:
         print('An error occurred: %s' % error)
 
-def createEvent(token,task:Task, calId):
-    service = checkAuth(token)
-    eventJson = getEvent(title=task.title,desc=task.description,start_date=task.start_date,end_date=task.end_date,timeZone="Australia/Melbourne")
-    event = service.events().insert(calendarId=calId, body=eventJson).execute()
+def createEvent(eventJson):
+    service = checkAuth()
+    
+    event = service.events().insert(calendarId='primary', body=eventJson).execute()
+    print(event)
     return event
 
 
-def deleteEvent(token,eventId):
+def deleteEvent(eventId):
     """Delete existing event for user.
 
     Args:
         calendarId (string): calendar id of event
     """
-    service = checkAuth(token)
+    service = checkAuth()
     
     res = service.events().delete(calendarId='primary', eventId=eventId).execute()
     return res
 
 
-def modifyEvent(token,event):
+def modifyEvent(event):
     """Delete existing event for user.
 
     Args:
         calendarId (string): calendar id of event
     """
-    service = checkAuth(token)
+    service = checkAuth()
 
     updated_event = service.events().update(calendarId='primary', eventId=event['id'], body=event).execute()
 
     # Print the updated date.
     print (updated_event['updated'])
     
-token="ya29.a0AVvZVsqt1RnGvmtKAwbZ5dYAtbuoHaOgx-kmxM0ap_Q4brBOj1X8jYJOD4YPAEwJ0TLnd-hWdMtXBrKo-Tf-g653uMub-QtWYN48qcAUPo-rz0BUX-6Pqg8TA-Ajim1tdP-nm4eBJRseG4VmGs-ARs6eWIcQaCgYKATYSARMSFQGbdwaI4ZS043XA_NlMLimhmLwo3A0163"
-createCalendar(token)
+    
+getEvents(maxResults=10, date=datetime.datetime.utcnow().isoformat() + 'Z')

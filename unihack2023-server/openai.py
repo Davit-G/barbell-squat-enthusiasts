@@ -2,6 +2,8 @@ import requests
 import json
 from config import API_KEY
 
+import datetime
+
 url = "https://api.openai.com/v1/chat/completions"
 
 headers = {
@@ -46,10 +48,12 @@ def build_prompt(data):
         {
             "name": "",
             "description": "",
-            "time":"dd/mm/yyyy"
+            "date": ""
         }```
-        Please give me less than 10 subtasks.
+        Please give me the number of subtasks equal to the number of milestones specified in the transcript.
         Please explicitly order the tasks.
+        The date is mandatory, formatted as dd-mm-yyyy, and the current date is """ + str(datetime.date.today()) + """.\n
+        Make all future tasks relative to the current date.
         """
     return data
 

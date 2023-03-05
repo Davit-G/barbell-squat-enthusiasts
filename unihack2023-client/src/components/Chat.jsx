@@ -2,13 +2,14 @@ import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { selectBackend } from '../features/backend/backendSlice';
-import { selectUid } from '../features/login/loginSlice';
+import { selectCalendarID, selectUid } from '../features/login/loginSlice';
 
 
 
 function ChatWindow({ projectName, onceChatIsDone }) {
     const chatRef = useRef()
     const messageEnd = useRef()
+    const calendarID = useSelector(selectCalendarID)
 
     const uid = useSelector(selectUid)
 
@@ -55,7 +56,7 @@ function ChatWindow({ projectName, onceChatIsDone }) {
                 isUserInput: false
             }])
             // scroll to bottom
-            messageEnd.current?.scrollIntoView({behavior: "smooth"})
+            // messageEnd.current?.scrollIntoView({behavior: "smooth"})
         }, 1000)
     }, [currentQuestion])
     
@@ -70,7 +71,7 @@ function ChatWindow({ projectName, onceChatIsDone }) {
             
 
             // scroll to bottom
-            messageEnd.current?.scrollIntoView({behavior: "smooth"})
+            // messageEnd.current?.scrollIntoView({behavior: "smooth"})
 
             // add answer to answeredQuestions
             setAnsweredQuestions(answeredQuestions.map((question, index) => {
@@ -94,6 +95,7 @@ function ChatWindow({ projectName, onceChatIsDone }) {
                 // send answers to backend
                 axios.post(`${backendURL}/api/project/create`, {
                     uid: uid,
+                    googleCalendarID: calendarID,
                     project_name: projectName,
                     project_description: answeredQuestions[0].answer,
                     question_answers: { "data": answeredQuestions.map((question) => {
@@ -125,7 +127,7 @@ function ChatWindow({ projectName, onceChatIsDone }) {
 
                     {chatHistory.map((message, index) => {
                         return (
-                            <div key={message} className='flex flex-row gap-2 w-full' style={{justifyContent: message.isUserInput ? "flex-end" : "flex-start"}}>
+                            <div key={index} className='flex flex-row gap-2 w-full' style={{justifyContent: message.isUserInput ? "flex-end" : "flex-start"}}>
                                 <div style={{backgroundColor: message.isUserInput ? "rgba(80,80,80,1)" : "teal"}} className='min-w-1/2 w-fit rounded-3xl p-1.5 '>
                                     <p className='text-white text-xl p-2 dark:text-gray-200'>{message.text}</p>
                                 </div>
