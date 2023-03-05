@@ -6,9 +6,8 @@ import taskListener as taskListener
 from schemas.user import User
 from schemas.project import Project
 from schemas.task import Task
-
 import uuid
-
+import calendarController as calendarAPI
 import openai
 
 app = FastAPI()
@@ -41,6 +40,8 @@ async def create_user(user: User):
     Returns:
         dict: statuscode
     """
+    id = await calendarAPI.createCalendar(user.googleAccessToken)
+    user.id = id
     user_data = vars(user)
     auth.create_user_in_database(user_data)
     return {"status": 201}
@@ -94,17 +95,8 @@ async def get_tasks(proj_id):
     return {"tasks": tasks}
 
 @app.post("/api/project/create")
-async def create_project(project: Project):
-
-    
-
-    print(project)
+async def create_project(project: Project, token:str):
     project_data = vars(project)
-    print("project_data")
-    print(project_data)
-
-    # if you wanted to access googleCalendarID from here
-    # project_data["googleCalendarID"]
 
     """
     uid: str # the owner of this project
@@ -117,13 +109,10 @@ async def create_project(project: Project):
 
     # openapi shenanigans
     input_answers = project_data["question_answers"]["data"]
-    print("input_answers")
-    print(input_answers)
+    user = await auth.get_user_details(project_data["uid"])
+    token = user["googleAccessToken"]
 
     subtasks = openai.get_subtasks(input_answers)
-    # subtasks = {'subtasks': [{'name': 'Research Z Algorithm', 'description': 'Spend time gathering information and understanding the concepts behind the Z Algorithm', 'time': '01/06/2021'}, {'name': 'Read Z Algorithm Code', 'description': 'Spend time reading code examples and  understanding how it works', 'time': '10/06/2021'}, {'name': 'Implement Z Algorithm', 'description': 'Write out the code for the Z Algorithm on a small example', 'time': '20/06/2021'}, {'name': 'Debug Small Example', 'description': 'Test the code on the small example and debug any issues that come up', 'time': '25/06/2021'}, {'name': 'Implement Z Algorithm on Larger Example', 'description': 'Test the code on a larger example and optimize', 'time': '05/07/2021'}, {'name': 'Test and Debug Larger Example', 'description': 'Ensure the code works as expected for the larger example, and debug any issues that arise', 'time': '15/07/2021'}, {'name': 'Verify Implementation with Other Data Sets', 'description': 'Test the code on different data sets and verify that the implementation works properly', 'time': '30/07/2021'}, {'name': 'Write Documentation and Examples', 'description': 'Create documentation and example code to share with others', 'time': '07/08/2021'}, {'name': 'Publish Results', 'description': 'Publish the results of the Z Algorithm implementation in a forum or blog', 'time': '14/08/2021'}]}
-    print("subtasks")
-    print(subtasks)
 
     # encode a number onto each subtask called task_num
     for i in range(len(subtasks["subtasks"])):
@@ -131,14 +120,19 @@ async def create_project(project: Project):
 
     proj_id = uuid.uuid4().hex
     project_data["proj_id"] = proj_id
-    print("project_id hash id thing")
-    print(project_data["proj_id"])
 
     projListener.create_project_in_database(project_data) # creates project in database
 
-    taskListener.create_multiple_tasks_in_database(subtasks, proj_id) # create the tasks that are linked to the project
+    create_multiple_tasks_in_database(subtasks, proj_id,token) # create the tasks that are linked to the project
 
     return {"status": 201, "project_id": proj_id}
+
+
+def create_multiple_tasks_in_database(task_data, proj_id, calendar_id,token):
+    for task in task_data["subtasks"]:
+        task["proj_id"] = proj_id
+        create_task(task, calendar_id,token)
+    
 
 @app.get("/api/project/{proj_id}")
 async def get_project_by_id(proj_id:str):
@@ -150,6 +144,13 @@ async def get_project_by_id(proj_id:str):
         print(e)
         return {"status": 404}
     
+
+@app.delete("/api/delete_project/{project_id}")
+async def delete_project(project_id: str):
+    projListener.delete_project_by_id(project_id)
+    return {"status": 201}
+
+
 @app.patch("/api/project/patch/{project_id}")
 async def update_project(new_project: Project):
     try:
@@ -159,10 +160,30 @@ async def update_project(new_project: Project):
         print(e)
         return {"status": 400}
     
-@app.post("/api/create_task")
-async def create_task(task: Task):
+async def create_task(task: Task, calendarId: str,token):
     task_data = vars(task)
+    data = await calendarAPI.createEvent(token,task_data, calendarId)
+    task_data["task_id"] = data["id"]
     taskListener.create_task_in_database(task_data)
+    return {"status": 201}
+
+@app.post("/api/create_task")
+async def create_task(task: Task, calendarId: str):
+    task_data = vars(task)
+    project_data = projListener.get_project_details(task_data["proj_id"])
+    user = await auth.get_user_details(project_data["uid"])
+    token = user["googleAccessToken"]
+    
+    data = await calendarAPI.createEvent(token,task_data, calendarId)
+    task_data["task_id"] = data["id"]
+    taskListener.create_task_in_database(task_data)
+    return {"status": 201}
+
+
+@app.delete("/api/delete_task/{task_id}")
+async def delete_task(task_id: str):
+    
+    taskListener.delete_task_by_id(task_id)
     return {"status": 201}
 
 @app.get("/api/task/{task_id}")
@@ -178,6 +199,7 @@ async def get_task_by_id(task_id):
     except Exception as e:
         print(e)
         return {"status": 404}
+
     
 @app.patch("/api/task/patch/{task_id}")
 async def update_task(new_task: Task):
