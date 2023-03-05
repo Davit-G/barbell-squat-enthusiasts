@@ -103,7 +103,6 @@ function AppLayout({}) {
                     >
                       New Project
                     </Link>
-                   
                   </div>
                 </>
               ) : (
@@ -166,12 +165,6 @@ function AppLayout({}) {
 
               <div className=" flex flex-col my-10">
                 <div className="flex flex-col space-y-3">
-                  <Link
-                    to="/"
-                    className="text-base md:text-lg text-left text-gray-500 hover:text-zinc-900 dark:text-zinc-300 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75 font-semibold"
-                  >
-                    Settings
-                  </Link>
                   <button
                     onClick={() => {
                       signOut(auth)

@@ -132,6 +132,7 @@ function Week() {
           </div>
 
           <div className="p-4 flex flex-col justify-start items-start mt-4 w-full h-[45rem]  space-y-3 overflow-y-scroll scrollbar-hide">
+            
             {visibleTasks.map((task, index) => {
               return (
                 <div
