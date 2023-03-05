@@ -40,7 +40,7 @@ async def create_user(user: User):
     Returns:
         dict: statuscode
     """
-    id = await calendarAPI.createCalendar(user.googleAccessToken)
+    id = calendarAPI.createCalendar(user.googleAccessToken)
     user.id = id
     user_data = vars(user)
     auth.create_user_in_database(user_data)
