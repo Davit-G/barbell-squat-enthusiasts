@@ -95,7 +95,7 @@ async def get_tasks(proj_id):
     return {"tasks": tasks}
 
 @app.post("/api/project/create")
-async def create_project(project: Project, token:str):
+async def create_project(project: Project):
     project_data = vars(project)
 
     """
