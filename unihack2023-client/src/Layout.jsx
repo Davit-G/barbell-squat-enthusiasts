@@ -35,7 +35,7 @@ function Layout({ children }) {
                 <div className="container flex flex-wrap items-center justify-between mx-auto">
                     <a href="/" className="flex items-center">
                         <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-                            Flex Task
+                            Quick Tasks
                         </span>{" "}
                         {/* title */}
                     </a>
@@ -121,7 +121,7 @@ function Layout({ children }) {
 
             <div className="container min-h-full mx-auto">{children ? children : <Outlet></Outlet>}</div>
 
-            {/* <footer className='h-fit absolute bottom-0 left-0 w-f'>
+            {/* <footer className='h-fit'>
                 <div className="bg-neutral-200 p-6 text-center dark:bg-neutral-700">
                     <span className='text-neutral-600'>© 2023 </span>
                     <a

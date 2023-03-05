@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   startOfToday,
   startOfYesterday,
@@ -8,73 +8,19 @@ import {
   eachDayOfInterval,
 } from "date-fns";
 import AnimatedVerticalPage from "../AnimatedVerticalPage";
-import { useSelector } from "react-redux";
-import { selectLogin, selectUid } from "../../features/login/loginSlice";
-import { selectBackend } from "../../features/backend/backendSlice";
-import axios from "axios";
+
 function Week() {
   let today = startOfToday();
 
-  const backendURL = useSelector(selectBackend);
-  const loggedIn = useSelector(selectLogin);
-
-  const loggedInUID = useSelector(selectUid);
-  const [userProjects, setUserProjects] = useState([]);
-
-  const [visibleTasks, setVisibleTasks] = useState([]);
   const [activeDay, setActiveDay] = useState(today.getDay());
   const [selectedDay, setSelectedDay] = useState(format(today, "dd/MM/yyyy"));
+  console.log(activeDay);
+  const getDayofWeek = () => {};
 
   let weekDays = eachDayOfInterval({
     start: startOfWeek(today),
     end: endOfWeek(today),
   });
-
-  useEffect(() => {
-    if (!loggedIn) return;
-
-    // we are logged in, so get the user's projects
-    axios.get(`${backendURL}/api/user/${loggedInUID}/projects`).then((res) => {
-      setUserProjects(res.data.projects);
-    });
-
-    setSelectedDay(format(today, "dd/MM/yyyy"));
-  }, []);
-
-  useEffect(() => {
-    if (!loggedIn) return;
-    if(!selectedDay) return
-    setVisibleTasks([]);
-    userProjects.map((project) => {
-      axios
-        .get(`${backendURL}/api/project/${project.proj_id}/tasks`)
-        .then((res) => {
-          const tasks = res.data.tasks;
-          tasks.map((task) => {
-            const taskDate = task.date;
-            const [day, month, year] = taskDate.split("-");
-
-            const newDate = new Date(year, month - 1, day);
-            const [formatDay, formatMonth, FormatYear] = selectedDay
-              .toString()
-              .split("/");
-            const newSelectedDateFormat = new Date(
-              FormatYear,
-              formatMonth - 1,
-              formatDay
-            );
-
-            if (
-              newDate.getDate() == newSelectedDateFormat.getDate() &&
-              newDate.getMonth() == newSelectedDateFormat.getMonth() &&
-              newDate.getFullYear() == newSelectedDateFormat.getFullYear()
-            ) {
-              setVisibleTasks((prev) => [...prev, task]);
-            }
-          });
-        });
-    });
-  }, [userProjects, selectedDay]);
 
   const days = {
     0: "Sunday",
@@ -135,11 +81,9 @@ function Week() {
             
             {visibleTasks.map((task, index) => {
               return (
-                <div
-                  key={`week-task-${index}`}
-                  className="rounded-xl shadow-md shadow-zinc-500 dark:shadow-none dark:bg-zinc-700 transition-all duration-150 hover:scale-[1.02] dark:bg-opacity-60 p-4 w-full cursor-pointer"
-                >
-                  <h1 className="text-2xl font-semibold">{task.name}</h1>
+                <div key={`week-task-${index}`} className="rounded-xl shadow-md shadow-zinc-500 dark:shadow-none dark:bg-zinc-700 transition-all duration-150 hover:scale-[1.02] dark:bg-opacity-60 p-4 w-full cursor-pointer">
+                  <p className="text-purple-600">12:00 PM - 4:00 PM</p>
+                  <h1 className="text-2xl font-semibold">{task}: Task name</h1>
                 </div>
               );
             })}

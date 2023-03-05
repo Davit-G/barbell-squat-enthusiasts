@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { motion, useIsPresent } from "framer-motion";
 import AnimatedHorizontalPage from "./AnimatedHorizontalPage";
-import { useNavigate } from "react-router";
 function HomePage({}) {
   const isPresent = useIsPresent();
-  const navigate = useNavigate();
   return (
     <AnimatedHorizontalPage>
       <div className="h-[90vh] mx-auto">
@@ -31,10 +29,11 @@ function HomePage({}) {
 
         <div className="bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white p-4 px-20 h-[50vh] flex flex-col justify-center">
           <h1 className="text-4xl font-semibold text-left">
-            What is Flex Task?
+            What is Quick Tasks?
           </h1>
-          <h2 className="text-xl mt-5 text-left dark:text-zinc-400">
-          Flextask is an AI powered time management app that will help you manage your project by breaking it down into more manageable tasks. We provide the user with an intuitive interface, prompting them for information about their project and generating the tasks with an OpenAI  query. Once the tasks are generated, the user can tweak the provided tasks to their liking. Quick Tasks uses the Google Calendar API, allowing the user to effortlessly integrate the given tasks into their daily life.
+          <h2 className="text-xl text-left dark:text-zinc-400">
+            Quick tasks helps you break overwhelming projects down to achieve
+            your goals!
           </h2>
         </div>
       </div>

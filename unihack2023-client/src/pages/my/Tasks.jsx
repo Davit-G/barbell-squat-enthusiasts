@@ -32,7 +32,7 @@ function TaskBlock({ task }) {
           </button>
         </div>
       </div>
-    </div>
+    </AnimatedVerticalPage>
   );
 }
 
@@ -85,7 +85,7 @@ function Tasks({}) {
   }, [userProjects]);
 
   return (
-    <AnimatedVerticalPage>
+    <>
       <div className="w-full p-8 pt-10  flex  flex-col justify-start items-end">
         <h1 className="text-4xl font-semibold text-left dark:text-zinc-200 m-auto">
           Your tasks for today
@@ -97,12 +97,12 @@ function Tasks({}) {
         <div className="flex flex-col justify-start items-start space-y-4 mt-8 p-6 w-full overflow-y-scroll scrollbar-hide h-[45rem]">
           {" "}
           {/* Tasks go here */}
-          {allTodayTasks.map((task, index) => {
-            return <TaskBlock key={`task-${index}`} task={task} />;
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((task, index) => {
+            return <TaskBlock key={`task-${index}`} num={task} />;
           })}
         </div>
       </div>
-    </AnimatedVerticalPage>
+    </>
   );
 }
 

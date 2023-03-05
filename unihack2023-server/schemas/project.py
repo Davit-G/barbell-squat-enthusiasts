@@ -5,7 +5,6 @@ from typing import Optional
 class Project(BaseModel):
     uid: str # the owner of this project
     project_name: str
-    googleCalendarID: Optional[str]
     project_description: Optional[str]
     start_date: Optional[str]
     end_date: Optional[str]
