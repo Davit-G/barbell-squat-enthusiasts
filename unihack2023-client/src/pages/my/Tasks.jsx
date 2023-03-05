@@ -9,21 +9,28 @@ import { useDispatch } from "react-redux";
 import { format, isToday } from "date-fns";
 import axios from "axios";
 function TaskBlock({ task }) {
+
+  const deleteTask = () => {
+    
+  }
+
   return (
     <div className="cursor-pointer rounded-xl shadow-md shadow-zinc-500 dark:shadow-none text-zinc-900 dark:text-white dark:bg-zinc-700 dark:bg-opacity-60 p-3 w-full hover:scale-[1.02] transition-all duration-150">
       <h1 className="text-2xl font-semibold">{task.name}</h1>
-      <p className="text-gray-700 dark:text-zinc-400 mt-2 truncate-2-lines">
-        {task.description}
-      </p>
+      <div className="grid grid-cols-4">
+        <p className="text-gray-700 dark:text-zinc-400 mt-2 truncate-2-lines col-span-3">
+          {task.description}
+        </p>
 
-      <div className="flex flex-row justify-end mt-4">
-        <button className="bg-green-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-lime-700">
-          Complete
-        </button>
-       
-        <button className="bg-red-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-red-700">
-          Delete
-        </button>
+        <div className="flex  justify-end">
+          <button className="bg-green-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-lime-700">
+            Complete
+          </button>
+
+          <button className="bg-red-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-red-700">
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -46,18 +53,18 @@ function Tasks({}) {
     axios.get(`${backendURL}/api/user/${loggedInUID}/projects`).then((res) => {
       setUserProjects(res.data.projects);
     });
-  }, [loggedIn]);
+  }, []);
 
   useEffect(() => {
     if (!loggedIn) return;
-   
+
     userProjects.map((project) => {
       axios
         .get(`${backendURL}/api/project/${project.proj_id}/tasks`)
         .then((res) => {
           const tasks = res.data.tasks;
           tasks.map((task) => {
-            console.log(task.date)
+            console.log(task.date);
             const taskDate = task.date;
             const [day, month, year] = taskDate.split("-");
 
@@ -75,7 +82,7 @@ function Tasks({}) {
           });
         });
     });
-  }, []);
+  }, [userProjects]);
 
   return (
     <AnimatedVerticalPage>

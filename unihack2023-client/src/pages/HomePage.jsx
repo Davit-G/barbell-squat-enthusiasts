@@ -13,12 +13,14 @@ function HomePage({}) {
             Planning projects has{" "}
             <span className="text-blue-500">never been this easy</span>!
           </h1>
-          
 
           <div className="flex flex-row justify-center mt-4">
-            <button onClick={() => {
-              navigate("/login")
-            }} className="bg-blue-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-blue-700">
+            <button
+              onClick={() => {
+                navigate("/login");
+              }}
+              className="bg-blue-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-blue-700"
+            >
               Get Started
             </button>
             <button className="bg-blue-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-blue-700">
@@ -32,8 +34,14 @@ function HomePage({}) {
             What is Flex Task?
           </h1>
           <h2 className="text-xl text-left dark:text-zinc-400">
-            Flex Task helps you break overwhelming projects down to achieve
-            your goals!
+            Flextask is an AI powered time management app that will help you
+            manage your project by breaking it down into more manageable tasks.
+            We provide the user with an intuitive interface, prompting them for
+            information about their project and generating the tasks with an
+            OpenAI query. Once the tasks are generated, the user can tweak the
+            provided tasks to their liking. Quick Tasks uses the Google Calendar
+            API, allowing the user to effortlessly integrate the given tasks
+            into their daily life.
           </h2>
         </div>
       </div>

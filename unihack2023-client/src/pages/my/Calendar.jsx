@@ -80,26 +80,27 @@ function Calendar() {
           const tasks = res.data.tasks;
           tasks.map((task) => {
             const taskDate = task.date;
-            const [year, month, day] = taskDate.split("-");
+            const [day,month,year] = taskDate.split("-");
             console.log(year, month, day);
             const taskDateObj = new Date(year, month - 1, day);
             
 
-            console.log(taskDateObj.getDate(), selectedDay.getDate())
-            console.log(taskDateObj.getMonth(), selectedDay.getMonth())
-           
+         
+            
 
             if(
-              taskDateObj.getFullYear() === selectedDay.getFullYear() &&
+              
               taskDateObj.getMonth() === selectedDay.getMonth() &&
-              taskDateObj.getDate() === selectedDay.getDate()
+              taskDateObj.getDate() === selectedDay.getDate() && 
+              taskDateObj.getFullYear() == selectedDay.getFullYear()
             ){
               setVisibleTasks(prev => [...prev, task])
+              // console.log(true)
             }
           });
         });
     });
-  }, [selectedDay]);
+  }, [userProjects,selectedDay]);
 
   let colStartClasses = [
     "",
