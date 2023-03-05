@@ -65,12 +65,12 @@ async def get_user_credentials(user_id):
 async def get_user_dashboard(user_id):
     try:
         # try get all projects of user
-        projects = projListener.get_all_projects_by_uid(user_id)
+        projects_list = projListener.get_all_projects_by_uid(user_id)
         # iterate through projects and get all tasks
-        for project in projects:
+        for project in projects_list:
             project["tasks"] = taskListener.get_tasks_by_project_id(project["proj_id"])
         
-        return {"projects": projects}
+        return {"projects": projects_list}
         
     except Exception as e:
         print(e)
@@ -79,12 +79,12 @@ async def get_user_dashboard(user_id):
 @app.get("/api/user/{user_id}/projects")
 async def get_user_projects(user_id):
     try:
-        projects = projListener.get_all_projects_by_uid(user_id)
+        project_list = projListener.get_all_projects_by_uid(user_id)
     except Exception as e:
         print(e)
         return {"status": 404}
 
-    return {"projects": projects}
+    return {"projects": project_list}
 
 
 @app.get("/api/project/{proj_id}/tasks")
@@ -133,10 +133,11 @@ async def create_project(project: Project):
 
     return {"status": 201, "project_id": proj_id}
 
-@app.get("/api/project/{project_id}")
-async def get_project_by_id(project_id:str):
+@app.get("/api/project/{proj_id}")
+async def get_project_by_id(proj_id:str):
     try:
-        project = projListener.get_project_details(project_id)
+        project = projListener.get_project_details(proj_id)
+        
         return project
     except Exception as e:
         print(e)

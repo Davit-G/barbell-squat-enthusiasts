@@ -15,8 +15,7 @@ database = client.Unihack2023
 projects = database["Projects"]
 
 def get_project_details(id):
-    project = projects.find_one({"proj_id": id})
-    print(project)
+    project = projects.find_one({"proj_id": id}, {"_id": 0})
     if project is None:
         raise Exception("Project does not exist")
     return project
