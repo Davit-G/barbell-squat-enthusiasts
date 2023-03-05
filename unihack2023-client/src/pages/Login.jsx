@@ -82,7 +82,7 @@ function Login({}) {
           {" "}
           {/* login box in the middle*/}
           <h1 className="w-full text-center text-4xl font-semibold text-zinc-900 dark:text-zinc-200">
-            Log In to Quick Tasks
+            Log In to Flex Task
           </h1>
           <p className="text-gray-700 dark:text-zinc-400 text-center mt-8">
             Choose your login provider:
