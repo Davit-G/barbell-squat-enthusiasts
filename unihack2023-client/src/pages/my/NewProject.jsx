@@ -30,10 +30,6 @@ function NewProjectPage({ }) {
         setProjectPageState("chat")
     }
 
-    useEffect(() => {
-        console.log(projectName, projectDescription)
-    })
-
     return (
         <AnimatedVerticalPage>
             <div className="h-full min-h-fit w-full overflow-auto ">
