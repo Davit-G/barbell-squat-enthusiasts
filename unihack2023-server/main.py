@@ -58,6 +58,7 @@ async def get_user_credentials(user_id):
         "uid": user["uid"],
         "name": user["name"],
         "calendarId" : user["calendarId"],
+        "googleAccessToken": user["googleAccessToken"],
         "user_projects": user["user_projects"]}
 
 
