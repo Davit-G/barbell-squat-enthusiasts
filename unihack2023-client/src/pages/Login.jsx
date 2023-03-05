@@ -37,7 +37,7 @@ function Login({}) {
     console.log("Signing up..."); // TODO: sign up with google? how tf
     signInWithPopup(auth, googleProvider)
       .then((res) => {
-        GoogleAuthProvider.addScope("https://www.googleapis.com/auth/calendar")
+        // google.addScope("https://www.googleapis.com/auth/calendar"),
         const credential = GoogleAuthProvider.credentialFromResult(res);
         const user = res.user;
 
@@ -82,7 +82,7 @@ function Login({}) {
           {" "}
           {/* login box in the middle*/}
           <h1 className="w-full text-center text-4xl font-semibold text-zinc-900 dark:text-zinc-200">
-            Log In to Quick Tasks
+            Log In to Flex Task
           </h1>
           <p className="text-gray-700 dark:text-zinc-400 text-center mt-8">
             Choose your login provider:
