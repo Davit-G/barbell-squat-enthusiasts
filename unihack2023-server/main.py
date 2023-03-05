@@ -40,7 +40,7 @@ async def create_user(user: User):
     Returns:
         dict: statuscode
     """
-    id = calendarAPI.createCalendar()
+    id = calendarAPI.createCalendar(user.googleAccessToken)
     user.id = id
     user_data = vars(user)
     auth.create_user_in_database(user_data)
@@ -95,7 +95,7 @@ async def get_tasks(proj_id):
     return {"tasks": tasks}
 
 @app.post("/api/project/create")
-async def create_project(project: Project):
+async def create_project(project: Project, token:str):
     project_data = vars(project)
 
     """
@@ -125,15 +125,15 @@ async def create_project(project: Project):
 
     projListener.create_project_in_database(project_data) # creates project in database
 
-    create_multiple_tasks_in_database(subtasks, proj_id) # create the tasks that are linked to the project
+    create_multiple_tasks_in_database(subtasks, proj_id,token) # create the tasks that are linked to the project
 
     return {"status": 201, "project_id": proj_id}
 
 
-def create_multiple_tasks_in_database(task_data, proj_id, calendar_id):
+def create_multiple_tasks_in_database(task_data, proj_id, calendar_id,token):
     for task in task_data["subtasks"]:
         task["proj_id"] = proj_id
-        create_task(task, calendar_id)
+        create_task(task, calendar_id,token)
     
 
 @app.get("/api/project/{proj_id}")
@@ -163,9 +163,9 @@ async def update_project(new_project: Project):
         return {"status": 400}
     
 @app.post("/api/create_task")
-async def create_task(task: Task, calendarId: str):
+async def create_task(task: Task, calendarId: str,token:str):
     task_data = vars(task)
-    data = await calendarAPI.createEvent(task_data, calendarId)
+    data = await calendarAPI.createEvent(token,task_data, calendarId)
     task_data["task_id"] = data["id"]
     taskListener.create_task_in_database(task_data)
     return {"status": 201}
