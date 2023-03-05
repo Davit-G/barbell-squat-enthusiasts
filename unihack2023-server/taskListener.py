@@ -16,7 +16,7 @@ database = client.Unihack2023
 tasks = database["Tasks"]
 
 def get_task_details(id):
-    task = tasks.find_one({"task_id": id})
+    task = tasks.find_one({"task_id": id},{"_id" : 0})
     if task is None:
         raise Exception("Task does not exist")
     return task
