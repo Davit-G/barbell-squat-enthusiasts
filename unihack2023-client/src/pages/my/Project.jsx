@@ -87,15 +87,7 @@ function TaskBlock({ task }) {
         {task.description}
       </p>
 
-      <div className="flex flex-row justify-end mt-4">
-        <button className="bg-green-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-lime-700">
-          Complete
-        </button>
-
-        <button className="bg-red-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-red-700">
-          Delete
-        </button>
-      </div>
+      
     </div>
   );
 }

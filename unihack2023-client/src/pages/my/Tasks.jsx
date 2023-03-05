@@ -64,18 +64,18 @@ function Tasks({}) {
         .then((res) => {
           const tasks = res.data.tasks;
           tasks.map((task) => {
-            console.log(task.date);
+            // console.log(task.date);
             const taskDate = task.date;
             const [day, month, year] = taskDate.split("-");
-
+            
             const newDate = new Date(year, month - 1, day);
             // const newDate = new Date(day,month,year)
             const today = new Date();
-
+            
             if (
               newDate.getDate() == today.getDate() &&
-              newDate.getMonth() == today.getMonth() &&
-              newDate.getFullYear() == today.getFullYear()
+              newDate.getMonth() == today.getMonth() 
+              
             ) {
               setAllTodayTasks((oldArray) => [...oldArray, task]);
             }

@@ -38,6 +38,7 @@ export const loginSlice = createSlice({
                 state.loggedIn = parsedLogin.loggedIn;
                 state.displayName = parsedLogin.displayName;
                 state.accessToken = parsedLogin.accessToken;
+                state.calendarID = parsedLogin.accessToken;
                 state.uid = parsedLogin.uid;
 
             } catch (error) {
