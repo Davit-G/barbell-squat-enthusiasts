@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { GoogleAuthProvider, getAuth, signInWithPopup, onAuthStateChanged } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { setLogin, setUserDetails } from "../features/login/loginSlice";
+import { setCalendarID, setLogin, setUserDetails } from "../features/login/loginSlice";
 import { selectBackend } from "../features/backend/backendSlice";
 import { motion, useIsPresent } from "framer-motion";
 import AnimatedHorizontalPage from "./AnimatedHorizontalPage";
@@ -28,6 +28,7 @@ function Login({}) {
   const isPresent = useIsPresent();
   const dispatch = useDispatch();
   const googleProvider = new GoogleAuthProvider();
+  googleProvider.addScope("https://www.googleapis.com/auth/calendar")
   const auth = getAuth();
 
   const backendURL = useSelector(selectBackend);
@@ -36,6 +37,7 @@ function Login({}) {
     console.log("Signing up..."); // TODO: sign up with google? how tf
     signInWithPopup(auth, googleProvider)
       .then((res) => {
+        // google.addScope("https://www.googleapis.com/auth/calendar"),
         const credential = GoogleAuthProvider.credentialFromResult(res);
         const user = res.user;
 
@@ -49,6 +51,11 @@ function Login({}) {
             googleAccessToken: credential.accessToken,
           })
           .then((res) => {
+            
+            console.log(res);
+
+            dispatch(setCalendarID(res.data.calendarID))
+            
             navigate("/my", { replace: true });
             dispatch(setLogin(true));
 
@@ -75,7 +82,7 @@ function Login({}) {
           {" "}
           {/* login box in the middle*/}
           <h1 className="w-full text-center text-4xl font-semibold text-zinc-900 dark:text-zinc-200">
-            Log In to Quick Tasks
+            Log In to Flex Task
           </h1>
           <p className="text-gray-700 dark:text-zinc-400 text-center mt-8">
             Choose your login provider:

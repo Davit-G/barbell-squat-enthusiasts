@@ -30,10 +30,6 @@ function NewProjectPage({ }) {
         setProjectPageState("chat")
     }
 
-    useEffect(() => {
-        console.log(projectName, projectDescription)
-    })
-
     return (
         <AnimatedVerticalPage>
             <div className="h-full min-h-fit w-full overflow-auto ">
@@ -76,9 +72,10 @@ function NewProjectPage({ }) {
 
                         <ChatWindow onceChatIsDone={(projectId) => {
                             setProjectPageState("created");
+                            
                             // add project id to project details
                             setProjectDetails({ ...projectDetails, project_id: projectId })
-                        }} ></ChatWindow>
+                        }} projectName={projectName}></ChatWindow>
                     </div>
 
                 </> : projectPageState === "loading" ? <>

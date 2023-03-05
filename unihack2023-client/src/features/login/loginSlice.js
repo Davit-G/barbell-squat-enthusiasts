@@ -5,6 +5,7 @@ const initialState = {
     accessToken: "",
     uid: "",
     displayName: "",
+    calendarID: "",
 };
 
 export const loginSlice = createSlice({
@@ -18,6 +19,9 @@ export const loginSlice = createSlice({
             state.displayName = action.payload.displayName;
             state.accessToken = action.payload.accessToken;
             state.uid = action.payload.uid;
+        },
+        setCalendarID: (state, action) => {
+            state.calendarID = action.payload;
         },
         setLoginFromLocalStorage: (state) => {
             try {
@@ -34,6 +38,7 @@ export const loginSlice = createSlice({
                 state.loggedIn = parsedLogin.loggedIn;
                 state.displayName = parsedLogin.displayName;
                 state.accessToken = parsedLogin.accessToken;
+                state.calendarID = parsedLogin.accessToken;
                 state.uid = parsedLogin.uid;
 
             } catch (error) {
@@ -46,13 +51,14 @@ export const loginSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setLogin, setUserDetails, setLoginFromLocalStorage, setLogout } = loginSlice.actions;
+export const { setLogin, setUserDetails, setLoginFromLocalStorage, setLogout, setCalendarID } = loginSlice.actions;
 
 // export the selector
 export const selectLogin = (state) => state.login.loggedIn;
 export const selectAccessToken = (state) => state.login.accessToken;
 export const selectDispayName = (state) => state.login.displayName;
 export const selectUid = (state) => state.login.uid;
+export const selectCalendarID = (state) => state.login.calendarID;
 
 // export const selectUserDetails = (state) => state.login.setUserDetails;
 export default loginSlice.reducer;

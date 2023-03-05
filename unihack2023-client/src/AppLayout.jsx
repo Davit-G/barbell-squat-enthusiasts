@@ -37,7 +37,6 @@ function AppLayout({}) {
 
     // we are logged in, so get the user's projects
     axios.get(`${backendURL}/api/user/${userUID}/projects`).then((res) => {
-      
       dispatch(
         setProjects({
           projects: res.data.projects,
@@ -45,8 +44,6 @@ function AppLayout({}) {
       );
     });
   }, [loggedIn]);
-
-  
 
   const userProjects = useSelector(getAllProjects);
 
@@ -72,7 +69,7 @@ function AppLayout({}) {
                   to="/"
                   className="text-2xl dark:text-white font-semibold text-left col-span-3"
                 >
-                  Quick Tasks
+                  Flex Tasks
                 </Link>
                 <button
                   className="text-zinc-900 dark:text-gray-400 dark:hover:text-white hover:text-blue-700 justify-end mt-1"
@@ -105,12 +102,6 @@ function AppLayout({}) {
                       className="text-base md:text-lg text-left  font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-500 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
                     >
                       New Project
-                    </Link>
-                    <Link
-                      to="/my/task/new"
-                      className="text-base md:text-lg text-left  font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-500 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
-                    >
-                      New Task
                     </Link>
                   </div>
                 </>
@@ -149,9 +140,11 @@ function AppLayout({}) {
                 <br></br>
                 {loggedIn ? (
                   <>
-                    <h1 className="text-base md:text-2xl text-left  font-bold text-black-500 dark:text-zinc-300">
-                      Projects
-                    </h1>
+                    {userProjects.length > 0 ? (
+                      <h1 className="text-base md:text-2xl text-left  font-bold text-black-500 dark:text-zinc-300">
+                        Projects
+                      </h1>
+                    ) : null}
                     <div className="p-1 block ">
                       {userProjects.map((project, index) => {
                         return (
@@ -174,12 +167,12 @@ function AppLayout({}) {
 
               <div className=" flex flex-col my-10">
                 <div className="flex flex-col space-y-3">
-                  <Link
+                  {/* <Link
                     to="/"
                     className="text-base md:text-lg text-left text-gray-500 hover:text-zinc-900 dark:text-zinc-300 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75 font-semibold"
                   >
                     Settings
-                  </Link>
+                  </Link> */}
                   <button
                     onClick={() => {
                       signOut(auth)
@@ -229,6 +222,14 @@ function AppLayout({}) {
           )}
         </div>
       </div>
+      <footer className="w-full h-fit absolute bottom-0 left-0 w-f">
+        <div className="bg-zinc-200 p-6 text-center dark:bg-zinc-800 font-bold text-zinc-900 dark:text-zinc-300">
+          <span className="">© 2023 </span>
+          <a className="hover:underline " href="/">
+            Quick Tasks
+          </a>
+        </div>
+      </footer>
     </>
   );
 }

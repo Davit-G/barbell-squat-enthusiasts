@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 
 import "../styles/main.css";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom"; // configuring the browser routing things
-import Layout from "./Layout";
+import Layout from "./Layout.jsx";
 import Calendar from "./pages/my/Calendar";
 import Week from "./pages/my/Week";
 import Error from "./pages/ErrorPage";
@@ -75,7 +75,7 @@ function Fallback() {
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+
     <Provider store={store}>
       {" "}
       {/* handles redux */}
@@ -91,5 +91,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           </React.Suspense>
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>
+  
 );
