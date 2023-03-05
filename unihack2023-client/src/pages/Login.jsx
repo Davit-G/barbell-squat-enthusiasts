@@ -2,12 +2,26 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import { useNavigate } from "react-router-dom";
-import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, getAuth, signInWithPopup, onAuthStateChanged } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogin, setUserDetails } from "../features/login/loginSlice";
 import { selectBackend } from "../features/backend/backendSlice";
 import { motion, useIsPresent } from "framer-motion";
 import AnimatedHorizontalPage from "./AnimatedHorizontalPage";
+
+function isUserEqual(googleUser, firebaseUser) {
+    if (firebaseUser) {
+      var providerData = firebaseUser.providerData;
+      for (var i = 0; i < providerData.length; i++) {
+        if (providerData[i].providerId === firebase.auth.GoogleAuthProvider.PROVIDER_ID &&
+          providerData[i].uid === googleUser.getBasicProfile().getId()) {
+          // We don't need to reauth the Firebase connection.
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 
 function Login({}) {
   const navigate = useNavigate();
@@ -32,6 +46,7 @@ function Login({}) {
           .post(`${backendURL}/api/create_user/`, {
             uid: user.uid,
             name: user.displayName,
+            googleAccessToken: credential.accessToken,
           })
           .then((res) => {
             navigate("/my", { replace: true });
