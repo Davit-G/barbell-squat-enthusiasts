@@ -76,9 +76,10 @@ function NewProjectPage({ }) {
 
                         <ChatWindow onceChatIsDone={(projectId) => {
                             setProjectPageState("created");
+                            
                             // add project id to project details
                             setProjectDetails({ ...projectDetails, project_id: projectId })
-                        }} ></ChatWindow>
+                        }} projectName={projectName}></ChatWindow>
                     </div>
 
                 </> : projectPageState === "loading" ? <>

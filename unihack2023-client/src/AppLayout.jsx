@@ -37,7 +37,6 @@ function AppLayout({}) {
 
     // we are logged in, so get the user's projects
     axios.get(`${backendURL}/api/user/${userUID}/projects`).then((res) => {
-      
       dispatch(
         setProjects({
           projects: res.data.projects,
@@ -45,8 +44,6 @@ function AppLayout({}) {
       );
     });
   }, [loggedIn]);
-
-  
 
   const userProjects = useSelector(getAllProjects);
 
@@ -106,12 +103,7 @@ function AppLayout({}) {
                     >
                       New Project
                     </Link>
-                    <Link
-                      to="/my/task/new"
-                      className="text-base md:text-lg text-left  font-semibold text-gray-500 hover:text-zinc-900 dark:text-zinc-500 no-underline dark:hover:text-zinc-400 dark:hover:text-opacity-75"
-                    >
-                      New Task
-                    </Link>
+                   
                   </div>
                 </>
               ) : (
@@ -229,6 +221,14 @@ function AppLayout({}) {
           )}
         </div>
       </div>
+      <footer className="w-full h-fit absolute bottom-0 left-0 w-f">
+        <div className="bg-zinc-200 p-6 text-center dark:bg-zinc-800 font-bold text-zinc-900 dark:text-zinc-300">
+          <span className="">© 2023 </span>
+          <a className="hover:underline " href="/">
+            Quick Tasks
+          </a>
+        </div>
+      </footer>
     </>
   );
 }

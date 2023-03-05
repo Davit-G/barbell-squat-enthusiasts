@@ -125,7 +125,7 @@ function ChatWindow({ projectName, onceChatIsDone }) {
 
                     {chatHistory.map((message, index) => {
                         return (
-                            <div key={message} className='flex flex-row gap-2 w-full' style={{justifyContent: message.isUserInput ? "flex-end" : "flex-start"}}>
+                            <div key={index} className='flex flex-row gap-2 w-full' style={{justifyContent: message.isUserInput ? "flex-end" : "flex-start"}}>
                                 <div style={{backgroundColor: message.isUserInput ? "rgba(80,80,80,1)" : "teal"}} className='min-w-1/2 w-fit rounded-3xl p-1.5 '>
                                     <p className='text-white text-xl p-2 dark:text-gray-200'>{message.text}</p>
                                 </div>
