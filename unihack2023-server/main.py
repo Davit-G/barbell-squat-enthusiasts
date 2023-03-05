@@ -123,7 +123,7 @@ async def create_project(project: Project):
 
     projListener.create_project_in_database(project_data) # creates project in database
 
-    create_multiple_tasks_in_database(subtasks, proj_id,user['calenderId'],token) # create the tasks that are linked to the project
+    create_multiple_tasks_in_database(subtasks, proj_id,user['calendarId'],token) # create the tasks that are linked to the project
 
     return {"status": 201, "project_id": proj_id}
 
