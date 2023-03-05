@@ -95,10 +95,16 @@ async def get_tasks(proj_id):
 
 @app.post("/api/project/create")
 async def create_project(project: Project):
+
+    
+
     print(project)
     project_data = vars(project)
     print("project_data")
     print(project_data)
+
+    # if you wanted to access googleCalendarID from here
+    # project_data["googleCalendarID"]
 
     """
     uid: str # the owner of this project

@@ -52,7 +52,7 @@ def build_prompt(data):
         }```
         Please give me the number of subtasks equal to the number of milestones specified in the transcript.
         Please explicitly order the tasks.
-        The date is mandatory, formatted as dd/mm/yyyy, and the current date is """ + str(datetime.date.today()) + """.\n
+        The date is mandatory, formatted as dd-mm-yyyy, and the current date is """ + str(datetime.date.today()) + """.\n
         Make all future tasks relative to the current date.
         """
     return data

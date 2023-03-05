@@ -2,13 +2,14 @@ import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { selectBackend } from '../features/backend/backendSlice';
-import { selectUid } from '../features/login/loginSlice';
+import { selectCalendarID, selectUid } from '../features/login/loginSlice';
 
 
 
 function ChatWindow({ projectName, onceChatIsDone }) {
     const chatRef = useRef()
     const messageEnd = useRef()
+    const calendarID = useSelector(selectCalendarID)
 
     const uid = useSelector(selectUid)
 
@@ -94,6 +95,7 @@ function ChatWindow({ projectName, onceChatIsDone }) {
                 // send answers to backend
                 axios.post(`${backendURL}/api/project/create`, {
                     uid: uid,
+                    googleCalendarID: calendarID,
                     project_name: projectName,
                     project_description: answeredQuestions[0].answer,
                     question_answers: { "data": answeredQuestions.map((question) => {
