@@ -37,7 +37,7 @@ function Login({}) {
     console.log("Signing up..."); // TODO: sign up with google? how tf
     signInWithPopup(auth, googleProvider)
       .then((res) => {
-        GoogleAuthProvider.addScope("https://www.googleapis.com/auth/calendar")
+        // google.addScope("https://www.googleapis.com/auth/calendar"),
         const credential = GoogleAuthProvider.credentialFromResult(res);
         const user = res.user;
 
