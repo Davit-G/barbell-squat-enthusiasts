@@ -160,7 +160,7 @@ async def update_project(new_project: Project):
         print(e)
         return {"status": 400}
     
-async def create_task(task: Task, calendarId: str,token):
+def create_task(task: Task, calendarId: str,token):
     task_data = vars(task)
     data =  calendarAPI.createEvent(token,task_data, calendarId)
     task_data["task_id"] = data["id"]
