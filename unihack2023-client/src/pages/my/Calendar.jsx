@@ -28,20 +28,17 @@ import {
 } from "date-fns";
 
 function Calendar() {
-  const dispatch = useDispatch()
-
- 
-  const userProjects = useSelector(getAllProjects);
-  
+  const [userProjects, setUserProjects] = useState([]);
   const loggedIn = useSelector(selectLogin);
-  const userUID = useSelector(selectUid);
+  const loggedInUID = useSelector(selectUid);
   const backendURL = useSelector(selectBackend);
+  const [visibleTasks, setVisibleTasks] = useState([]);
   let today = startOfToday();
   let [selectedDay, setSelectedDay] = useState(today);
 
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
-  console.log(format(selectedDay,'dd/MM/yyyy'))
+
   let days = eachDayOfInterval({
     start: firstDayCurrentMonth,
     end: endOfMonth(firstDayCurrentMonth),
@@ -61,11 +58,48 @@ function Calendar() {
     return classes.filter(Boolean).join(" ");
   }
 
-  
+ 
 
-   
+  useEffect(() => {
+    if (!loggedIn) return;
 
+    // we are logged in, so get the user's projects
+    axios.get(`${backendURL}/api/user/${loggedInUID}/projects`).then((res) => {
+      setUserProjects(res.data.projects);
+    });
+    setSelectedDay(today)
+  }, [loggedIn]);
 
+  useEffect(() => {
+    if (!loggedIn) return;
+    setVisibleTasks([]);
+    userProjects.forEach((project) => {
+      axios
+        .get(`${backendURL}/api/project/${project.proj_id}/tasks`)
+        .then((res) => {
+          const tasks = res.data.tasks;
+          tasks.map((task) => {
+            const taskDate = task.date;
+            const [year, month, day] = taskDate.split("-");
+            console.log(year, month, day);
+            const taskDateObj = new Date(year, month - 1, day);
+            
+
+            console.log(taskDateObj.getDate(), selectedDay.getDate())
+            console.log(taskDateObj.getMonth(), selectedDay.getMonth())
+           
+
+            if(
+              taskDateObj.getFullYear() === selectedDay.getFullYear() &&
+              taskDateObj.getMonth() === selectedDay.getMonth() &&
+              taskDateObj.getDate() === selectedDay.getDate()
+            ){
+              setVisibleTasks(prev => [...prev, task])
+            }
+          });
+        });
+    });
+  }, [selectedDay]);
 
   let colStartClasses = [
     "",
@@ -176,7 +210,9 @@ function Calendar() {
                   </time>
                 </h2>
                 <ol className="mt-4 space-y-4 text-sm leading-6  h-[40rem] overflow-y-scroll scrollbar-hide p-4">
-                 
+                  {visibleTasks.map((task) => {
+                    return <CalendarTask task={task} />;
+                  })}
                 </ol>
               </section>
             </div>
@@ -199,9 +235,7 @@ function CalendarTask({ task }) {
         <button className="bg-green-500  font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-lime-600">
           Complete
         </button>
-        <button className="bg-blue-500  font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-blue-600">
-          Edit
-        </button>
+        
         <button className="bg-red-500  font-semibold rounded-lg shadow-md px-4 py-1 m-3 hover:bg-red-600">
           Delete
         </button>

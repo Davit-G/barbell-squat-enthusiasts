@@ -28,7 +28,7 @@ function Login({}) {
   const isPresent = useIsPresent();
   const dispatch = useDispatch();
   const googleProvider = new GoogleAuthProvider();
-  googleProvider.addScope("https://www.googleapis.com/auth/calendar%22")
+  googleProvider.addScope("https://www.googleapis.com/auth/calendar")
   const auth = getAuth();
 
   const backendURL = useSelector(selectBackend);
@@ -37,7 +37,7 @@ function Login({}) {
     console.log("Signing up..."); // TODO: sign up with google? how tf
     signInWithPopup(auth, googleProvider)
       .then((res) => {
-        GoogleAuthProvider.addScope("https://www.googleapis.com/auth/calendar%22")
+        GoogleAuthProvider.addScope("https://www.googleapis.com/auth/calendar")
         const credential = GoogleAuthProvider.credentialFromResult(res);
         const user = res.user;
 

@@ -53,7 +53,9 @@ function Project({}) {
             {project.project_name}
           </h1>
           <div className="flex justify-center p-2">
-            <p className="text-base font-semibold dark:text-zinc-400">{project.project_description}</p>
+            <p className="text-base font-semibold dark:text-zinc-400">
+              {project.project_description}
+            </p>
           </div>
 
           <div className="grid grid-cols-2 pt-4  mx-auto w-11/12">
@@ -89,9 +91,7 @@ function TaskBlock({ task }) {
         <button className="bg-green-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-lime-700">
           Complete
         </button>
-        <button className="bg-blue-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-blue-700">
-          Edit
-        </button>
+
         <button className="bg-red-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-red-700">
           Delete
         </button>

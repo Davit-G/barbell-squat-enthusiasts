@@ -20,9 +20,7 @@ function TaskBlock({ task }) {
         <button className="bg-green-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-lime-700">
           Complete
         </button>
-        <button className="bg-blue-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-blue-700">
-          Edit
-        </button>
+       
         <button className="bg-red-500 text-white font-semibold rounded-lg shadow-md px-4 py-2 m-2 hover:bg-red-700">
           Delete
         </button>
@@ -52,12 +50,14 @@ function Tasks({}) {
 
   useEffect(() => {
     if (!loggedIn) return;
+   
     userProjects.map((project) => {
       axios
         .get(`${backendURL}/api/project/${project.proj_id}/tasks`)
         .then((res) => {
           const tasks = res.data.tasks;
           tasks.map((task) => {
+            console.log(task.date)
             const taskDate = task.date;
             const [day, month, year] = taskDate.split("-");
 
@@ -70,12 +70,12 @@ function Tasks({}) {
               newDate.getMonth() == today.getMonth() &&
               newDate.getFullYear() == today.getFullYear()
             ) {
-              setAllTodayTasks((prev) => [...prev, task]);
+              setAllTodayTasks((oldArray) => [...oldArray, task]);
             }
           });
         });
     });
-  }, [userProjects, loggedIn]);
+  }, []);
 
   return (
     <AnimatedVerticalPage>
