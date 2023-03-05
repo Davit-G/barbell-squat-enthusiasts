@@ -4,15 +4,16 @@ import { getAllProjects } from "../../features/projects/projectsSlice";
 import { selectLogin, selectUid } from "../../features/login/loginSlice";
 import { selectBackend } from "../../features/backend/backendSlice";
 import { useSelector } from "react-redux";
-
+import { setProjects } from "../../features/projects/projectsSlice";
+import { useDispatch } from "react-redux";
+import { format, isToday } from "date-fns";
 import axios from "axios";
 function TaskBlock({ task }) {
   return (
     <div className="cursor-pointer rounded-xl shadow-md shadow-zinc-500 dark:shadow-none text-zinc-900 dark:text-white dark:bg-zinc-700 dark:bg-opacity-60 p-3 w-full hover:scale-[1.02] transition-all duration-150">
-     
       <h1 className="text-2xl font-semibold">{task.name}</h1>
       <p className="text-gray-700 dark:text-zinc-400 mt-2 truncate-2-lines">
-       {task.description}
+        {task.description}
       </p>
 
       <div className="flex flex-row justify-end mt-4">
@@ -32,28 +33,49 @@ function TaskBlock({ task }) {
 
 function Tasks({}) {
   // tasks view, shows up here temporarily
-
+  const dispatch = useDispatch();
   const backendURL = useSelector(selectBackend);
   const loggedIn = useSelector(selectLogin);
 
   const loggedInUID = useSelector(selectUid);
-  const userProjects = useSelector(getAllProjects);
+  const [userProjects, setUserProjects] = useState([]);
   const [allTodayTasks, setAllTodayTasks] = useState([]);
 
   useEffect(() => {
-    if (!loggedIn) return
-    userProjects.map(project => {
-      axios.get(`${backendURL}/api/project/${project.proj_id}/tasks`).then(res => {
-        const tasks = res.data.tasks
-        tasks.map(task => {
-          if(task.time === 'Today'){
-            setAllTodayTasks(prev => [...prev, task])
-          }
-          ///Need to fix date and then we can then make sure that we convert string into date and check to see if that date equals today ok thanks
-        })
-      })
-    })
-  },[loggedIn])
+    if (!loggedIn) return;
+
+    // we are logged in, so get the user's projects
+    axios.get(`${backendURL}/api/user/${loggedInUID}/projects`).then((res) => {
+      setUserProjects(res.data.projects);
+    });
+  }, [loggedIn]);
+
+  useEffect(() => {
+    if (!loggedIn) return;
+    userProjects.map((project) => {
+      axios
+        .get(`${backendURL}/api/project/${project.proj_id}/tasks`)
+        .then((res) => {
+          const tasks = res.data.tasks;
+          tasks.map((task) => {
+            const taskDate = task.date;
+            const [day, month, year] = taskDate.split("-");
+
+            const newDate = new Date(year, month - 1, day);
+            // const newDate = new Date(day,month,year)
+            const today = new Date();
+
+            if (
+              newDate.getDate() == today.getDate() &&
+              newDate.getMonth() == today.getMonth() &&
+              newDate.getFullYear() == today.getFullYear()
+            ) {
+              setAllTodayTasks((prev) => [...prev, task]);
+            }
+          });
+        });
+    });
+  }, [userProjects, loggedIn]);
 
   return (
     <AnimatedVerticalPage>
